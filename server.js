@@ -240,13 +240,10 @@ app.get('/', (req, res) => {
         </div>
         
         <div class="https-info">
-          <h2>🔐 Secure Connection</h2>
-          ${protocol === 'https' 
-            ? '<p>✅ You are connected via HTTPS (secure)</p>' 
-            : `<p>⚠️ You are connected via HTTP (not secure)</p>
-               <p><a href="https://100.95.42.95:${HTTPS_PORT}"><button>Switch to HTTPS (Port ${HTTPS_PORT})</button></a></p>
-               <p><small>Note: You may see a browser warning about self-signed certificate.</small></p>
-               <p><small>Click "Advanced" → "Proceed to site (unsafe)"</small></p>`
+         <h2>🔐 Secure Connection</h2>
+         ${protocol === 'https' 
+          ? '<p>✅ You are connected via HTTPS (secure)</p>' 
+          : '<p>✅ You are connected via HTTP (your connection is managed by Render)</p>'
           }
         </div>
         
