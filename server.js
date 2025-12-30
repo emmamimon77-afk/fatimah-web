@@ -923,13 +923,7 @@ const server = app.listen(PORT, '0.0.0.0', () => {
 
 
 
-// Graceful shutdown
-process.on('SIGTERM', () => {
-  httpServer.close();
-  if (httpsServer) httpsServer.close();
-  console.log('Server shutting down gracefully');
-  process.exit(0);
-});
+
 
 // Keep-alive
 setInterval(() => {}, 60000);
