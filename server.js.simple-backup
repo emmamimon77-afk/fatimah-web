@@ -1,0 +1,26 @@
+const express = require('express');
+const app = express();
+const PORT = 8080;
+
+app.use(express.urlencoded({ extended: true }));
+
+app.get('/', (req, res) => {
+  res.send(`
+    <h1>🌸 Fatimah's Server 🌸</h1>
+    <p>Server is running!</p>
+    <p>HTTP: http://100.95.42.95:8080</p>
+  `);
+});
+
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🌐 Server running on http://0.0.0.0:${PORT}`);
+});
+
+process.on('SIGTERM', () => {
+  server.close(() => {
+    console.log('Server shutting down gracefully');
+    process.exit(0);
+  });
+});
+
+setInterval(() => {}, 60000);

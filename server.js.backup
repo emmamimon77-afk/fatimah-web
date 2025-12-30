@@ -1,0 +1,63 @@
+const express = require('express');
+const app = express();
+const PORT = 8080;
+
+app.get('/', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>🌸 Fatimah's Server 🌸</title>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          text-align: center;
+          padding: 50px;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+        }
+        .container {
+          background: rgba(0,0,0,0.7);
+          padding: 40px;
+          border-radius: 15px;
+          display: inline-block;
+        }
+        h1 {
+          font-size: 2.5em;
+          margin-bottom: 20px;
+        }
+        p {
+          font-size: 1.2em;
+          margin: 10px 0;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <h1>🌸 Welcome to Fatimah's Server! 🌸</h1>
+        <p>You are connected via my private Tailscale network.</p>
+        <p>Feel free to explore and say hello!</p>
+        <p><em>This server starts automatically on boot.</em></p>
+      </div>
+    </body>
+    </html
+  `);
+});
+
+
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🌐 Server running on http://0.0.0.0:${PORT}`);
+});
+
+// Keep the process alive
+process.on('SIGTERM', () => {
+  server.close(() => {
+    console.log('Server shutting down gracefully');
+    process.exit(0);
+  });
+});
+
+// Prevent immediate exit
+setInterval(() => {
+  // Keep-alive heartbeat (does nothing but keeps process running)
+}, 60000);

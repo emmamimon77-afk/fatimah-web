@@ -1,0 +1,12 @@
+nohup: ignoring input
+✅ SSL certificates loaded successfully
+📝 Loaded 7 messages from file
+🌐 HTTP Server running on http://0.0.0.0:8080
+   Access via: http://100.95.42.95:8080
+📝 Messages: 7 loaded
+🔐 HTTPS Server running on https://0.0.0.0:8443
+   Access via: https://100.95.42.95:8443
+   Tailscale: https://fatimah-thinkcentre-m910q.tail0b1bfd.ts.net:8443
+   Note: You may see a browser warning about self-signed certificate.
+   This is normal for private servers. Click "Advanced" -> "Proceed".
+Server shutting down gracefully

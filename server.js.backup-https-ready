@@ -1,0 +1,536 @@
+const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
+const app = express();
+const PORT = 8080;
+
+// ===== CONFIGURATION =====
+const MESSAGES_FILE = 'data/messages.json';
+const UPLOADS_DIR = 'uploads';
+
+// ===== MIDDLEWARE =====
+app.use(express.urlencoded({ extended: true }));
+
+// ===== FILE UPLOAD CONFIG =====
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    if (!fs.existsSync(UPLOADS_DIR)) {
+      fs.mkdirSync(UPLOADS_DIR);
+    }
+    cb(null, UPLOADS_DIR);
+  },
+  filename: (req, file, cb) => {
+    const uniqueName = Date.now() + '-' + file.originalname.replace(/\s+/g, '_');
+    cb(null, uniqueName);
+  }
+});
+
+const upload = multer({ 
+  storage: storage,
+  limits: { fileSize: 50 * 1024 * 1024 } // 50MB
+});
+
+// ===== MESSAGE SYSTEM =====
+let messages = [];
+
+// Load messages from file
+function loadMessages() {
+  try {
+    if (fs.existsSync(MESSAGES_FILE)) {
+      const data = fs.readFileSync(MESSAGES_FILE, 'utf8');
+      messages = JSON.parse(data);
+      console.log(`Loaded ${messages.length} messages from file`);
+    }
+  } catch (err) {
+    console.log('Error loading messages:', err.message);
+    messages = [];
+  }
+}
+
+// Save messages to file
+function saveMessages() {
+  try {
+    fs.writeFileSync(MESSAGES_FILE, JSON.stringify(messages, null, 2));
+  } catch (err) {
+    console.log('Error saving messages:', err.message);
+  }
+}
+
+// Clean up old messages (keep last 100)
+function cleanupMessages() {
+  if (messages.length > 100) {
+    console.log(`Cleaning up messages: ${messages.length} -> 100`);
+    messages = messages.slice(-100);
+    saveMessages();
+  }
+}
+
+// Initialize
+loadMessages();
+setInterval(cleanupMessages, 3600000); // Cleanup every hour
+
+// ===== SHARED TEMPLATES =====
+const navigation = `
+  <nav style="background: rgba(0,0,0,0.8); padding: 15px; border-radius: 10px; margin-bottom: 30px;">
+    <a href="/" style="color: white; margin: 0 15px; text-decoration: none; font-weight: bold;">🏠 Home</a>
+    <a href="/about" style="color: white; margin: 0 15px; text-decoration: none; font-weight: bold;">📖 About</a>
+    <a href="/friends" style="color: white; margin: 0 15px; text-decoration: none; font-weight: bold;">👥 Friends</a>
+    <a href="/message" style="color: white; margin: 0 15px; text-decoration: none; font-weight: bold;">💬 Messages</a>
+    <a href="/files" style="color: white; margin: 0 15px; text-decoration: none; font-weight: bold;">🗂️ Files</a>
+    <a href="/links" style="color: white; margin: 0 15px; text-decoration: none; font-weight: bold;">🔗 Links</a>
+  </nav>
+`;
+
+const styles = `
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      padding: 30px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      min-height: 100vh;
+    }
+    .container {
+      background: rgba(0,0,0,0.7);
+      padding: 40px;
+      border-radius: 15px;
+      display: inline-block;
+      max-width: 800px;
+      margin: 20px auto;
+      text-align: left;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #ffd166;
+    }
+    h2 {
+      color: #a9e4d7;
+      margin-top: 30px;
+    }
+    p {
+      font-size: 1.2em;
+      margin: 10px 0;
+      line-height: 1.6;
+    }
+    a {
+      color: #6ee7b7;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .message-box, .friend-card, .file-item {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: none;
+    }
+    button {
+      background: #6ee7b7;
+      color: #000;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #34d399;
+    }
+    .delete-btn {
+      background: #f87171;
+      margin-left: 10px;
+    }
+    .delete-btn:hover {
+      background: #ef4444;
+    }
+    .success {
+      background: rgba(110, 231, 183, 0.2);
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px 0;
+    }
+    .error {
+      background: rgba(248, 113, 113, 0.2);
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px 0;
+    }
+  </style>
+`;
+
+// ===== ROUTES =====
+
+// Home Page
+app.get('/', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>🌸 Fatimah's Server 🌸</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>🌸 Welcome to Fatimah's Server! 🌸</h1>
+        <p>You are connected via my private Tailscale network.</p>
+        <p>This is your private hub for communication and file sharing.</p>
+        
+        <div class="message-box">
+          <h2>📢 Recent Messages</h2>
+          ${messages.slice(-3).reverse().map(msg => `
+            <p><strong>${msg.name}</strong>: ${msg.message} <em>(${msg.time})</em></p>
+          `).join('')}
+          ${messages.length === 0 ? '<p>No messages yet. Be the first to say hello!</p>' : ''}
+        </div>
+        
+        <h2>⚡ Quick Access</h2>
+        <p><a href="/message"><button>💬 Send a Message</button></a></p>
+        <p><a href="/files"><button>🗂️ File Sharing</button></a></p>
+        <p><a href="/friends"><button>👥 Friends List</button></a></p>
+        <p><a href="/links"><button>🔗 Useful Links</button></a></p>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// About Page
+app.get('/about', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>About - Fatimah's Server</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>📖 About This Server</h1>
+        <p>This is a private server running on my personal computer, accessible only via Tailscale.</p>
+        
+        <h2>🎯 Purpose</h2>
+        <p>• Private communication hub for friends</p>
+        <p>• Share links and resources securely</p>
+        <p>• Learning platform for web development</p>
+        <p>• Safe space to experiment and collaborate</p>
+        
+        <h2>🔒 Security</h2>
+        <p>• Accessible only via Tailscale VPN</p>
+        <p>• No exposure to public internet</p>
+        <p>• Encrypted connections</p>
+        <p>• Trusted friends only</p>
+        
+        <h2>🛠️ Technology</h2>
+        <p>• Node.js + Express web server</p>
+        <p>• Systemd service (auto-starts on boot)</p>
+        <p>• Tailscale for secure networking</p>
+        <p>• Linux Mint operating system</p>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// Friends Page
+app.get('/friends', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Friends - Fatimah's Server</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>👥 Friends Network</h1>
+        <p>These are the trusted friends who can access this server:</p>
+        
+        <div class="friend-card">
+          <h3>🌸 Fatimah (You!)</h3>
+          <p>📍 Server Administrator</p>
+          <p>💻 Maintains this private network</p>
+        </div>
+        
+        <div class="friend-card">
+          <h3>👋 Future Friend 1</h3>
+          <p>📍 To be invited via Tailscale</p>
+          <p>📧 Will appear here once joined</p>
+        </div>
+        
+        <div class="friend-card">
+          <h3>👋 Future Friend 2</h3>
+          <p>📍 To be invited via Tailscale</p>
+          <p>📧 Will appear here once joined</p>
+        </div>
+        
+        <h2>➕ How to Add Friends</h2>
+        <p>1. Go to <a href="https://login.tailscale.com" target="_blank">Tailscale Admin</a></p>
+        <p>2. Click "Invite someone"</p>
+        <p>3. Send the invite link to your friend</p>
+        <p>4. Once they join, their name will appear here!</p>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// Messages Page
+app.get('/message', (req, res) => {
+  const success = req.query.success;
+  const error = req.query.error;
+  
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Send Message - Fatimah's Server</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>💬 Send a Message</h1>
+        <p>Leave a message for Fatimah or other friends visiting this server.</p>
+        
+        ${success ? `<div class="success">${success}</div>` : ''}
+        ${error ? `<div class="error">${error}</div>` : ''}
+        
+        <form method="POST" action="/send-message">
+          <p><strong>Your Name:</strong></p>
+          <input type="text" name="name" placeholder="Enter your name" required>
+          
+          <p><strong>Your Message:</strong></p>
+          <textarea name="message" rows="5" placeholder="Type your message here..." required></textarea>
+          
+          <br>
+          <button type="submit">📤 Send Message</button>
+        </form>
+        
+        <h2>📜 Recent Messages (${messages.length} total)</h2>
+        ${messages.slice(-5).reverse().map((msg, index) => `
+          <div class="message-box">
+            <p><strong>${msg.name}</strong> said:</p>
+            <p>${msg.message}</p>
+            <p><small>${msg.time}</small></p>
+            <p>
+              <a href="/delete-message/${messages.length - 1 - index}">
+                <button class="delete-btn">🗑️ Delete</button>
+              </a>
+            </p>
+          </div>
+        `).join('')}
+        ${messages.length === 0 ? '<p>No messages yet. Be the first!</p>' : ''}
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// Handle message submission
+app.post('/send-message', (req, res) => {
+  const { name, message } = req.body;
+  const time = new Date().toLocaleString();
+  
+  if (!name.trim() || !message.trim()) {
+    return res.redirect('/message?error=Name and message are required');
+  }
+  
+  messages.push({ name: name.trim(), message: message.trim(), time });
+  saveMessages();
+  res.redirect('/message?success=Message sent successfully!');
+});
+
+// Delete message
+app.get('/delete-message/:index', (req, res) => {
+  const index = parseInt(req.params.index);
+  if (index >= 0 && index < messages.length) {
+    messages.splice(index, 1);
+    saveMessages();
+    res.redirect('/message?success=Message deleted');
+  } else {
+    res.redirect('/message?error=Invalid message');
+  }
+});
+
+// File Upload Page
+app.get('/files', (req, res) => {
+  let fileList = [];
+  try {
+    const files = fs.readdirSync(UPLOADS_DIR);
+    fileList = files.map(file => {
+      const stats = fs.statSync(path.join(UPLOADS_DIR, file));
+      return {
+        name: file,
+        size: (stats.size / 1024).toFixed(2) + ' KB',
+        date: stats.mtime.toLocaleDateString(),
+        url: `/download/${file}`
+      };
+    });
+  } catch (err) {
+    console.log('No files in uploads directory');
+  }
+
+  const success = req.query.success;
+  const error = req.query.error;
+  
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>File Sharing - Fatimah's Server</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation.replace('href="/files"', 'href="/files" style="color: #6ee7b7;"')}
+        <h1>🗂️ File Sharing Area</h1>
+        <p>Upload and download files securely within our private network.</p>
+        
+        ${success ? `<div class="success">${success}</div>` : ''}
+        ${error ? `<div class="error">${error}</div>` : ''}
+        
+        <div class="message-box">
+          <h2>📤 Upload a File</h2>
+          <form action="/upload" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" required>
+            <br><br>
+            <button type="submit">⬆️ Upload File</button>
+          </form>
+          <p><small>Max file size: 50MB. Files are private to this server only.</small></p>
+        </div>
+        
+        <h2>📥 Available Files (${fileList.length})</h2>
+        ${fileList.length === 0 ? 
+          '<p>No files uploaded yet. Be the first!</p>' : 
+          fileList.map(file => `
+            <div class="file-item">
+              <h3>📄 ${file.name}</h3>
+              <p>Size: ${file.size} | Date: ${file.date}</p>
+              <p>
+                <a href="${file.url}"><button>⬇️ Download</button></a>
+                <a href="/delete-file/${file.name}">
+                  <button class="delete-btn">🗑️ Delete</button>
+                </a>
+              </p>
+            </div>
+          `).join('')
+        }
+        
+        <h2>📋 Instructions</h2>
+        <p>1. Click "Choose File" to select a file from your computer</p>
+        <p>2. Click "Upload File" to share it with the group</p>
+        <p>3. Anyone on this Tailscale network can download it</p>
+        <p>4. Files stay until manually deleted</p>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// Handle file upload
+app.post('/upload', upload.single('file'), (req, res) => {
+  if (!req.file) {
+    return res.redirect('/files?error=No file uploaded');
+  }
+  res.redirect('/files?success=File uploaded successfully: ' + req.file.originalname);
+});
+
+// File download
+app.get('/download/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, UPLOADS_DIR, filename);
+  
+  if (fs.existsSync(filePath)) {
+    res.download(filePath);
+  } else {
+    res.redirect('/files?error=File not found');
+  }
+});
+
+// Delete file
+app.get('/delete-file/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, UPLOADS_DIR, filename);
+  
+  if (fs.existsSync(filePath)) {
+    fs.unlinkSync(filePath);
+    res.redirect('/files?success=File deleted: ' + filename);
+  } else {
+    res.redirect('/files?error=File not found');
+  }
+});
+
+// Links Page
+app.get('/links', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Useful Links - Fatimah's Server</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>🔗 Useful Links & Resources</h1>
+        
+        <h2>🌐 Tailscale Links</h2>
+        <p><a href="https://login.tailscale.com" target="_blank">🔐 Tailscale Admin Console</a> - Manage your network</p>
+        <p><a href="https://tailscale.com/kb" target="_blank">📚 Tailscale Documentation</a> - Guides and tutorials</p>
+        <p><a href="https://tailscale.com/download" target="_blank">⬇️ Tailscale Downloads</a> - Get Tailscale for any device</p>
+        
+        <h2>💻 Development Resources</h2>
+        <p><a href="https://nodejs.org" target="_blank">🟢 Node.js Official Site</a> - JavaScript runtime</p>
+        <p><a href="https://expressjs.com" target="_blank">🚀 Express.js Documentation</a> - Web framework</p>
+        <p><a href="https://developer.mozilla.org" target="_blank">🦖 MDN Web Docs</a> - Web development reference</p>
+        
+        <h2>🎬 YouTube & Social Links</h2>
+        <p><a href="https://www.youtube.com/" target="_blank">▶️ YouTube</a> - Watch videos</p>
+        <p><a href="https://www.patreon.com/" target="_blank">❤️ Patreon</a> - Support creators</p>
+        <p><a href="https://twitter.com/" target="_blank">🐦 Twitter/X</a> - Social updates</p>
+        <p><a href="https://discord.com/" target="_blank">💬 Discord</a> - Chat community</p>
+        
+        <h2>🔧 Server Management</h2>
+        <p><a href="https://systemd.io" target="_blank">⚙️ Systemd Documentation</a> - Service management</p>
+        <p><a href="https://linuxmint.com" target="_blank">🍃 Linux Mint Website</a> - Your operating system</p>
+        
+        <h2>➕ Add Your Own Links</h2>
+        <p>Edit this page in <code>server.js</code> to add your favorite links!</p>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// ===== START SERVER =====
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🌐 Server running on http://0.0.0.0:${PORT}`);
+  console.log(`📝 Messages: ${messages.length} loaded`);
+});
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  server.close(() => {
+    console.log('Server shutting down gracefully');
+    process.exit(0);
+  });
+});
+
+// Keep-alive
+setInterval(() => {}, 60000);

@@ -1,0 +1,329 @@
+const express = require('express');
+const app = express();
+const PORT = 8080;
+
+// Middleware to parse form data
+app.use(express.urlencoded({ extended: true }));
+
+// Shared navigation HTML (used on all pages)
+const navigation = `
+  <nav style="background: rgba(0,0,0,0.8); padding: 15px; border-radius: 10px; margin-bottom: 30px;">
+    <a href="/" style="color: white; margin: 0 15px; text-decoration: none; font-weight: bold;">🏠 Home</a>
+    <a href="/about" style="color: white; margin: 0 15px; text-decoration: none; font-weight: bold;">📖 About</a>
+    <a href="/friends" style="color: white; margin: 0 15px; text-decoration: none; font-weight: bold;">👥 Friends</a>
+    <a href="/message" style="color: white; margin: 0 15px; text-decoration: none; font-weight: bold;">💬 Send Message</a>
+    <a href="/links" style="color: white; margin: 0 15px; text-decoration: none; font-weight: bold;">🔗 Useful Links</a>
+  </nav>
+`;
+
+// Shared CSS styles
+const styles = `
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      padding: 30px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      min-height: 100vh;
+    }
+    .container {
+      background: rgba(0,0,0,0.7);
+      padding: 40px;
+      border-radius: 15px;
+      display: inline-block;
+      max-width: 800px;
+      margin: 20px auto;
+      text-align: left;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #ffd166;
+    }
+    h2 {
+      color: #a9e4d7;
+    }
+    p {
+      font-size: 1.2em;
+      margin: 10px 0;
+      line-height: 1.6;
+    }
+    a {
+      color: #6ee7b7;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .message-box {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: none;
+    }
+    button {
+      background: #6ee7b7;
+      color: #000;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #34d399;
+    }
+    .friend-card {
+      background: rgba(255,255,255,0.1);
+      padding: 15px;
+      border-radius: 10px;
+      margin: 15px 0;
+    }
+  </style>
+`;
+
+// Store messages (in memory - will reset on server restart)
+let messages = [];
+
+// Home Page
+app.get('/', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>🌸 Fatimah's Server 🌸</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>🌸 Welcome to Fatimah's Server! 🌸</h1>
+        <p>You are connected via my private Tailscale network.</p>
+        <p>This is your gateway to our private community. Feel free to explore!</p>
+        
+        <div class="message-box">
+          <h2>📢 Recent Messages</h2>
+          ${messages.slice(-3).reverse().map(msg => `
+            <p><strong>${msg.name}</strong>: ${msg.message} <em>(${msg.time})</em></p>
+          `).join('')}
+          ${messages.length === 0 ? '<p>No messages yet. Be the first to say hello!</p>' : ''}
+        </div>
+        
+        <h2>⚡ Quick Links</h2>
+        <p><a href="/message">💬 Send a message</a></p>
+        <p><a href="/friends">👥 View friends list</a></p>
+        <p><a href="/links">🔗 Useful resources</a></p>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// About Page
+app.get('/about', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>About - Fatimah's Server</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>📖 About This Server</h1>
+        <p>This is a private server running on my personal computer, accessible only via Tailscale.</p>
+        
+        <h2>🎯 Purpose</h2>
+        <p>• Private communication hub for friends</p>
+        <p>• Share links and resources securely</p>
+        <p>• Learning platform for web development</p>
+        <p>• Safe space to experiment and collaborate</p>
+        
+        <h2>🔒 Security</h2>
+        <p>• Accessible only via Tailscale VPN</p>
+        <p>• No exposure to public internet</p>
+        <p>• Encrypted connections</p>
+        <p>• Trusted friends only</p>
+        
+        <h2>🛠️ Technology</h2>
+        <p>• Node.js + Express web server</p>
+        <p>• Systemd service (auto-starts on boot)</p>
+        <p>• Tailscale for secure networking</p>
+        <p>• Linux Mint operating system</p>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// Friends Page
+app.get('/friends', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Friends - Fatimah's Server</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>👥 Friends Network</h1>
+        <p>These are the trusted friends who can access this server:</p>
+        
+        <div class="friend-card">
+          <h3>🌸 Fatimah (You!)</h3>
+          <p>📍 Server Administrator</p>
+          <p>💻 Maintains this private network</p>
+        </div>
+        
+        <div class="friend-card">
+          <h3>👋 Future Friend 1</h3>
+          <p>📍 To be invited via Tailscale</p>
+          <p>📧 Will appear here once joined</p>
+        </div>
+        
+        <div class="friend-card">
+          <h3>👋 Future Friend 2</h3>
+          <p>📍 To be invited via Tailscale</p>
+          <p>📧 Will appear here once joined</p>
+        </div>
+        
+        <h2>➕ How to Add Friends</h2>
+        <p>1. Go to <a href="https://login.tailscale.com" target="_blank">Tailscale Admin</a></p>
+        <p>2. Click "Invite someone"</p>
+        <p>3. Send the invite link to your friend</p>
+        <p>4. Once they join, their name will appear here!</p>
+        
+        <p><em>Note: You can edit this page to add real friend names!</em></p>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// Message Page (Form)
+app.get('/message', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Send Message - Fatimah's Server</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>💬 Send a Message</h1>
+        <p>Leave a message for Fatimah or other friends visiting this server.</p>
+        
+        <form method="POST" action="/send-message">
+          <p><strong>Your Name:</strong></p>
+          <input type="text" name="name" placeholder="Enter your name" required>
+          
+          <p><strong>Your Message:</strong></p>
+          <textarea name="message" rows="5" placeholder="Type your message here..." required></textarea>
+          
+          <br>
+          <button type="submit">📤 Send Message</button>
+        </form>
+        
+        <h2>📜 Recent Messages</h2>
+        ${messages.slice(-5).reverse().map(msg => `
+          <div class="message-box">
+            <p><strong>${msg.name}</strong> said:</p>
+            <p>${msg.message}</p>
+            <p><small>${msg.time}</small></p>
+          </div>
+        `).join('')}
+        ${messages.length === 0 ? '<p>No messages yet. Be the first!</p>' : ''}
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// Handle message submission
+app.post('/send-message', (req, res) => {
+  const { name, message } = req.body;
+  const time = new Date().toLocaleString();
+  
+  messages.push({ name, message, time });
+  
+  // Redirect back to message page
+  res.redirect('/message');
+});
+
+// Useful Links Page
+app.get('/links', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Useful Links - Fatimah's Server</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>🔗 Useful Links & Resources</h1>
+        
+        <h2>🌐 Tailscale Links</h2>
+        <p><a href="https://login.tailscale.com" target="_blank">🔐 Tailscale Admin Console</a> - Manage your network</p>
+        <p><a href="https://tailscale.com/kb" target="_blank">📚 Tailscale Documentation</a> - Guides and tutorials</p>
+        <p><a href="https://tailscale.com/download" target="_blank">⬇️ Tailscale Downloads</a> - Get Tailscale for any device</p>
+       
+        <h2>🎬 YouTube & Social Links</h2>
+        <p><a href="https://www.youtube.com/@PredictiveHistory" target="_blank">▶️ Favorite Psycho-history YouTube Channel</a> - Watch load of amazing future predicative videos based on understanding world history!</p>
+       
+        <p><a href="https://www.patreon.com/@NowYouKnowChannel" target="_blank">❤️ Support on Patreon</a> - Help support this channel</p>
+        <p><a href="https://www.youtube.com/@DeepDeen" target="_blank">🐦 Follow Professor Syed Saad Qadri on religion, philosophy and beyond! /X</a> - Dean of Islamic Studies</p>
+        <p><a href="https://discord.gg/YourInviteCode" target="_blank">💬 Join Discord</a> - Chat with us</p>
+        <h2>💻 Development Resources</h2>
+        <p><a href="https://nodejs.org" target="_blank">🟢 Node.js Official Site</a> - JavaScript runtime</p>
+        <p><a href="https://expressjs.com" target="_blank">🚀 Express.js Documentation</a> - Web framework</p>
+        <p><a href="https://developer.mozilla.org" target="_blank">🦖 MDN Web Docs</a> - Web development reference</p>
+        
+        <h2>🔧 Server Management</h2>
+        <p><a href="https://systemd.io" target="_blank">⚙️ Systemd Documentation</a> - Service management</p>
+        <p><a href="https://linuxmint.com" target="_blank">🍃 Linux Mint Website</a> - Your operating system</p>
+        
+        <h2>➕ Add Your Own Links</h2>
+        <p>Edit this page in <code>server.js</code> to add:</p>
+        <p>• Shared documents or files</p>
+        <p>• Project collaboration links</p>
+        <p>• Chat rooms or forums</p>
+        <p>• Media libraries</p>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// Start server
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🌐 Server running on http://0.0.0.0:${PORT}`);
+});
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  server.close(() => {
+    console.log('Server shutting down gracefully');
+    process.exit(0);
+  });
+});
+
+// Keep-alive
+setInterval(() => {
+  // Keep process alive
+}, 60000);
