@@ -5,8 +5,8 @@ const fs = require('fs');
 const https = require('https');
 
 const app = express();
-const HTTP_PORT = process.env.PORT || 8080;
-const HTTPS_PORT = process.env.PORT || 8443;
+const PORT = process.env.PORT || 8080;
+
 
 // ===== SSL CONFIGURATION =====
 const SSL_KEY_PATH = 'ssl/key.pem';
@@ -215,7 +215,7 @@ const styles = `
 // Home Page
 app.get('/', (req, res) => {
   const protocol = req.secure ? 'https' : 'http';
-  const port = req.secure ? HTTPS_PORT : HTTP_PORT;
+  const port = PORT;
   
   res.send(`
     <!DOCTYPE html>
@@ -917,29 +917,14 @@ app.get('/entertainment', (req, res) => {
 
 // ===== START SERVERS =====
 
-// Start HTTP server (always)
-const httpServer = app.listen(HTTP_PORT, '0.0.0.0', () => {
-  console.log(`🌐 HTTP Server running on http://0.0.0.0:${HTTP_PORT}`);
-  console.log(`   Access via: http://100.95.42.95:${HTTP_PORT}`);
+// Start server for Render (single port)
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Fatimah's Server running on port ${PORT}`);
   console.log(`📝 Messages: ${messages.length} loaded`);
+  console.log(`   Render URL: https://fatimah-web.onrender.com`);
 });
 
-// Start HTTPS server if certificates are available
-let httpsServer = null;
-if (sslCredentials) {
-  httpsServer = https.createServer(sslCredentials, app);
-  httpsServer.listen(HTTPS_PORT, '0.0.0.0', () => {
-    console.log(`🔐 HTTPS Server running on https://0.0.0.0:${HTTPS_PORT}`);
-    console.log(`   Access via: https://100.95.42.95:${HTTPS_PORT}`);
-    console.log(`   Tailscale: https://fatimah-thinkcentre-m910q.tail0b1bfd.ts.net:${HTTPS_PORT}`);
-    console.log(`   Note: You may see a browser warning about self-signed certificate.`);
-    console.log(`   This is normal for private servers. Click "Advanced" -> "Proceed".`);
-  });
-} else {
-  console.log('⚠️ HTTPS not available - SSL certificates missing');
-  console.log('   To generate certificates, run:');
-  console.log('   cd ~/fatimah-web/ssl && openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 365 -nodes -subj "/C=US/ST=State/L=City/O=Fatimah Server/CN=localhost"');
-}
+
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
