@@ -334,7 +334,6 @@ app.get('/about', (req, res) => {
   `);
 });
 
-
 // Friends Page
 app.get('/friends', (req, res) => {
   res.send(`
@@ -782,7 +781,7 @@ app.get('/ai', (req, res) => {
   `);
 });
 
-// ===== NEWS & MEDIA PAGE =====
+// ===== NEWS & MEDIA PAGE - UPDATED LINKS =====
 app.get('/news', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -800,11 +799,11 @@ app.get('/news', (req, res) => {
         <div class="link-grid">
           <div class="link-card">
             <h3>📡 Alternative News Networks</h3>
-            <p><a href="https://censored.news" target="_blank">🚫 Censored News</a> - Uncensored news aggregator</p>
-            <p><a href="https://censored.news/category/world" target="_blank">🌍 World News</a></p>
-            <p><a href="https://censored.news/category/us" target="_blank">🇺🇸 US News</a></p>
-            <p><a href="https://censored.news/category/technology" target="_blank">💻 Technology</a></p>
-            <p><a href="https://censored.news/category/health" target="_blank">🏥 Health</a></p>
+            <p><a href="/world-news">🌍 World News</a> | <a href="https://censored.news/category/world" target="_blank">(External)</a></p>
+            <p><a href="/us-news">🇺🇸 US News</a> | <a href="https://censored.news/category/us" target="_blank">(External)</a></p>
+            <p><a href="/technology">💻 Technology</a> | <a href="https://censored.news/category/technology" target="_blank">(External)</a></p>
+            <p><a href="/health">🏥 Health</a> | <a href="https://censored.news/category/health" target="_blank">(External)</a></p>
+            <p><a href="https://censored.news" target="_blank">🚫 Censored News</a> - Main aggregator</p>
           </div>
           
           <div class="link-card">
@@ -916,6 +915,112 @@ app.get('/entertainment', (req, res) => {
   `);
 });
 
+// ===== MISSING NEWS ROUTES - ADDED =====
+
+// World News Page
+app.get('/world-news', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>World News - Fatimah's Server</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>🌍 World News</h1>
+        <p>This section is for curated world news links and resources.</p>
+        <p>• <a href="https://censored.news/category/world" target="_blank">🌐 Censored.news World Section</a></p>
+        <p>• <a href="https://www.aljazeera.com" target="_blank">📰 Al Jazeera</a> - International coverage</p>
+        <p>• <a href="https://www.bbc.com/news/world" target="_blank">🇬🇧 BBC World News</a></p>
+        <p>• <a href="https://www.reuters.com/world" target="_blank">📊 Reuters World</a></p>
+        <br>
+        <a href="/news" style="display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">← Back to News</a>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// US News Page
+app.get('/us-news', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>US News - Fatimah's Server</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>🇺🇸 US News</h1>
+        <p>US-focused news and political coverage.</p>
+        <p>• <a href="https://censored.news/category/us" target="_blank">🚫 Censored.news US Section</a></p>
+        <p>• <a href="https://www.zerohedge.com" target="_blank">📈 Zero Hedge</a> - Financial news</p>
+        <p>• <a href="https://www.theguardian.com/us-news" target="_blank">📰 Guardian US</a></p>
+        <p>• <a href="https://apnews.com/hub/us-news" target="_blank">🏢 AP US News</a></p>
+        <br>
+        <a href="/news" style="display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">← Back to News</a>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// Technology Page
+app.get('/technology', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Technology - Fatimah's Server</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>💻 Technology</h1>
+        <p>Tech news, AI developments, and innovation coverage.</p>
+        <p>• <a href="https://censored.news/category/technology" target="_blank">🚫 Censored.news Tech Section</a></p>
+        <p>• <a href="https://techcrunch.com" target="_blank">🚀 TechCrunch</a></p>
+        <p>• <a href="https://www.theverge.com/tech" target="_blank">🔷 The Verge Tech</a></p>
+        <p>• <a href="https://arstechnica.com" target="_blank">⚙️ Ars Technica</a></p>
+        <br>
+        <a href="/news" style="display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">← Back to News</a>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// Health Page
+app.get('/health', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Health - Fatimah's Server</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>🏥 Health</h1>
+        <p>Health news, medical research, and wellness information.</p>
+        <p>• <a href="https://censored.news/category/health" target="_blank">🚫 Censored.news Health Section</a></p>
+        <p>• <a href="https://www.naturalnews.com" target="_blank">🌿 Natural News</a></p>
+        <p>• <a href="https://www.nih.gov/news-events" target="_blank">🏛️ NIH News</a></p>
+        <p>• <a href="https://www.who.int/news" target="_blank">🌍 WHO News</a></p>
+        <br>
+        <a href="/news" style="display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">← Back to News</a>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
 // ===== START SERVERS =====
 
 // Start server for Render (single port)
@@ -924,10 +1029,6 @@ const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`📝 Messages: ${messages.length} loaded`);
   console.log(`   Render URL: https://fatimah-web.onrender.com`);
 });
-
-
-
-
 
 // Keep-alive
 setInterval(() => {}, 60000);
