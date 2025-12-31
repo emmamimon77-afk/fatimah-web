@@ -282,7 +282,7 @@ app.get('/', (req, res) => {
   `);
 });
 
-// About Page
+// About Page - FIXED FOR RENDER
 app.get('/about', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -295,7 +295,7 @@ app.get('/about', (req, res) => {
       <div class="container">
         ${navigation}
         <h1>📖 About This Server</h1>
-        <p>This is a private server running on my personal computer, accessible only via Tailscale.</p>
+        <p>This is an educational web server project deployed on Render.</p>
         
         <h2>🎯 Purpose</h2>
         <p>• Private communication hub for friends</p>
@@ -304,32 +304,36 @@ app.get('/about', (req, res) => {
         <p>• Safe space to experiment and collaborate</p>
         
         <h2>🔒 Security</h2>
-        <p>• Accessible only via Tailscale VPN</p>
-        <p>• No exposure to public internet</p>
-        <p>• Encrypted connections (HTTPS available)</p>
-        <p>• Trusted friends only</p>
+        <p>• Deployed on Render with automatic HTTPS</p>
+        <p>• Secure connections via SSL/TLS</p>
+        <p>• Private code repository</p>
+        <p>• Regular updates and maintenance</p>
         
-        <h2>🛠️ Technology</h2>
+        <h2>🚀 Technology</h2>
         <p>• Node.js + Express web server</p>
-        <p>• Systemd service (auto-starts on boot)</p>
-        <p>• Tailscale for secure networking</p>
-        <p>• Linux Mint operating system</p>
+        <p>• Render.com for cloud hosting</p>
+        <p>• GitHub for version control</p>
+        <p>• JavaScript, HTML, CSS</p>
         
-        <h2>🔐 Connection Info</h2>
-        <p>• HTTP: <code>http://100.95.42.95:${HTTP_PORT}</code></p>
-        <p>• HTTPS: <code>https://100.95.42.95:${HTTPS_PORT}</code></p>
-        <p>• Tailscale: <code>https://fatimah-thinkcentre-m910q.tail0b1bfd.ts.net:${HTTPS_PORT}</code></p>
+        <h2>🌐 Connection Info</h2>
+        <p>• Live URL: <code>https://fatimah-web.onrender.com</code></p>
+        <p>• GitHub: <code>https://github.com/emmamimon77-afk/fatimah-web</code></p>
+        <p>• Port: <code>${process.env.PORT || 10000}</code></p>
         
         <h2>📁 Project Structure</h2>
-        <p>• Server code: <code>~/fatimah-web/server.js</code></p>
-        <p>• Messages: <code>~/fatimah-web/data/messages.json</code></p>
-        <p>• Uploads: <code>~/fatimah-web/uploads/</code></p>
-        <p>• SSL certs: <code>~/fatimah-web/ssl/</code></p>
+        <p>• Server code: <code>server.js</code></p>
+        <p>• Messages: stored in application memory</p>
+        <p>• Dependencies: <code>package.json</code></p>
+        <p>• Version control: Git with GitHub</p>
+        
+        <br>
+        <a href="/" style="display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">← Back to Home</a>
       </div>
     </body>
     </html>
   `);
 });
+
 
 // Friends Page
 app.get('/friends', (req, res) => {
