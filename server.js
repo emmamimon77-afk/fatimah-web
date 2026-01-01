@@ -23,14 +23,108 @@ try {
   console.log('   HTTP will still work on port 8080.');
 }
 
-// ===== CONFIGURATION =====
-const MESSAGES_FILE = 'data/messages.json';
-const UPLOADS_DIR = 'uploads';
+// ===== MONGODB CONFIGURATION =====
+const { MongoClient } = require('mongodb');
 
-// ===== MIDDLEWARE =====
-app.use(express.urlencoded({ extended: true }));
+// Your connection string from MongoDB Atlas
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://emmamimon77_db_user:z01RznyHwIuTqSWw@cluster0.7prkjzu.mongodb.net/fatimah_server';
+const DB_NAME = 'fatimah_server';
+const COLLECTION_NAME = 'messages';
+
+let dbClient = null;
+let messagesCollection = null;
+
+// Initialize MongoDB connection
+async function initDB() {
+  try {
+    dbClient = new MongoClient(MONGODB_URI);
+    await dbClient.connect();
+    const db = dbClient.db(DB_NAME);
+    messagesCollection = db.collection(COLLECTION_NAME);
+    console.log('✅ Connected to MongoDB Atlas');
+    
+    // Create index for better performance
+    await messagesCollection.createIndex({ time: -1 });
+  } catch (err) {
+    console.log('❌ MongoDB connection error:', err.message);
+    // Fallback to memory storage
+    messagesCollection = null;
+  }
+}
+
+// Call init on server start
+initDB();
+
+// ===== MESSAGE SYSTEM =====
+let messages = [];
+
+async function loadMessages() {
+  if (messagesCollection) {
+    try {
+      // Load from MongoDB
+      const dbMessages = await messagesCollection
+        .find({})
+        .sort({ time: -1 })
+        .limit(100)
+        .toArray();
+      
+      messages = dbMessages.reverse(); // Oldest first
+      console.log(`📝 Loaded ${messages.length} messages from MongoDB`);
+    } catch (err) {
+      console.log('Error loading from MongoDB:', err.message);
+      messages = [];
+    }
+  } else {
+    // Fallback to file system
+    try {
+      if (fs.existsSync('data/messages.json')) {
+        const data = fs.readFileSync('data/messages.json', 'utf8');
+        messages = JSON.parse(data);
+        console.log(`📝 Loaded ${messages.length} messages from file`);
+      }
+    } catch (err) {
+      console.log('Error loading messages:', err.message);
+      messages = [];
+    }
+  }
+}
+
+async function saveMessages() {
+  if (messagesCollection) {
+    try {
+      // Save to MongoDB (replace all documents)
+      await messagesCollection.deleteMany({});
+      if (messages.length > 0) {
+        await messagesCollection.insertMany(messages);
+      }
+      console.log(`💾 Saved ${messages.length} messages to MongoDB`);
+    } catch (err) {
+      console.log('Error saving to MongoDB:', err.message);
+    }
+  } else {
+    // Fallback to file
+    try {
+      fs.writeFileSync('data/messages.json', JSON.stringify(messages, null, 2));
+    } catch (err) {
+      console.log('Error saving messages:', err.message);
+    }
+  }
+}
+
+function cleanupMessages() {
+  if (messages.length > 100) {
+    console.log(`🧹 Cleaning up messages: ${messages.length} -> 100`);
+    messages = messages.slice(-100);
+    saveMessages();
+  }
+}
+
+// Load messages on startup
+loadMessages();
+setInterval(cleanupMessages, 3600000);
 
 // ===== FILE UPLOAD CONFIG =====
+const UPLOADS_DIR = 'uploads';
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     if (!fs.existsSync(UPLOADS_DIR)) {
@@ -49,40 +143,6 @@ const upload = multer({
   limits: { fileSize: 50 * 1024 * 1024 }
 });
 
-// ===== MESSAGE SYSTEM =====
-let messages = [];
-
-function loadMessages() {
-  try {
-    if (fs.existsSync(MESSAGES_FILE)) {
-      const data = fs.readFileSync(MESSAGES_FILE, 'utf8');
-      messages = JSON.parse(data);
-      console.log(`📝 Loaded ${messages.length} messages from file`);
-    }
-  } catch (err) {
-    console.log('Error loading messages:', err.message);
-    messages = [];
-  }
-}
-
-function saveMessages() {
-  try {
-    fs.writeFileSync(MESSAGES_FILE, JSON.stringify(messages, null, 2));
-  } catch (err) {
-    console.log('Error saving messages:', err.message);
-  }
-}
-
-function cleanupMessages() {
-  if (messages.length > 100) {
-    console.log(`🧹 Cleaning up messages: ${messages.length} -> 100`);
-    messages = messages.slice(-100);
-    saveMessages();
-  }
-}
-
-loadMessages();
-setInterval(cleanupMessages, 3600000);
 
 // ===== SHARED TEMPLATES =====
 const navigation = `
@@ -464,7 +524,7 @@ app.post('/send-message', (req, res) => {
   }
   
   messages.push({ name: name.trim(), message: message.trim(), time });
-  saveMessages();
+  await saveMessages();
   res.redirect('/message?success=Message sent successfully!');
 });
 
@@ -473,7 +533,7 @@ app.get('/delete-message/:index', (req, res) => {
   const index = parseInt(req.params.index);
   if (index >= 0 && index < messages.length) {
     messages.splice(index, 1);
-    saveMessages();
+    await saveMessages();
     res.redirect('/message?success=Message deleted');
   } else {
     res.redirect('/message?error=Invalid message');
