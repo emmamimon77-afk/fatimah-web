@@ -7,6 +7,11 @@ const https = require('https');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+// ===== BODY PARSER MIDDLEWARE =====
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+// ===================================
+
 
 // ===== SSL CONFIGURATION =====
 const SSL_KEY_PATH = 'ssl/key.pem';
