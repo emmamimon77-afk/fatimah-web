@@ -32,8 +32,8 @@ try {
 const { MongoClient } = require('mongodb');
 
 // Your connection string from MongoDB Atlas
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://emmamimon77_db_user:z01RznyHwIuTqSWw@cluster0.7prkjzu.mongodb.net/fatimah_server';
-const DB_NAME = 'fatimah_server';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://emmamimon77_db_user:z01RznyHwIuTqSWw@cluster0.7prkjzu.mongodb.net/fatimah_server?retryWrites=true&w=majority';
+
 const COLLECTION_NAME = 'messages';
 
 let dbClient = null;
@@ -95,23 +95,45 @@ async function loadMessages() {
 }
 
 async function saveMessages() {
+  console.log(`💾 Attempting to save ${messages.length} messages...`);
+  
   if (messagesCollection) {
     try {
       // Save to MongoDB (replace all documents)
+      console.log('🗃️ Saving to MongoDB...');
       await messagesCollection.deleteMany({});
       if (messages.length > 0) {
-        await messagesCollection.insertMany(messages);
+        const result = await messagesCollection.insertMany(messages);
+        console.log(`✅ Saved ${result.insertedCount} messages to MongoDB`);
+      } else {
+        console.log('📭 No messages to save to MongoDB');
       }
-      console.log(`💾 Saved ${messages.length} messages to MongoDB`);
     } catch (err) {
-      console.log('Error saving to MongoDB:', err.message);
+      console.log('❌ MongoDB save error:', err.message);
+      console.log('❌ Full error:', err);
+      
+      // Fallback to file
+      try {
+        if (!fs.existsSync('data')) {
+          fs.mkdirSync('data', { recursive: true });
+        }
+        fs.writeFileSync('data/messages.json', JSON.stringify(messages, null, 2));
+        console.log('📁 Saved to fallback file instead');
+      } catch (fileErr) {
+        console.log('❌ File save error:', fileErr.message);
+      }
     }
   } else {
     // Fallback to file
+    console.log('📁 MongoDB not available, saving to file...');
     try {
+      if (!fs.existsSync('data')) {
+        fs.mkdirSync('data', { recursive: true });
+      }
       fs.writeFileSync('data/messages.json', JSON.stringify(messages, null, 2));
+      console.log(`📁 Saved ${messages.length} messages to file`);
     } catch (err) {
-      console.log('Error saving messages:', err.message);
+      console.log('Error saving messages to file:', err.message);
     }
   }
 }
@@ -281,6 +303,54 @@ const styles = `
     }
   </style>
 `;
+
+// Test MongoDB connection
+app.get('/test-mongo', async (req, res) => {
+  try {
+    if (!messagesCollection) {
+      return res.send('❌ MongoDB not connected. messagesCollection is null');
+    }
+    
+    // Test connection
+    const count = await messagesCollection.countDocuments();
+    const testMessage = {
+      name: 'Test User',
+      message: 'Test message from /test-mongo route',
+      time: new Date().toLocaleString()
+    };
+    
+    // Try to insert
+    const insertResult = await messagesCollection.insertOne(testMessage);
+    
+    // Count again
+    const newCount = await messagesCollection.countDocuments();
+    
+    // Delete test message
+    await messagesCollection.deleteOne({ _id: insertResult.insertedId });
+    
+    res.send(`
+      <h1>MongoDB Test Results</h1>
+      <p>✅ Connection status: ${messagesCollection ? 'Connected' : 'Not connected'}</p>
+      <p>📊 Initial document count: ${count}</p>
+      <p>✅ Test insertion: Successful</p>
+      <p>📊 New document count: ${newCount}</p>
+      <p>✅ Test deletion: Successful</p>
+      <p>🔄 Final document count: ${await messagesCollection.countDocuments()}</p>
+      <hr>
+      <p>Messages in memory: ${messages.length}</p>
+      <p>Uploads directory exists: ${fs.existsSync('uploads') ? 'Yes' : 'No'}</p>
+      <p>Data directory exists: ${fs.existsSync('data') ? 'Yes' : 'No'}</p>
+    `);
+  } catch (err) {
+    res.send(`
+      <h1>MongoDB Test Error</h1>
+      <p>❌ Error: ${err.message}</p>
+      <p>📝 Stack: ${err.stack}</p>
+      <hr>
+      <p>Messages in memory: ${messages.length}</p>
+    `);
+  }
+});
 
 // ===== ROUTES =====
 
