@@ -28,6 +28,34 @@ try {
   console.log('   HTTP will still work on port 8080.');
 }
 
+// ===== TEMPORARY: FORCE FILE STORAGE FOR TESTING =====
+// Set to false when MongoDB is working
+const FORCE_FILE_STORAGE = true;
+
+// Then modify your initDB function:
+async function initDB() {
+  if (FORCE_FILE_STORAGE) {
+    console.log('📁 TEMPORARY: Forcing file storage (MongoDB disabled)');
+    messagesCollection = null;
+    return;
+  }
+  
+  try {
+    dbClient = new MongoClient(MONGODB_URI);
+    await dbClient.connect();
+    const db = dbClient.db(DB_NAME);
+    messagesCollection = db.collection(COLLECTION_NAME);
+    console.log('✅ Connected to MongoDB Atlas');
+    
+    // Create index for better performance
+    await messagesCollection.createIndex({ time: -1 });
+  } catch (err) {
+    console.log('❌ MongoDB connection error:', err.message);
+    // Fallback to memory storage
+    messagesCollection = null;
+  }
+}
+
 // ===== MONGODB CONFIGURATION =====
 const { MongoClient } = require('mongodb');
 
@@ -174,6 +202,12 @@ const storage = multer.diskStorage({
     cb(null, uniqueName);
   }
 });
+
+// Ensure data directory exists on startup
+if (!fs.existsSync('data')) {
+  fs.mkdirSync('data', { recursive: true });
+  console.log('✅ Created data directory');
+}
 
 const upload = multer({ 
   storage: storage,
