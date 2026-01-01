@@ -503,7 +503,7 @@ app.get('/message', (req, res) => {
         
         <div class="https-info">
           <h3>💾 Message Storage</h3>
-          <p>• Messages are saved to <code>data/messages.json</code></p>
+          <p>• Messages are saved to <strong>MongoDB Atlas</strong> (persistent storage)</p>
           <p>• Auto-cleanup: Keeps last 100 messages</p>
           <p>• Messages persist through server restarts</p>
           <p>• Only visible to Tailscale-connected friends</p>
@@ -515,7 +515,7 @@ app.get('/message', (req, res) => {
 });
 
 // Handle message submission
-app.post('/send-message', (req, res) => {
+app.post('/send-message', async (req, res) => {
   const { name, message } = req.body;
   const time = new Date().toLocaleString();
   
@@ -529,7 +529,7 @@ app.post('/send-message', (req, res) => {
 });
 
 // Delete message
-app.get('/delete-message/:index', (req, res) => {
+app.get('/delete-message/:index', async (req, res) => {
   const index = parseInt(req.params.index);
   if (index >= 0 && index < messages.length) {
     messages.splice(index, 1);
