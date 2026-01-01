@@ -30,7 +30,7 @@ try {
 
 // ===== TEMPORARY: FORCE FILE STORAGE FOR TESTING =====
 // Set to false when MongoDB is working
-const FORCE_FILE_STORAGE = true;
+const FORCE_FILE_STORAGE = false;
 
 // Then modify your initDB function:
 async function initDB() {
