@@ -130,6 +130,13 @@ setInterval(cleanupMessages, 3600000);
 
 // ===== FILE UPLOAD CONFIG =====
 const UPLOADS_DIR = 'uploads';
+
+// Ensure uploads directory exists on startup
+if (!fs.existsSync(UPLOADS_DIR)) {
+  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+  console.log('✅ Created uploads directory');
+}
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     if (!fs.existsSync(UPLOADS_DIR)) {
@@ -521,16 +528,31 @@ app.get('/message', (req, res) => {
 
 // Handle message submission
 app.post('/send-message', async (req, res) => {
+  // Debug: log what we receive
+  console.log('📨 Received form data:', req.body);
+  
+  if (!req.body) {
+    return res.redirect('/message?error=No form data received. Check server middleware.');
+  }
+  
   const { name, message } = req.body;
   const time = new Date().toLocaleString();
   
-  if (!name.trim() || !message.trim()) {
+  if (!name || !name.trim() || !message || !message.trim()) {
     return res.redirect('/message?error=Name and message are required');
   }
   
   messages.push({ name: name.trim(), message: message.trim(), time });
-  await saveMessages();
-  res.redirect('/message?success=Message sent successfully!');
+  
+  // Try to save
+  try {
+    await saveMessages();
+    res.redirect('/message?success=Message sent successfully!');
+  } catch (err) {
+    console.error('❌ Save error:', err);
+    // Even if save fails, keep message in memory for current session
+    res.redirect('/message?success=Message sent (but saving failed)');
+  }
 });
 
 // Delete message
