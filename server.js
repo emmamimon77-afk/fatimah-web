@@ -7,6 +7,26 @@ const https = require('https');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+const mongoose = require('mongoose');
+
+
+
+// ===== MONGODB CONNECTION =====
+const MONGO_URI = 'mongodb+srv://emmamimon77_db_user:J6kcxgHGtfLO25BT@cluster0.7prkjzu.mongodb.net/fatimah_server';
+mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('✅ Connected to MongoDB Atlas successfully'))
+  .catch(err => console.log('⚠️ MongoDB connection failed, using in-memory messages. Error:', err.message));
+
+
+// ===== MESSAGE SCHEMA =====
+const messageSchema = new mongoose.Schema({
+  name: String,
+  message: String,
+  time: { type: Date, default: Date.now }
+});
+
+const Message = mongoose.model('Message', messageSchema);
+
 
 // ===== SSL CONFIGURATION =====
 const SSL_KEY_PATH = 'ssl/key.pem';
@@ -29,6 +49,8 @@ const UPLOADS_DIR = 'uploads';
 
 // ===== MIDDLEWARE =====
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 
 // ===== FILE UPLOAD CONFIG =====
 const storage = multer.diskStorage({
@@ -55,8 +77,7 @@ let messages = [];
 function loadMessages() {
   try {
     if (fs.existsSync(MESSAGES_FILE)) {
-      const data = fs.readFileSync(MESSAGES_FILE, 'utf8');
-      messages = JSON.parse(data);
+      messages = JSON.parse(fs.readFileSync(MESSAGES_FILE, 'utf8'));
       console.log(`📝 Loaded ${messages.length} messages from file`);
     }
   } catch (err) {
@@ -64,6 +85,7 @@ function loadMessages() {
     messages = [];
   }
 }
+
 
 function saveMessages() {
   try {
@@ -83,6 +105,7 @@ function cleanupMessages() {
 
 loadMessages();
 setInterval(cleanupMessages, 3600000);
+
 
 // ===== SHARED TEMPLATES =====
 const navigation = `
@@ -394,91 +417,89 @@ app.get('/friends', (req, res) => {
   `);
 });
 
-// Messages Page
-app.get('/message', (req, res) => {
+
+// ===== MESSAGES ROUTES =====
+app.get('/message', async (req, res) => {
   const success = req.query.success;
   const error = req.query.error;
-  
-  res.send(`
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <title>Send Message - Fatimah's Server</title>
-      ${styles}
-    </head>
-    <body>
-      <div class="container">
-        ${navigation}
-        <h1>💬 Send a Message</h1>
-        <p>Leave a message for Fatimah or other friends visiting this server.</p>
-        
-        ${success ? `<div class="success">${success}</div>` : ''}
-        ${error ? `<div class="error">${error}</div>` : ''}
-        
-        <form method="POST" action="/send-message">
-          <p><strong>Your Name:</strong></p>
-          <input type="text" name="name" placeholder="Enter your name" required>
-          
-          <p><strong>Your Message:</strong></p>
-          <textarea name="message" rows="5" placeholder="Type your message here..." required></textarea>
-          
-          <br>
-          <button type="submit">📤 Send Message</button>
-        </form>
-        
-        <h2>📜 Recent Messages (${messages.length} total)</h2>
-        ${messages.slice(-5).reverse().map((msg, index) => `
-          <div class="message-box">
-            <p><strong>${msg.name}</strong> said:</p>
-            <p>${msg.message}</p>
-            <p><small>${msg.time}</small></p>
-            <p>
-              <a href="/delete-message/${messages.length - 1 - index}">
-                <button class="delete-btn">🗑️ Delete</button>
-              </a>
-            </p>
+
+  try {
+    const dbMessages = await Message.find().sort({ time: -1 }).limit(10).exec();
+
+    res.send(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Send Message - Fatimah's Server</title>
+        ${styles}
+      </head>
+      <body>
+        <div class="container">
+          ${navigation}
+          <h1>💬 Send a Message</h1>
+          <p>Leave a message for Fatimah or other friends visiting this server.</p>
+          ${success ? `<div class="success">${success}</div>` : ''}
+          ${error ? `<div class="error">${error}</div>` : ''}
+
+          <form method="POST" action="/send-message">
+            <p><strong>Your Name:</strong></p>
+            <input type="text" name="name" placeholder="Enter your name" required>
+            <p><strong>Your Message:</strong></p>
+            <textarea name="message" rows="5" placeholder="Type your message here..." required></textarea>
+            <br><button type="submit">📤 Send Message</button>
+          </form>
+
+          <h2>📜 Recent Messages (${dbMessages.length} total)</h2>
+          ${dbMessages.map(msg => `
+            <div class="message-box">
+              <p><strong>${msg.name}</strong> said:</p>
+              <p>${msg.message}</p>
+              <p><small>${msg.time}</small></p>
+              <p><a href="/delete-message/${msg._id}"><button class="delete-btn">🗑️ Delete</button></a></p>
+            </div>
+          `).join('')}
+
+          <div class="https-info">
+            <h3>💾 Message Storage</h3>
+            <p>• Messages are saved to MongoDB</p>
+            <p>• Only visible to Tailscale-connected friends</p>
           </div>
-        `).join('')}
-        ${messages.length === 0 ? '<p>No messages yet. Be the first!</p>' : ''}
-        
-        <div class="https-info">
-          <h3>💾 Message Storage</h3>
-          <p>• Messages are saved to <code>data/messages.json</code></p>
-          <p>• Auto-cleanup: Keeps last 100 messages</p>
-          <p>• Messages persist through server restarts</p>
-          <p>• Only visible to Tailscale-connected friends</p>
         </div>
-      </div>
-    </body>
-    </html>
-  `);
+      </body>
+      </html>
+    `);
+  } catch (err) {
+    console.error(err);
+    res.redirect('/message?error=Failed to load messages');
+  }
 });
 
-// Handle message submission
-app.post('/send-message', (req, res) => {
+app.post('/send-message', async (req, res) => {
   const { name, message } = req.body;
-  const time = new Date().toLocaleString();
-  
-  if (!name.trim() || !message.trim()) {
-    return res.redirect('/message?error=Name and message are required');
+  if (!name.trim() || !message.trim()) return res.redirect('/message?error=Name and message are required');
+
+  try {
+    const newMessage = new Message({ name: name.trim(), message: message.trim() });
+    await newMessage.save();
+    res.redirect('/message?success=Message sent successfully!');
+  } catch (err) {
+    console.error(err);
+    res.redirect('/message?error=Failed to save message');
   }
-  
-  messages.push({ name: name.trim(), message: message.trim(), time });
-  saveMessages();
-  res.redirect('/message?success=Message sent successfully!');
 });
 
-// Delete message
-app.get('/delete-message/:index', (req, res) => {
-  const index = parseInt(req.params.index);
-  if (index >= 0 && index < messages.length) {
-    messages.splice(index, 1);
-    saveMessages();
+app.get('/delete-message/:id', async (req, res) => {
+  const id = req.params.id;
+  try {
+    await Message.findByIdAndDelete(id);
     res.redirect('/message?success=Message deleted');
-  } else {
-    res.redirect('/message?error=Invalid message');
+  } catch (err) {
+    console.error(err);
+    res.redirect('/message?error=Failed to delete message');
   }
 });
+
+
 
 // File Upload Page
 app.get('/files', (req, res) => {
