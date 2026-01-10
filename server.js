@@ -14,7 +14,7 @@ const mongoose = require('mongoose');
 // ===== MONGODB CONNECTION =====
 const MONGO_URI = process.env.MONGODB_URI || 'mongodb+srv://emmamimon77_db_user:ZMofEUDjvhoWRbvY@cluster0.7prkjzu.mongodb.net/fatimah_server';
 
-mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGO_URI)
   .then(() => console.log('✅ Connected to MongoDB Atlas successfully'))
   .catch(err => console.log('⚠️ MongoDB connection failed, using in-memory messages. Error:', err.message));
 
