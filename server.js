@@ -60,7 +60,7 @@ async function initDB() {
 const { MongoClient } = require('mongodb');
 
 // Your connection string from MongoDB Atlas
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://emmamimon77_db_user:z01RznyHwIuTqSWw@cluster0.7prkjzu.mongodb.net/fatimah_server?retryWrites=true&w=majority';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://emmamimon77_db_user:ZMofEUDjvhoWRbvY@cluster0.7prkjzu.mongodb.net/fatimah_server?retryWrites=true&w=majority';
 
 // Add this line back:
 const DB_NAME = 'fatimah_server';  // <-- ADD THIS LINE BACK
