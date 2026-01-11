@@ -2424,44 +2424,382 @@ app.get('/religions/sikhism', (req, res) => {
   `);
 });
 
-
-
-
-// Other Religions Placeholder
+// OTHER RELIGIONS & TRADITIONS PAGE
 app.get('/religions/other', (req, res) => {
   res.send(`
     <!DOCTYPE html>
     <html>
-    <head><title>Other Religions - Coming Soon</title>${styles}</head>
+    <head>
+      <title>Other Religions & Traditions - World Religions</title>
+      ${styles}
+    </head>
     <body>
       <div class="container">
         ${navigation}
-        <h1>🌍 Other Religions & Traditions</h1>
-        <p>This page is coming soon!</p>
-        <a href="/religions">← Back to Religions</a>
+        <h1>🌍 Other Religions & Spiritual Traditions</h1>
+        <p>Exploring diverse religious traditions, indigenous spirituality, and philosophical systems from around the world.</p>
+        
+        <h2>🌏 Indigenous & Traditional Religions</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>African Traditional Religions</h3>
+            <p><strong>Followers:</strong> ~100 million</p>
+            <p><strong>Regions:</strong> Sub-Saharan Africa</p>
+            <p><strong>Features:</strong> Ancestor veneration, nature spirits, oral traditions</p>
+            <p><strong>Key Concepts:</strong> Ubuntu, community harmony, connection to land</p>
+            <p><strong>Resources:</strong></p>
+            <p>• <a href="https://www.africanworldheritage.org" target="_blank">African World Heritage</a></p>
+            <p>• <a href="https://www.metmuseum.org/toah/hd/rela/hd_rela.htm" target="_blank">Met Museum - African Religions</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Native American Spirituality</h3>
+            <p><strong>Peoples:</strong> Various tribes across Americas</p>
+            <p><strong>Features:</strong> Connection to nature, vision quests, sweat lodges</p>
+            <p><strong>Sacred:</strong> Medicine wheels, totem animals, sacred pipes</p>
+            <p><strong>Values:</strong> Seven generations principle, earth stewardship</p>
+            <p><strong>Resources:</strong></p>
+            <p>• <a href="https://www.native-languages.org/religion.htm" target="_blank">Native Languages - Religion</a></p>
+            <p>• <a href="https://www.nlm.nih.gov/nativevoices/timeline/532.html" target="_blank">Native Voices Timeline</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Aboriginal Australian</h3>
+            <p><strong>Concept:</strong> The Dreaming/Dreamtime</p>
+            <p><strong>Features:</strong> Songlines, ancestral beings, connection to land</p>
+            <p><strong>Sacred Sites:</strong> Uluru, Kata Tjuta</p>
+            <p><strong>Traditions:</strong> 60,000+ years continuous practice</p>
+            <p><strong>Resources:</strong></p>
+            <p>• <a href="https://www.australia.com/en/things-to-do/aboriginal-australia/dreamtime.html" target="_blank">Australian Dreamtime</a></p>
+            <p>• <a href="https://aiatsis.gov.au/explore/dreaming-and-dreamtime" target="_blank">AIATSIS - Dreaming</a></p>
+          </div>
+        </div>
+        
+        <h2>🕯️ Abrahamic Traditions (Beyond Main Three)</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Baháʼí Faith</h3>
+            <p><strong>Followers:</strong> 7-8 million</p>
+            <p><strong>Founded:</strong> 1863, Persia (Iran)</p>
+            <p><strong>Founder:</strong> Baháʼu'lláh</p>
+            <p><strong>Core Belief:</strong> Unity of all religions, humanity, God</p>
+            <p><strong>Scripture:</strong> Kitáb-i-Aqdas, Hidden Words</p>
+            <p><strong>Official:</strong> <a href="https://www.bahai.org" target="_blank">Bahai.org</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Druze</h3>
+            <p><strong>Followers:</strong> 1-1.5 million</p>
+            <p><strong>Founded:</strong> 11th century, Egypt</p>
+            <p><strong>Features:</strong> Esoteric, unitarian, closed community</p>
+            <p><strong>Regions:</strong> Lebanon, Syria, Israel, Jordan</p>
+            <p><strong>Texts:</strong> Epistles of Wisdom (Rasa'il al-hikma)</p>
+            <p><strong>Study:</strong> <a href="https://www.britannica.com/topic/Druze" target="_blank">Encyclopedia Britannica</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Rastafari</h3>
+            <p><strong>Followers:</strong> ~1 million</p>
+            <p><strong>Founded:</strong> 1930s, Jamaica</p>
+            <p><strong>Central Figure:</strong> Haile Selassie I</p>
+            <p><strong>Practices:</strong> Ital diet, dreadlocks, reasoning sessions</p>
+            <p><strong>Sacrament:</strong> Cannabis (ganja) for meditation</p>
+            <p><strong>Resources:</strong> <a href="https://rastafari.today" target="_blank">Rastafari Today</a></p>
+          </div>
+        </div>
+        
+        <h2>☯️ Dharmic & Eastern Traditions</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Jainism</h3>
+            <p><strong>Followers:</strong> 4-5 million</p>
+            <p><strong>Founded:</strong> ~600 BCE, India</p>
+            <p><strong>Key Principle:</strong> Ahimsa (non-violence)</p>
+            <p><strong>Scriptures:</strong> Agamas, Tattvartha Sutra</p>
+            <p><strong>Sects:</strong> Digambara, Śvētāmbara</p>
+            <p><strong>Official:</strong> <a href="https://www.jainworld.com" target="_blank">JainWorld.com</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Shinto</h3>
+            <p><strong>Followers:</strong> 4 million (Japan)</p>
+            <p><strong>Origin:</strong> Indigenous Japanese</p>
+            <p><strong>Features:</strong> Kami worship, nature spirits, shrines</p>
+            <p><strong>Texts:</strong> Kojiki, Nihon Shoki</p>
+            <p><strong>Practice:</strong> Purification rituals, festivals (matsuri)</p>
+            <p><strong>Resources:</strong> <a href="https://www.jinjahoncho.or.jp/en/" target="_blank">Jinja Honcho</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Taoism (Daoism)</h3>
+            <p><strong>Followers:</strong> 12-20 million</p>
+            <p><strong>Founded:</strong> ~500 BCE, China</p>
+            <p><strong>Key Text:</strong> Tao Te Ching (Laozi)</p>
+            <p><strong>Concept:</strong> Wu Wei (effortless action)</p>
+            <p><strong>Symbol:</strong> Yin-Yang, balance of opposites</p>
+            <p><strong>Study:</strong> <a href="https://ctext.org/daoism" target="_blank">Chinese Text Project</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Confucianism</h3>
+            <p><strong>More philosophy than religion</strong></p>
+            <p><strong>Founded:</strong> 551–479 BCE, China</p>
+            <p><strong>Founder:</strong> Confucius (Kong Fuzi)</p>
+            <p><strong>Texts:</strong> Four Books and Five Classics</p>
+            <p><strong>Values:</strong> Filial piety, ritual, righteousness</p>
+            <p><strong>Study:</strong> <a href="https://plato.stanford.edu/entries/confucius/" target="_blank">Stanford Encyclopedia</a></p>
+          </div>
+        </div>
+        
+        <h2>🔮 New Religious Movements</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Mormonism (LDS)</h3>
+            <p><strong>Followers:</strong> 16+ million</p>
+            <p><strong>Founded:</strong> 1830, USA</p>
+            <p><strong>Founder:</strong> Joseph Smith</p>
+            <p><strong>Scriptures:</strong> Bible + Book of Mormon</p>
+            <p><strong>Official:</strong> <a href="https://www.churchofjesuschrist.org" target="_blank">Church of Jesus Christ</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Jehovah's Witnesses</h3>
+            <p><strong>Followers:</strong> 8+ million</p>
+            <p><strong>Founded:</strong> 1870s, USA</p>
+            <p><strong>Founder:</strong> Charles Taze Russell</p>
+            <p><strong>Features:</strong> Door-to-door ministry, no military service</p>
+            <p><strong>Official:</strong> <a href="https://www.jw.org" target="_blank">JW.org</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Unification Church</h3>
+            <p><strong>Followers:</strong> 3+ million</p>
+            <p><strong>Founded:</strong> 1954, South Korea</p>
+            <p><strong>Founder:</strong> Sun Myung Moon</p>
+            <p><strong>Text:</strong> Divine Principle</p>
+            <p><strong>Known for:</strong> Mass weddings</p>
+            <p><strong>Site:</strong> <a href="https://www.unification.org" target="_blank">Unification.org</a></p>
+          </div>
+        </div>
+        
+        <h2>📚 Academic & Comparative Resources</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Academic Study</h3>
+            <p>• <a href="https://www.hds.harvard.edu" target="_blank">Harvard Divinity School</a></p>
+            <p>• <a href="https://divinity.uchicago.edu" target="_blank">University of Chicago Divinity</a></p>
+            <p>• <a href="https://religiousstudies.stanford.edu" target="_blank">Stanford Religious Studies</a></p>
+            <p>• <a href="https://www.thearda.com" target="_blank">ARDA - Religion Data Archive</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Museums & Collections</h3>
+            <p>• <a href="https://www.metmuseum.org/about-the-met/collection-areas/arts-of-africa-oceania-and-the-americas" target="_blank">Met Museum - World Religions Art</a></p>
+            <p>• <a href="https://www.britishmuseum.org/collection/galleries/living-and-dying" target="_blank">British Museum - Living and Dying</a></p>
+            <p>• <a href="https://www.si.edu/museums/african-art-museum" target="_blank">Smithsonian African Art</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Interfaith Organizations</h3>
+            <p>• <a href="https://www.uri.org" target="_blank">United Religions Initiative</a></p>
+            <p>• <a href="https://www.parliamentofreligions.org" target="_blank">Parliament of World's Religions</a></p>
+            <p>• <a href="https://www.scarboromissions.ca" target="_blank">Scarboro Missions Interfaith</a></p>
+          </div>
+        </div>
+        
+        <div class="https-info">
+          <h3>🎓 Educational Note</h3>
+          <p>This section aims to provide respectful, accurate information about diverse religious traditions. All content is sourced from academic institutions, official religious organizations, and reputable ethnographic studies. Inclusion here does not imply endorsement, but rather recognition of each tradition's cultural and spiritual significance.</p>
+        </div>
+        
+        <br>
+        <a href="/religions" style="display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">← Back to Religions</a>
       </div>
     </body>
     </html>
   `);
 });
 
-// Scriptures Placeholder
+// SACRED SCRIPTURE LIBRARIES PAGE
 app.get('/religions/scriptures', (req, res) => {
   res.send(`
     <!DOCTYPE html>
     <html>
-    <head><title>Sacred Scriptures - Coming Soon</title>${styles}</head>
+    <head>
+      <title>Sacred Scripture Libraries - World Religions</title>
+      ${styles}
+    </head>
     <body>
       <div class="container">
         ${navigation}
         <h1>📚 Sacred Scripture Libraries</h1>
-        <p>This page is coming soon!</p>
-        <a href="/religions">← Back to Religions</a>
+        <p>Digital archives and repositories of sacred texts from world religious traditions.</p>
+        
+        <h2>🌐 Multi-Religion Digital Libraries</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Sacred Texts Archive</h3>
+            <p>• <a href="https://www.sacred-texts.com" target="_blank">Sacred-Texts.com</a></p>
+            <p><strong>Features:</strong> One of the oldest and largest online archives</p>
+            <p><strong>Content:</strong> Over 1,700 sacred texts across 50+ traditions</p>
+            <p><strong>Languages:</strong> English translations, some original languages</p>
+            <p><strong>Religions:</strong> All major world religions + mythology, folklore</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Internet Sacred Text Archive</h3>
+            <p>• <a href="https://www.isfa.org" target="_blank">ISFA.org</a></p>
+            <p><strong>Features:</strong> Academic focus, peer-reviewed translations</p>
+            <p><strong>Content:</strong> Critical editions, comparative studies</p>
+            <p><strong>Specialties:</strong> Ancient Near Eastern texts, Gnostic scriptures</p>
+            <p><strong>Resources:</strong> Bibliographies, study guides</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>World Digital Library</h3>
+            <p>• <a href="https://www.wdl.org" target="_blank">WDL.org</a> (UNESCO)</p>
+            <p><strong>Features:</strong> High-resolution manuscript scans</p>
+            <p><strong>Content:</strong> Original manuscripts, historical documents</p>
+            <p><strong>Languages:</strong> 100+ languages, multilingual interface</p>
+            <p><strong>Highlight:</strong> Gutenberg Bible, Quran manuscripts, Torah scrolls</p>
+          </div>
+        </div>
+        
+        <h2>📖 Abrahamic Scriptures</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Jewish Scriptures</h3>
+            <p>• <a href="https://www.sefaria.org" target="_blank">Sefaria.org</a> - Complete Jewish library</p>
+            <p>• <a href="https://www.mechon-mamre.org" target="_blank">Mechon Mamre</a> - Hebrew Tanakh</p>
+            <p>• <a href="https://www.chabad.org/library" target="_blank">Chabad Library</a> - Torah + commentary</p>
+            <p>• <a href="https://www.jewishvirtuallibrary.org/jewish-source-texts" target="_blank">Jewish Virtual Library</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Christian Scriptures</h3>
+            <p>• <a href="https://www.biblegateway.com" target="_blank">BibleGateway.com</a> - 200+ translations</p>
+            <p>• <a href="https://www.bible.com" target="_blank">YouVersion Bible</a> - 2,000+ versions</p>
+            <p>• <a href="https://www.blueletterbible.org" target="_blank">Blue Letter Bible</a> - Greek/Hebrew tools</p>
+            <p>• <a href="https://www.vatican.va/archive/index.htm" target="_blank">Vatican Archive</a> - Catholic texts</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Islamic Scriptures</h3>
+            <p>• <a href="https://quran.com" target="_blank">Quran.com</a> - Multiple translations</p>
+            <p>• <a href="https://sunnah.com" target="_blank">Sunnah.com</a> - Hadith collections</p>
+            <p>• <a href="https://www.altafsir.com" target="_blank">Altafsir.com</a> - Quran commentaries</p>
+            <p>• <a href="https://www.islamicstudies.info" target="_blank">IslamicStudies.info</a> - Research portal</p>
+          </div>
+        </div>
+        
+        <h2>🕉️ Dharmic Scriptures</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Hindu Scriptures</h3>
+            <p>• <a href="https://www.sacred-texts.com/hin" target="_blank">Sacred Texts - Hinduism</a></p>
+            <p>• <a href="https://www.gitasupersite.iitk.ac.in" target="_blank">Gita Supersite</a> - Bhagavad Gita</p>
+            <p>• <a href="https://www.vedabase.io" target="_blank">Vedabase</a> - Vedic literature</p>
+            <p>• <a href="https://www.mahabharataonline.com" target="_blank">Mahabharata Online</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Buddhist Scriptures</h3>
+            <p>• <a href="https://suttacentral.net" target="_blank">SuttaCentral</a> - Early Buddhist texts</p>
+            <p>• <a href="https://www.accesstoinsight.org" target="_blank">Access to Insight</a> - Theravada</p>
+            <p>• <a href="https://www.buddhanet.net" target="_blank">BuddhaNet</a> - Digital library</p>
+            <p>• <a href="https://www.dharmapearls.net" target="_blank">Dharma Pearls</a> - Chinese Agamas</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Sikh Scriptures</h3>
+            <p>• <a href="https://www.srigranth.org" target="_blank">SriGranth.org</a> - Guru Granth Sahib</p>
+            <p>• <a href="https://www.searchgurbani.com" target="_blank">SearchGurbani.com</a></p>
+            <p>• <a href="https://www.sikhitothemax.org" target="_blank">SikhiToTheMax</a></p>
+            <p>• <a href="https://www.gurbanifm.com" target="_blank">GurbaniFM</a> - Audio recitations</p>
+          </div>
+        </div>
+        
+        <h2>☯️ East Asian Scriptures</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Taoist & Confucian</h3>
+            <p>• <a href="https://ctext.org" target="_blank">Chinese Text Project</a></p>
+            <p>• <a href="https://www.daoisopen.com" target="_blank">Dao Is Open</a> - Taoist texts</p>
+            <p>• <a href="https://www.confucius.org" target="_blank">Confucius Publishing</a></p>
+            <p>• <a href="https://www.acmuller.net/descriptive_catalogue" target="_blank">Korean Buddhist Canon</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Shinto Texts</h3>
+            <p>• <a href="https://jhti.berkeley.edu" target="_blank">Japanese Historical Text Initiative</a></p>
+            <p>• <a href="https://www.sacred-texts.com/shi" target="_blank">Sacred Texts - Shinto</a></p>
+            <p>• <a href="https://www.kokugakuin.ac.jp" target="_blank">Kokugakuin University</a></p>
+            <p>• <a href="https://www.japanesemythology.jp" target="_blank">Japanese Mythology</a></p>
+          </div>
+        </div>
+        
+        <h2>🔍 Specialized Collections</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Ancient & Classical</h3>
+            <p>• <a href="https://www.perseus.tufts.edu" target="_blank">Perseus Digital Library</a></p>
+            <p>• <a href="https://www.loebclassics.com" target="_blank">Loeb Classical Library</a></p>
+            <p>• <a href="https://www.earlychristianwritings.com" target="_blank">Early Christian Writings</a></p>
+            <p>• <a href="https://www.gnosis.org/library.html" target="_blank">Gnostic Society Library</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Academic Databases</h3>
+            <p>• <a href="https://www.jstor.org" target="_blank">JSTOR</a> - Academic journals</p>
+            <p>• <a href="https://www.atla.com" target="_blank">ATLA Religion Database</a></p>
+            <p>• <a href="https://www.brill.com" target="_blank">Brill Online</a> - Religious studies</p>
+            <p>• <a href="https://www.religion-online.org" target="_blank">Religion Online</a> - 6,000+ articles</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Manuscript Collections</h3>
+            <p>• <a href="https://www.bl.uk/manuscripts" target="_blank">British Library MSS</a></p>
+            <p>• <a href="https://digitalcollections.nypl.org" target="_blank">NYPL Digital Collections</a></p>
+            <p>• <a href="https://www.loc.gov/manuscripts" target="_blank">Library of Congress MSS</a></p>
+            <p>• <a href="https://gallica.bnf.fr" target="_blank">Gallica (French National Library)</a></p>
+          </div>
+        </div>
+        
+        <h2>📱 Mobile Apps & Tools</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Multi-Text Apps</h3>
+            <p>• <a href="https://www.logos.com" target="_blank">Logos Bible Software</a></p>
+            <p>• <a href="https://www.accordancebible.com" target="_blank">Accordance</a></p>
+            <p>• <a href="https://www.olivetree.com" target="_blank">Olive Tree Bible</a></p>
+            <p>• <a href="https://www.blueletterbible.org/apps" target="_blank">Blue Letter Bible App</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Language Tools</h3>
+            <p>• <a href="https://www.biblehub.com" target="_blank">BibleHub</a> - Interlinear</p>
+            <p>• <a href="https://corpus.quran.com" target="_blank">Quranic Arabic Corpus</a></p>
+            <p>• <a href="https://www.sanskrit-lexicon.uni-koeln.de" target="_blank">Cologne Sanskrit Lexicon</a></p>
+            <p>• <a href="https://www.perseus.tufts.edu/hopper/morph" target="_blank">Perseus Morphology Tool</a></p>
+          </div>
+        </div>
+        
+        <div class="https-info">
+          <h3>💡 Using These Resources</h3>
+          <p><strong>For Study:</strong> Compare translations, read commentaries, understand historical context</p>
+          <p><strong>For Research:</strong> Use academic databases for peer-reviewed scholarship</p>
+          <p><strong>For Devotion:</strong> Many sites offer audio recitations, daily reading plans, meditation guides</p>
+          <p><strong>Respectful Use:</strong> When studying scriptures of traditions not your own, approach with academic curiosity and cultural sensitivity</p>
+        </div>
+        
+        <br>
+        <a href="/religions" style="display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">← Back to Religions</a>
       </div>
     </body>
     </html>
   `);
 });
+
 
 // ===== 404 ERROR HANDLER =====
 app.use((req, res) => {
