@@ -1956,43 +1956,476 @@ app.get('/religions/hinduism', (req, res) => {
 `);
 });
 
-// ===== PLACEHOLDER ROUTES FOR MISSING RELIGIONS =====
-
-// Buddhism Placeholder
+// BUDDHISM PAGE - DETAILED
 app.get('/religions/buddhism', (req, res) => {
   res.send(`
     <!DOCTYPE html>
     <html>
-    <head><title>Buddhism - Coming Soon</title>${styles}</head>
+    <head>
+      <title>Buddhism - World Religions</title>
+      ${styles}
+    </head>
     <body>
       <div class="container">
         ${navigation}
-        <h1>☸️ Buddhism - Page Under Construction</h1>
-        <p>This page is coming soon!</p>
-        <a href="/religions">← Back to Religions</a>
+        <h1>☸️ Buddhism - The Middle Way</h1>
+        <p><strong>Followers:</strong> 520 million (7% of world population)</p>
+        <p><strong>Founded:</strong> ~500 BCE in Lumbini, Nepal (modern day)</p>
+        <p><strong>Founder:</strong> Siddhartha Gautama (The Buddha)</p>
+        <p><strong>Major Traditions:</strong> Theravada, Mahayana, Vajrayana</p>
+        
+        <h2>📖 Sacred Scriptures - Tripitaka (Three Baskets)</h2>
+        <div class="message-box">
+          <h3>Pali Canon (Tipiṭaka) - Theravada Buddhism</h3>
+          <p><strong>Three Divisions:</strong></p>
+          <p>1. <strong>Vinaya Piṭaka:</strong> Monastic rules and discipline</p>
+          <p>2. <strong>Sutta Piṭaka:</strong> Discourses of the Buddha</p>
+          <p>3. <strong>Abhidhamma Piṭaka:</strong> Philosophical analysis</p>
+          
+          <p><strong>Total:</strong> Approximately 40 volumes</p>
+          
+          <p><strong>📚 Read Online:</strong></p>
+          <p>• <a href="https://www.accesstoinsight.org/tipitaka" target="_blank">Access to Insight</a> - Pali Canon translations</p>
+          <p>• <a href="https://suttacentral.net" target="_blank">SuttaCentral</a> - Early Buddhist texts</p>
+          <p>• <a href="https://www.palicanon.org" target="_blank">PaliCanon.org</a> - Complete Pali texts</p>
+        </div>
+        
+        <div class="message-box">
+          <h3>Mahayana Sutras</h3>
+          <p><strong>Major Texts:</strong></p>
+          <p>• <strong>Lotus Sutra (Saddharma Puṇḍarīka Sūtra):</strong> Most influential Mahayana text</p>
+          <p>• <strong>Heart Sutra (Prajñāpāramitā Hṛdaya):</strong> Shortest, most popular sutra</p>
+          <p>• <strong>Diamond Sutra (Vajracchedikā Prajñāpāramitā Sūtra):</strong> Wisdom teachings</p>
+          <p>• <strong>Platform Sutra:</strong> Zen Buddhism foundational text</p>
+          <p>• <strong>Pure Land Sutras:</strong> Three main sutras of Pure Land Buddhism</p>
+        </div>
+        
+        <h2>☸️ Core Teachings - The Four Noble Truths</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>1. Dukkha (Suffering)</h3>
+            <p>• Life involves suffering</p>
+            <p>• Birth, aging, sickness, death</p>
+            <p>• Separation from what we love</p>
+            <p>• Not getting what we want</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>2. Samudaya (Cause of Suffering)</h3>
+            <p>• Craving and attachment</p>
+            <p>• Desire for pleasure</p>
+            <p>• Desire for existence/non-existence</p>
+            <p>• Ignorance of true nature</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>3. Nirodha (Cessation of Suffering)</h3>
+            <p>• Suffering can end</p>
+            <p>• Letting go of craving</p>
+            <p>• Achieving Nirvana</p>
+            <p>• Liberation from cycle of rebirth</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>4. Magga (Path to End Suffering)</h3>
+            <p>• The Noble Eightfold Path</p>
+            <p>• Middle Way between extremes</p>
+            <p>• Practical guide to enlightenment</p>
+            <p>• Leads to Nirvana</p>
+          </div>
+        </div>
+        
+        <h2>🕉️ The Noble Eightfold Path</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Wisdom (Paññā)</h3>
+            <p>1. <strong>Right View:</strong> Understanding Four Noble Truths</p>
+            <p>2. <strong>Right Intention:</strong> Commitment to ethical life</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Ethical Conduct (Sīla)</h3>
+            <p>3. <strong>Right Speech:</strong> No lying, slander, harsh words</p>
+            <p>4. <strong>Right Action:</strong> No killing, stealing, sexual misconduct</p>
+            <p>5. <strong>Right Livelihood:</strong> Ethical occupation</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Mental Discipline (Samādhi)</h3>
+            <p>6. <strong>Right Effort:</strong> Cultivate wholesome, abandon unwholesome</p>
+            <p>7. <strong>Right Mindfulness:</strong> Awareness of body, feelings, mind, phenomena</p>
+            <p>8. <strong>Right Concentration:</strong> Meditative absorption</p>
+          </div>
+        </div>
+        
+        <h2>🧘 How to Meditate (Buddhist Practice)</h2>
+        <div class="message-box">
+          <h3>Basic Meditation Instructions</h3>
+          
+          <p><strong>Posture (Asana):</strong></p>
+          <p>1. Sit comfortably cross-legged or on chair</p>
+          <p>2. Keep back straight but relaxed</p>
+          <p>3. Hands resting on knees or in lap</p>
+          <p>4. Eyes partially closed or softly focused</p>
+          
+          <p><strong>Mindfulness of Breathing (Ānāpānasati):</strong></p>
+          <p>1. Focus attention on breath at nostrils or abdomen</p>
+          <p>2. Observe natural breath without controlling</p>
+          <p>3. When mind wanders, gently return to breath</p>
+          <p>4. Start with 5-10 minutes daily</p>
+          
+          <p><strong>Loving-Kindness Meditation (Mettā):</strong></p>
+          <p>1. Sit comfortably, relax body</p>
+          <p>2. Repeat phrases silently:</p>
+          <p>&nbsp;&nbsp;• "May I be happy and peaceful"</p>
+          <p>&nbsp;&nbsp;• "May I be safe and protected"</p>
+          <p>&nbsp;&nbsp;• "May I be healthy and strong"</p>
+          <p>&nbsp;&nbsp;• "May I live with ease"</p>
+          <p>3. Extend to others: loved ones, neutral people, all beings</p>
+          
+          <p><strong>📚 Meditation Guides:</strong></p>
+          <p>• <a href="https://www.youtube.com/watch?v=kQ7IzSgMhqM" target="_blank">Meditation for Beginners - 10 Minutes</a></p>
+          <p>• <a href="https://www.youtube.com/watch?v=SEfs5TJZ6Nk" target="_blank">Mindfulness Meditation Guide</a></p>
+          <p>• <a href="https://www.dhamma.org" target="_blank">Vipassana Meditation Courses</a></p>
+        </div>
+        
+        <h2>🌿 The Three Jewels (Triratna)</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>1. Buddha (The Teacher)</h3>
+            <p>• The enlightened one</p>
+            <p>• Historical Buddha: Siddhartha Gautama</p>
+            <p>• Also refers to Buddha-nature in all beings</p>
+            <p>• Refuge: "I take refuge in the Buddha"</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>2. Dharma (The Teaching)</h3>
+            <p>• Buddha's teachings</p>
+            <p>• Universal law of nature</p>
+            <p>• Path to enlightenment</p>
+            <p>• Refuge: "I take refuge in the Dharma"</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>3. Sangha (The Community)</h3>
+            <p>• Monastic community</p>
+            <p>• All Buddhist practitioners</p>
+            <p>• Noble ones (enlightened beings)</p>
+            <p>• Refuge: "I take refuge in the Sangha"</p>
+          </div>
+        </div>
+        
+        <h2>🌍 Major Buddhist Traditions</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Theravada</h3>
+            <p>• <strong>Location:</strong> Sri Lanka, Thailand, Myanmar, Laos, Cambodia</p>
+            <p>• <strong>Focus:</strong> Monastic life, meditation, Pali Canon</p>
+            <p>• <strong>Goal:</strong> Become an arhat (liberated being)</p>
+            <p>• <strong>Practice:</strong> Vipassana (insight) meditation</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Mahayana</h3>
+            <p>• <strong>Location:</strong> China, Japan, Korea, Vietnam</p>
+            <p>• <strong>Focus:</strong> Bodhisattva ideal, helping all beings</p>
+            <p>• <strong>Goal:</strong> Become a Buddha for benefit of all</p>
+            <p>• <strong>Schools:</strong> Zen, Pure Land, Chan, Nichiren</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Vajrayana</h3>
+            <p>• <strong>Location:</strong> Tibet, Bhutan, Mongolia</p>
+            <p>• <strong>Focus:</strong> Tantric practices, rituals, visualization</p>
+            <p>• <strong>Goal:</strong> Enlightenment in one lifetime</p>
+            <p>• <strong>Practice:</strong> Mantras, mandalas, deity yoga</p>
+          </div>
+        </div>
+        
+        <h2>🌐 Official Buddhist Resources</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>📖 Scripture Study</h3>
+            <p>• <a href="https://suttacentral.net" target="_blank">SuttaCentral</a> - Early Buddhist texts</p>
+            <p>• <a href="https://www.accesstoinsight.org" target="_blank">Access to Insight</a> - Theravada texts</p>
+            <p>• <a href="https://www.buddhanet.net" target="_blank">BuddhaNet</a> - Buddhist information portal</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>🎓 Educational</h3>
+            <p>• <a href="https://www.dhammatalks.org" target="_blank">Dharma Talks</a> - Free Buddhist books</p>
+            <p>• <a href="https://www.lionsroar.com" target="_blank">Lion's Roar</a> - Buddhist magazine</p>
+            <p>• <a href="https://www.tricycle.org" target="_blank">Tricycle</a> - Buddhist review</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>🏮 Organizations</h3>
+            <p>• <a href="https://www.dhamma.org" target="_blank">Vipassana Meditation</a></p>
+            <p>• <a href="https://plumvillage.org" target="_blank">Plum Village</a> - Thich Nhat Hanh</p>
+            <p>• <a href="https://fpmt.org" target="_blank">FPMT</a> - Tibetan Buddhism</p>
+          </div>
+        </div>
+        
+        <br>
+        <a href="/religions" style="display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">← Back to Religions</a>
       </div>
     </body>
     </html>
   `);
 });
 
-// Sikhism Placeholder
+// SIKHISM PAGE - DETAILED
 app.get('/religions/sikhism', (req, res) => {
   res.send(`
     <!DOCTYPE html>
     <html>
-    <head><title>Sikhism - Coming Soon</title>${styles}</head>
+    <head>
+      <title>Sikhism - World Religions</title>
+      ${styles}
+    </head>
     <body>
       <div class="container">
         ${navigation}
-        <h1>☬ Sikhism - Page Under Construction</h1>
-        <p>This page is coming soon!</p>
-        <a href="/religions">← Back to Religions</a>
+        <h1>☬ Sikhism - The Way of the Disciple</h1>
+        <p><strong>Followers:</strong> 30 million (0.4% of world population)</p>
+        <p><strong>Founded:</strong> 1469 CE in Punjab, Indian subcontinent</p>
+        <p><strong>Founder:</strong> Guru Nanak Dev Ji (1469-1539)</p>
+        <p><strong>Scripture:</strong> Guru Granth Sahib (compiled 1604)</p>
+        
+        <h2>📖 Sacred Scripture - Guru Granth Sahib</h2>
+        <div class="message-box">
+          <h3>The Eternal Guru</h3>
+          <p>• <strong>Language:</strong> Gurmukhi script (Sant Bhasha, Punjabi, Hindi, Persian)</p>
+          <p>• <strong>Pages:</strong> 1,430 (Ang)</p>
+          <p>• <strong>Composition:</strong> 5,894 hymns (Shabads)</p>
+          <p>• <strong>Authors:</strong> 6 Sikh Gurus + 15 Bhagats (saints) + 11 Bhatts (bards)</p>
+          <p>• <strong>Compiled:</strong> Fifth Guru Arjan Dev (1604)</p>
+          <p>• <strong>Finalized:</strong> Tenth Guru Gobind Singh (1708) - declared eternal Guru</p>
+          
+          <p><strong>Content:</strong></p>
+          <p>• Teachings about One God (Ik Onkar)</p>
+          <p>• Devotional poetry and hymns</p>
+          <p>• Ethical guidelines for daily life</p>
+          <p>• Rejection of caste system and ritualism</p>
+          <p>• Emphasis on truthful living and honest work</p>
+          
+          <p><strong>📚 Read Online:</strong></p>
+          <p>• <a href="https://www.srigranth.org" target="_blank">SriGranth.org</a> - Complete Guru Granth Sahib</p>
+          <p>• <a href="https://www.searchgurbani.com" target="_blank">SearchGurbani.com</a> - Search and translations</p>
+          <p>• <a href="https://www.sikhitothemax.org" target="_blank">SikhiToTheMax</a> - Gurbani with meanings</p>
+          <p>• <a href="https://www.gurbanifm.com" target="_blank">GurbaniFM</a> - Audio recitations</p>
+        </div>
+        
+        <div class="message-box">
+          <h3>Other Important Scriptures</h3>
+          <p>• <strong>Dasam Granth:</strong> Compositions of Guru Gobind Singh</p>
+          <p>• <strong>Janamsakhis:</strong> Biographies of Guru Nanak</p>
+          <p>• <strong>Rahit Maryada:</strong> Sikh code of conduct (modern)</p>
+          <p>• <strong>Varan Bhai Gurdas:</strong> Key to understanding Guru Granth Sahib</p>
+        </div>
+        
+        <h2>☬ Core Beliefs</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>1. Ik Onkar (ੴ)</h3>
+            <p>• One Universal Creator God</p>
+            <p>• Formless (Nirguna) and with qualities (Saguna)</p>
+            <p>• Not anthropomorphic (no human form)</p>
+            <p>• Present in all creation</p>
+            <p>• Opening phrase of Guru Granth Sahib</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>2. Equality of All Humans</h3>
+            <p>• No caste distinctions</p>
+            <p>• Gender equality</p>
+            <p>• Equal access to worship</p>
+            <p>• Langar (community kitchen) serves all</p>
+            <p>• Rejection of priesthood class</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>3. Rejection of Ritualism</h3>
+            <p>• No fasting, pilgrimages, or asceticism</p>
+            <p>• No idol worship</p>
+            <p>• No superstitions or astrology</p>
+            <p>• Focus on inner devotion</p>
+            <p>• Simple, direct worship</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>4. Three Pillars</h3>
+            <p><strong>Naam Japna:</strong> Meditating on God's name</p>
+            <p><strong>Kirat Karni:</strong> Honest living and work</p>
+            <p><strong>Vand Chakna:</strong> Sharing with others</p>
+          </div>
+        </div>
+        
+        <h2>🙏 Sikh Worship & Practice</h2>
+        <div class="message-box">
+          <h3>Daily Routine (Nitnem)</h3>
+          
+          <p><strong>Morning Prayers (Amrit Vela - 3-6 AM):</strong></p>
+          <p>1. <strong>Japji Sahib:</strong> Composed by Guru Nanak (38 pauris)</p>
+          <p>2. <strong>Jaap Sahib:</strong> Composed by Guru Gobind Singh</p>
+          <p>3. <strong>Tav-Prasad Savaiye:</strong> Composed by Guru Gobind Singh</p>
+          <p>4. <strong>Anand Sahib:</strong> 40 verses, last 6 recited</p>
+          
+          <p><strong>Evening Prayers:</strong></p>
+          <p>• <strong>Rehras Sahib:</strong> Evening prayer</p>
+          
+          <p><strong>Bedtime Prayer:</strong></p>
+          <p>• <strong>Kirtan Sohila:</strong> Before sleeping</p>
+          
+          <p><strong>📚 How to Recite:</strong></p>
+          <p>• <a href="https://www.youtube.com/watch?v=Qj3q0TPYlNY" target="_blank">Japji Sahib Full Path</a></p>
+          <p>• <a href="https://www.youtube.com/watch?v=Y2Z__y3VkhY" target="_blank">Nitnem - Daily Prayers</a></p>
+          <p>• <a href="https://www.sikhiwiki.org/index.php/Nitnem" target="_blank">SikhiWiki - Nitnem Guide</a></p>
+        </div>
+        
+        <div class="message-box">
+          <h3>Gurdwara (Sikh Temple) Protocol</h3>
+          
+          <p><strong>Before Entering:</strong></p>
+          <p>1. Remove shoes</p>
+          <p>2. Wash hands and feet</p>
+          <p>3. Cover head (turban, scarf, or handkerchief)</p>
+          
+          <p><strong>Inside Gurdwara:</strong></p>
+          <p>1. Bow before Guru Granth Sahib</p>
+          <p>2. Offer donation (optional)</p>
+          <p>3. Sit on floor (men and women together)</p>
+          <p>4. Listen to Kirtan (hymn singing)</p>
+          <p>5. Listen to Katha (discourse)</p>
+          
+          <p><strong>Ardas (Prayer):</strong></p>
+          <p>• Formal congregational prayer</p>
+          <p>• Stand with folded hands</p>
+          <p>• Recited by Granthi (reader)</p>
+          <p>• Ends with "Waheguru Ji Ka Khalsa, Waheguru Ji Ki Fateh"</p>
+          
+          <p><strong>Karah Parshad (Sacred Pudding):</strong></p>
+          <p>• Sweet flour-based offering</p>
+          <p>• Blessed and distributed to all</p>
+          <p>• Received with cupped hands</p>
+          
+          <p><strong>Langar (Community Meal):</strong></p>
+          <p>• Free vegetarian meal served to all</p>
+          <p>• Everyone sits together on floor</p>
+          <p>• Served by volunteers (seva)</p>
+        </div>
+        
+        <h2>⚔️ The Five Ks (Panj Kakkar)</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>1. Kesh (Uncut Hair)</h3>
+            <p>• Symbol of acceptance of God's will</p>
+            <p>• Covered with turban (Dastar)</p>
+            <p>• Represents saintliness and spirituality</p>
+            <p>• Men and women keep hair uncut</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>2. Kangha (Wooden Comb)</h3>
+            <p>• For cleanliness and discipline</p>
+            <p>• Kept in hair at all times</p>
+            <p>• Symbol of order and purity</p>
+            <p>• Used twice daily</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>3. Kara (Steel Bracelet)</h3>
+            <p>• Worn on right wrist</p>
+            <p>• Symbol of restraint and link to Guru</p>
+            <p>• Reminder of moral actions</p>
+            <p>• Circular shape = eternity of God</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>4. Kirpan (Ceremonial Sword)</h3>
+            <p>• Symbol of dignity, courage, justice</p>
+            <p>• Defend the weak and oppressed</p>
+            <p>• Struggle against injustice</p>
+            <p>• Usually small (3-9 inches)</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>5. Kachera (Cotton Undergarment)</h3>
+            <p>• Symbol of self-control and chastity</p>
+            <p>• Practical for horseback riding</p>
+            <p>• Reminder of moral restraint</p>
+            <p>• Always ready for action</p>
+          </div>
+        </div>
+        
+        <h2>🕊️ The Ten Gurus</h2>
+        <div class="message-box">
+          <p><strong>1. Guru Nanak Dev</strong> (1469-1539) - Founder, taught "Ik Onkar"</p>
+          <p><strong>2. Guru Angad Dev</strong> (1504-1552) - Developed Gurmukhi script</p>
+          <p><strong>3. Guru Amar Das</strong> (1479-1574) - Established Langar,反对 caste</p>
+          <p><strong>4. Guru Ram Das</strong> (1534-1581) - Founded Amritsar, built Harmandir Sahib</p>
+          <p><strong>5. Guru Arjan Dev</strong> (1563-1606) - Compiled Adi Granth, built Golden Temple</p>
+          <p><strong>6. Guru Hargobind</strong> (1595-1644) - Wore two swords (Miri-Piri)</p>
+          <p><strong>7. Guru Har Rai</strong> (1630-1661) - Maintained military force</p>
+          <p><strong>8. Guru Har Krishan</strong> (1656-1664) - Youngest Guru (age 5)</p>
+          <p><strong>9. Guru Tegh Bahadur</strong> (1621-1675) - Martyred defending religious freedom</p>
+          <p><strong>10. Guru Gobind Singh</strong> (1666-1708) - Founded Khalsa, declared Guru Granth Sahib as final Guru</p>
+        </div>
+        
+        <h2>🎉 Major Sikh Festivals</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Gurpurbs</h3>
+            <p>• <strong>Guru Nanak's Birthday:</strong> Most important</p>
+            <p>• <strong>Guru Gobind Singh's Birthday:</strong> January</p>
+            <p>• <strong>Guru Arjan's Martyrdom:</strong> June</p>
+            <p>• <strong>Guru Tegh Bahadur's Martyrdom:</strong> November</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Historical Events</h3>
+            <p>• <strong>Vaisakhi:</strong> Founding of Khalsa (April 13, 1699)</p>
+            <p>• <strong>Bandi Chhor Divas:</strong> Diwali for Sikhs</p>
+            <p>• <strong>Hola Mohalla:</strong> Martial arts festival</p>
+            <p>• <strong>Maghi:</strong> Commemorates martyrdom of 40 Sikhs</p>
+          </div>
+        </div>
+        
+        <h2>🌍 Official Sikh Resources</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>📖 Scripture Study</h3>
+            <p>• <a href="https://www.srigranth.org" target="_blank">SriGranth.org</a></p>
+            <p>• <a href="https://www.searchgurbani.com" target="_blank">SearchGurbani.com</a></p>
+            <p>• <a href="https://www.sikhitothemax.org" target="_blank">SikhiToTheMax</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>🎓 Educational</h3>
+            <p>• <a href="https://www.sikhiwiki.org" target="_blank">SikhiWiki</a> - Sikh encyclopedia</p>
+            <p>• <a href="https://www.sikhnet.com" target="_blank">SikhNet</a> - Educational resources</p>
+            <p>• <a href="https://www.sgpc.net" target="_blank">SGPC</a> - Shiromani Gurdwara Parbandhak Committee</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>🕌 Organizations</h3>
+            <p>• <a href="https://www.goldentempleamritsar.org" target="_blank">Golden Temple, Amritsar</a></p>
+            <p>• <a href="https://www.unitedsikhs.org" target="_blank">United Sikhs</a></p>
+            <p>• <a href="https://www.sikhcoalition.org" target="_blank">Sikh Coalition</a></p>
+          </div>
+        </div>
+        
+        <br>
+        <a href="/religions" style="display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">← Back to Religions</a>
       </div>
     </body>
     </html>
   `);
 });
+
+
+
 
 // Other Religions Placeholder
 app.get('/religions/other', (req, res) => {
