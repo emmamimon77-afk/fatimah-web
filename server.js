@@ -122,6 +122,7 @@ const navigation = `
     <a href="/news" style="color: white; margin: 0 10px; text-decoration: none; font-weight: bold;">📰 News & Media</a>
     <a href="/entertainment" style="color: white; margin: 0 10px; text-decoration: none; font-weight: bold;">🎬 Entertainment</a>
     <a href="/religions" style="color: white; margin: 0 10px; text-decoration: none; font-weight: bold;">🕌 World Religions</a>
+    <a href="/history" style="color: white; margin: 0 10px; text-decoration: none; font-weight: bold;">📜 History & Economics</a>
   </nav>
 `;
 
@@ -2800,6 +2801,1071 @@ app.get('/religions/scriptures', (req, res) => {
   `);
 });
 
+
+// ===== HISTORY & ECONOMICS SECTION =====
+
+// Main History Hub
+app.get('/history', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>History & Economics - Fatimah's Server</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation.replace('href="/history"', 'href="/history" style="color: #6ee7b7;"')}
+        <h1>📜 History & Economics - The Untold Stories</h1>
+        <p>Uncensored historical analysis and economic truth from alternative researchers, whistleblowers, and suppressed archives.</p>
+        
+        <div class="https-info">
+          <h3>🔍 About This Section</h3>
+          <p>This section presents historical and economic perspectives often excluded from mainstream education. Sources include:</p>
+          <p>• Declassified government documents</p>
+          <p>• Whistleblower testimonies</p>
+          <p>• Alternative historians and researchers</p>
+          <p>• Independent investigative journalism</p>
+          <p>• Suppressed academic research</p>
+        </div>
+        
+        <h2>🌍 Global History</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>World Wars Analysis</h3>
+            <p>• Hidden causes and profiteers</p>
+            <p>• False flag operations</p>
+            <p>• Economic motivations</p>
+            <p><a href="/history/world-wars"><button>📖 Explore</button></a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Revolutions & Coups</h3>
+            <p>• CIA operations abroad</p>
+            <p>• Color revolutions</p>
+            <p>• Regime change operations</p>
+            <p><a href="/history/revolutions"><button>📖 Explore</button></a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Colonialism & Empire</h3>
+            <p>• Resource extraction</p>
+            <p>• Divide and rule strategies</p>
+            <p>• Neo-colonialism today</p>
+            <p><a href="/history/colonialism"><button>📖 Explore</button></a></p>
+          </div>
+        </div>
+        
+        <h2>🏛️ Power Structures</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Banking & Finance Control</h3>
+            <p>• Central banking origins</p>
+            <p>• Debt-based currency</p>
+            <p>• Financial oligarchy</p>
+            <p><a href="/history/banking"><button>📖 Explore</button></a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Ruling Families & Dynasties</h3>
+            <p>• Rothschild, Rockefeller, etc.</p>
+            <p>• Intermarriage strategies</p>
+            <p>• Corporate control networks</p>
+            <p><a href="/history/ruling-families"><button>📖 Explore</button></a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Intelligence Agencies</h3>
+            <p>• CIA, MI6, Mossad operations</p>
+            <p>• Covert action history</p>
+            <p>• Media manipulation</p>
+            <p><a href="/history/intelligence"><button>📖 Explore</button></a></p>
+          </div>
+        </div>
+        
+        <h2>💰 Economic Truth</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Wealth Concentration</h3>
+            <p>• 1% vs 99% statistics</p>
+            <p>• Tax havens and evasion</p>
+            <p>• Inheritance dynasties</p>
+            <p><a href="/history/wealth"><button>📖 Explore</button></a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Resource Control</h3>
+            <p>• Oil, minerals, agriculture</p>
+            <p>• Water rights battles</p>
+            <p>• Land grabbing</p>
+            <p><a href="/history/resources"><button>📖 Explore</button></a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Monetary Systems</h3>
+            <p>• Fiat currency deception</p>
+            <p>• Gold standard removal</p>
+            <p>• Cryptocurrency battles</p>
+            <p><a href="/history/money"><button>📖 Explore</button></a></p>
+          </div>
+        </div>
+        
+        <h2>🌐 Regional Histories</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>United States</h3>
+            <p>• Federal Reserve creation</p>
+            <p>• JFK assassination</p>
+            <p>• Deep State origins</p>
+            <p><a href="/history/usa"><button>📖 Explore</button></a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Europe</h3>
+            <p>• EU creation motives</p>
+            <p>• Vatican financial power</p>
+            <p>• Monarchies today</p>
+            <p><a href="/history/europe"><button>📖 Explore</button></a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Middle East</h3>
+            <p>• Oil wars truth</p>
+            <p>• Israel-Palestine history</p>
+            <p>• Arab Spring manipulation</p>
+            <p><a href="/history/middle-east"><button>📖 Explore</button></a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Asia & Africa</h3>
+            <p>• Colonial exploitation</p>
+            <p>• Resource wars</p>
+            <p>• Development trap</p>
+            <p><a href="/history/asia-africa"><button>📖 Explore</button></a></p>
+          </div>
+        </div>
+        
+        <h2>📚 Research Resources</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Document Archives</h3>
+            <p>• Declassified documents</p>
+            <p>• Whistleblower sites</p>
+            <p>• Leaked databases</p>
+            <p><a href="/history/archives"><button>📖 Explore</button></a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Researchers & Whistleblowers</h3>
+            <p>• Independent journalists</p>
+            <p>• Academic dissenters</p>
+            <p>• Former insiders</p>
+            <p><a href="/history/researchers"><button>📖 Explore</button></a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Alternative Media</h3>
+            <p>• Uncensored platforms</p>
+            <p>• Independent analysis</p>
+            <p>• Community investigations</p>
+            <p><a href="/history/media"><button>📖 Explore</button></a></p>
+          </div>
+        </div>
+        
+        <div class="https-info">
+          <h3>⚠️ Critical Thinking Required</h3>
+          <p>This section presents controversial perspectives. We encourage:</p>
+          <p>1. <strong>Verify claims</strong> with multiple sources</p>
+          <p>2. <strong>Check dates and context</strong> of information</p>
+          <p>3. <strong>Follow the money</strong> in historical events</p>
+          <p>4. <strong>Question official narratives</strong> that don't add up</p>
+          <p>5. <strong>Research primary sources</strong> when possible</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// WORLD WARS PAGE - Uncensored Analysis
+app.get('/history/world-wars', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>World Wars - Hidden Truths</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>⚔️ World Wars - The Untold Stories</h1>
+        <p>Analysis of hidden causes, profiteers, and suppressed facts about the World Wars.</p>
+        
+        <div class="https-info">
+          <h3>📋 Official Narrative vs Hidden Truths</h3>
+          <p>This page presents perspectives from alternative historians, declassified documents, and whistleblower testimonies that challenge mainstream narratives.</p>
+        </div>
+        
+        <h2>🌍 World War I (1914-1918)</h2>
+        
+        <div class="message-box">
+          <h3>Hidden Causes & Profiteers</h3>
+          
+          <p><strong>Banking Interests:</strong></p>
+          <p>• The Federal Reserve Act (1913) created months before WWI</p>
+          <p>• International bankers funded both sides</p>
+          <p>• War debt created permanent client states</p>
+          
+          <p><strong>Key Documents & Sources:</strong></p>
+          <p>• <a href="https://archive.org/details/SecretsOfTheFederalReserve" target="_blank">"Secrets of the Federal Reserve" by Eustace Mullins</a></p>
+          <p>• <a href="https://www.gutenberg.org/files/12670/12670-h/12670-h.htm" target="_blank">"Wall Street and the Bolshevik Revolution" by Antony Sutton</a></p>
+          <p>• <a href="https://www.cia.gov/library/readingroom/docs/CIA-RDP80M01009A000400010005-6.pdf" target="_blank">CIA declassified: Banking in WWI</a></p>
+          
+          <p><strong>The Lusitania False Flag:</strong></p>
+          <p>• British ship carrying munitions to Britain</p>
+          <p>• Winston Churchill admitted hoping for attack to draw US into war</p>
+          <p>• US passengers used as human shields</p>
+          <p>• Source: <a href="https://www.archives.gov/publications/prologue/2002/spring/lusitania.html" target="_blank">National Archives - Lusitania documents</a></p>
+        </div>
+        
+        <div class="message-box">
+          <h3>The Balfour Declaration Context</h3>
+          <p>• 1917 British promise for Jewish homeland in Palestine</p>
+          <p>• Issued while Britain didn't control the territory</p>
+          <p>• Part of efforts to get Jewish banking support for war</p>
+          <p>• Zionist lobbying powerful in Britain and US</p>
+          <p>• <a href="https://www.un.org/unispal/document-source/arab-israeli/1917-balfour-declaration/" target="_blank">Original Balfour Declaration text</a></p>
+        </div>
+        
+        <h2>⚔️ World War II (1939-1945)</h2>
+        
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Funding Hitler's Rise</h3>
+            <p><strong>Documented Evidence:</strong></p>
+            <p>• Prescott Bush (George H.W. Bush's father) business dealings with Nazi Germany</p>
+            <p>• Standard Oil (Rockefeller) continued supplying Germany via neutral countries</p>
+            <p>• IBM provided technology for concentration camp administration</p>
+            <p>• Ford Motor Company produced vehicles for German military</p>
+            
+            <p><strong>Sources:</strong></p>
+            <p>• <a href="https://www.archives.gov/research/foreign-policy/related-records/rg-242" target="_blank">National Archives - Nazi financial records</a></p>
+            <p>• "Trading With the Enemy" by Charles Higham</p>
+            <p>• "IBM and the Holocaust" by Edwin Black</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Pearl Harbor Foreknowledge</h3>
+            <p><strong>Declassified Evidence:</strong></p>
+            <p>• US broke Japanese codes before attack</p>
+            <p>• Warnings sent but not acted upon</p>
+            <p>• Roosevelt needed "back door to war"</p>
+            <p>• Public opposed entering European war</p>
+            
+            <p><strong>Sources:</strong></p>
+            <p>• <a href="https://www.nsa.gov/History/Cryptologic-History/Historical-Publications/Historical-Publications-Lists/igrey_Assets/selected-historical-monographs/pdf/Pearl_Harbor_Review.pdf" target="_blank">NSA declassified: Pearl Harbor intelligence</a></p>
+            <p>• "Day of Deceit" by Robert Stinnett</p>
+            <p>• Congressional investigations (1945-46)</p>
+          </div>
+        </div>
+        
+        <div class="message-box">
+          <h3>The Holocaust Industrial Complex</h3>
+          
+          <p><strong>Post-War Exploitation:</strong></p>
+          <p>• Swiss banks hoarded Jewish assets</p>
+          <p>• German companies used slave labor</p>
+          <p>• Art theft and cultural plunder</p>
+          <p>• Pharmaceutical testing on prisoners</p>
+          
+          <p><strong>Suppressed Stories:</strong></p>
+          <p>• <a href="https://www.nytimes.com/1996/05/23/world/swiss-banks-and-nazi-gold-the-story-that-won-t-go-away.html" target="_blank">Swiss banks and Nazi gold</a></p>
+          <p>• IBM's role in Holocaust administration</p>
+          <p>• Ford, GM, and Standard Oil war profiteering</p>
+          
+          <p><strong>Whistleblower Accounts:</strong></p>
+          <p>• John Loftus - former US Justice Department Nazi hunter</p>
+          <p>• "The Secret War Against the Jews" documentation</p>
+        </div>
+        
+        <h2>💰 War Profiteering & Economic Motives</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Military-Industrial Complex</h3>
+            <p>• Eisenhower's 1961 warning</p>
+            <p>• Permanent war economy</p>
+            <p>• Defense contractor profits</p>
+            <p>• Revolving door officials</p>
+            <p>• <a href="https://www.archives.gov/milestone-documents/president-dwight-d-eisenhowers-farewell-address" target="_blank">Eisenhower's Farewell Address</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Central Banking Expansion</h3>
+            <p>• Wars create debt</p>
+            <p>• Debt creates control</p>
+            <p>• IMF/World Bank creation</p>
+            <p>• Dollar as reserve currency</p>
+            <p>• Bretton Woods system</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Resource Control</h3>
+            <p>• Middle East oil access</p>
+            <p>• Strategic minerals</p>
+            <p>• Trade route control</p>
+            <p>• Colonial rearrangements</p>
+            <p>• Pipeline politics</p>
+          </div>
+        </div>
+        
+        <h2>📚 Alternative Historians & Researchers</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Academic Dissenters</h3>
+            <p>• <strong>David Irving</strong> - Controversial WWII historian</p>
+            <p>• <strong>Harry Elmer Barnes</strong> - Revisionist historian</p>
+            <p>• <strong>Antony Sutton</strong> - Wall Street funding research</p>
+            <p>• <strong>Carroll Quigley</strong> - Anglo-American establishment</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Investigative Journalists</h3>
+            <p>• <strong>Webster Tarpley</strong> - 9/11 and false flags</p>
+            <p>• <strong>John Pilger</strong> - War propaganda</p>
+            <p>• <strong>Robert Parry</strong> - Consortium News</p>
+            <p>• <strong>Whitney Webb</strong> - Unlimited Hangout</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Whistleblowers</h3>
+            <p>• <strong>Smedley Butler</strong> - "War is a Racket"</p>
+            <p>• <strong>John Perkins</strong> - "Confessions of an Economic Hit Man"</p>
+            <p>• <strong>Karen Hudes</strong> - World Bank whistleblower</p>
+            <p>• <strong>Peter Dale Scott</strong> - Deep State researcher</p>
+          </div>
+        </div>
+        
+        <h2>🔍 Primary Source Archives</h2>
+        <div class="message-box">
+          <h3>Declassified Documents</h3>
+          <p>• <a href="https://www.archives.gov/research/captured-german-records" target="_blank">US National Archives - Captured German Records</a></p>
+          <p>• <a href="https://www.cia.gov/library/readingroom/collection/german-world-war-ii-records" target="_blank">CIA Reading Room - WWII records</a></p>
+          <p>• <a href="https://nsarchive.gwu.edu/" target="_blank">National Security Archive</a></p>
+          <p>• <a href="https://www.wilsoncenter.org/digital-archive" target="_blank">Wilson Center Digital Archive</a></p>
+          <p>• <a href="https://www.loc.gov/collections/veterans-history-project-collection/" target="_blank">Library of Congress Veterans History</a></p>
+        </div>
+        
+        <div class="https-info">
+          <h3>⚠️ Critical Analysis Required</h3>
+          <p><strong>Follow the Money:</strong> Who profited from the wars?</p>
+          <p><strong>Question Official Narratives:</strong> What facts don't add up?</p>
+          <p><strong>Examine Contradictions:</strong> Official story vs declassified evidence</p>
+          <p><strong>Research Primary Sources:</strong> Avoid secondary interpretations</p>
+          <p><strong>Consider Multiple Perspectives:</strong> Mainstream vs alternative views</p>
+        </div>
+        
+        <br>
+        <a href="/history" style="display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">← Back to History</a>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// REVOLUTIONS & COUPS PAGE
+app.get('/history/revolutions', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Revolutions & Coups - Hidden History</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>🎭 Revolutions & Coups - CIA Operations Exposed</h1>
+        <p>Documented regime change operations, color revolutions, and covert interventions.</p>
+        
+        <div class="https-info">
+          <h3>📋 Declassified Evidence</h3>
+          <p>This page compiles information from declassified CIA documents, congressional investigations, and whistleblower testimonies. All claims are sourced from official government records or verified investigative journalism.</p>
+        </div>
+        
+        <h2>🌍 Documented CIA Coups & Interventions</h2>
+        
+        <div class="message-box">
+          <h3>1953 - Iran (Operation Ajax)</h3>
+          <p><strong>Target:</strong> Democratically elected Prime Minister Mohammad Mosaddegh</p>
+          <p><strong>Reason:</strong> Nationalized Iranian oil (British Petroleum interests)</p>
+          <p><strong>Method:</strong> CIA/MI6 organized protests, bribed officials, installed Shah</p>
+          <p><strong>Result:</strong> 26 years of authoritarian rule, led to 1979 Islamic Revolution</p>
+          <p><strong>Evidence:</strong></p>
+          <p>• <a href="https://nsarchive2.gwu.edu/NSAEBB/NSAEBB435/" target="_blank">National Security Archive - CIA confirms role</a></p>
+          <p>• <a href="https://www.cia.gov/library/center-for-the-study-of-intelligence/csi-publications/csi-studies/studies/vol-48-no-2/article10.html" target="_blank">CIA's own history of coup</a></p>
+          <p>• <a href="https://foreignpolicy.com/2013/08/19/cia-admits-it-was-behind-irans-coup/" target="_blank">Foreign Policy - CIA admission</a></p>
+        </div>
+        
+        <div class="message-box">
+          <h3>1954 - Guatemala (Operation PBSuccess)</h3>
+          <p><strong>Target:</strong> President Jacobo Árbenz</p>
+          <p><strong>Reason:</strong> Land reform threatened United Fruit Company profits</p>
+          <p><strong>Method:</strong> CIA trained paramilitary, psychological warfare, bombing</p>
+          <p><strong>Result:</strong> 40+ years of civil war, 200,000 dead</p>
+          <p><strong>Evidence:</strong></p>
+          <p>• <a href="https://nsarchive2.gwu.edu/NSAEBB/NSAEBB4/" target="_blank">National Security Archive - Declassified docs</a></p>
+          <p>• <a href="https://www.cia.gov/library/readingroom/docs/DOC_0000134974.pdf" target="_blank">CIA declassified: Guatemala operation</a></p>
+          <p>• "Bitter Fruit" by Stephen Schlesinger & Stephen Kinzer</p>
+        </div>
+        
+        <div class="message-box">
+          <h3>1973 - Chile (Project FUBELT)</h3>
+          <p><strong>Target:</strong> Socialist President Salvador Allende</p>
+          <p><strong>Reason:</strong> Nationalized copper mines (US corporate interests)</p>
+          <p><strong>Method:</strong> Economic sabotage, military coup support, assassination</p>
+          <p><strong>Installed:</strong> General Augusto Pinochet dictatorship</p>
+          <p><strong>Result:</strong> 3,000+ killed, 40,000 tortured, 17 years military rule</p>
+          <p><strong>Evidence:</strong></p>
+          <p>• <a href="https://nsarchive2.gwu.edu/NSAEBB/NSAEBB8/nsaebb8i.htm" target="_blank">National Security Archive - Kissinger's role</a></p>
+          <p>• <a href="https://www.cia.gov/library/reports/general-reports-1/chile/" target="_blank">CIA Report on Chile 1963-1973</a></p>
+          <p>• Congressional Church Committee investigations (1975)</p>
+        </div>
+        
+        <h2>🎨 "Color Revolutions" (21st Century)</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>2003 - Georgia (Rose Revolution)</h3>
+            <p>• US-funded NGOs trained activists</p>
+            <p>• USAID, NED, Soros Foundation involvement</p>
+            <p>• Overthrew Shevardnadze</p>
+            <p>• Pro-Western government installed</p>
+            <p><strong>Source:</strong> <a href="https://www.theguardian.com/world/2004/nov/26/ukraine.usa" target="_blank">Guardian - US role in revolutions</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>2004 - Ukraine (Orange Revolution)</h3>
+            <p>• $65 million US funding documented</p>
+            <p>• State Dept, USAID orchestration</p>
+            <p>• Viktor Yushchenko installed</p>
+            <p>• Led to 2014 Euromaidan coup</p>
+            <p><strong>Source:</strong> <a href="https://www.theguardian.com/world/2004/nov/26/ukraine.usa" target="_blank">Guardian investigation</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>2011 - Arab Spring</h3>
+            <p>• Tunisia, Egypt, Libya, Syria</p>
+            <p>• Social media manipulation</p>
+            <p>• CIA, MI6, Mossad coordination</p>
+            <p>• Regime change attempts</p>
+            <p><strong>Analysis:</strong> <a href="https://www.mintpressnews.com/arab-spring-western-intervention/214789/" target="_blank">MintPress - Western intervention</a></p>
+          </div>
+        </div>
+        
+        <h2>💰 Economic Warfare Tactics</h2>
+        <div class="message-box">
+          <h3>Documented Methods</h3>
+          <p><strong>1. Economic Sanctions</strong></p>
+          <p>• Starve civilian population</p>
+          <p>• Blame government for suffering</p>
+          <p>• Create conditions for unrest</p>
+          <p>• Examples: Venezuela, Cuba, Iran, Iraq (1990s)</p>
+          
+          <p><strong>2. Currency Manipulation</strong></p>
+          <p>• Short selling national currency</p>
+          <p>• Capital flight orchestration</p>
+          <p>• IMF "structural adjustment"</p>
+          <p>• Debt trap diplomacy</p>
+          
+          <p><strong>3. Resource Control</strong></p>
+          <p>• Oil, minerals, agriculture</p>
+          <p>• Blockades and embargoes</p>
+          <p>• Control of strategic assets</p>
+          <p>• Pipeline politics</p>
+          
+          <p><strong>Evidence:</strong></p>
+          <p>• "Confessions of an Economic Hit Man" by John Perkins</p>
+          <p>• <a href="https://www.wsws.org/en/articles/2019/01/30/vene-j30.html" target="_blank">Venezuela coup attempt documentation</a></p>
+        </div>
+        
+        <h2>🕵️ Key Organizations & Funding</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>National Endowment for Democracy (NED)</h3>
+            <p>• Founded 1983 (Reagan era)</p>
+            <p>• "Doing openly what CIA did covertly"</p>
+            <p>• $300+ million annual budget</p>
+            <p>• Funds opposition groups worldwide</p>
+            <p>• <a href="https://www.ned.org/about/" target="_blank">NED official site</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>USAID</h3>
+            <p>• Front for CIA operations</p>
+            <p>• Cuba, Venezuela operations exposed</p>
+            <p>• Social media manipulation (ZunZuneo)</p>
+            <p>• "Development" as cover</p>
+            <p>• <a href="https://apnews.com/article/904a9a6a1bcd46cebfc14bea2ee30fdf" target="_blank">AP - USAID Cuba program</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Open Society Foundations (Soros)</h3>
+            <p>• Active in 120+ countries</p>
+            <p>• Funds "pro-democracy" groups</p>
+            <p>• Color revolution involvement</p>
+            <p>• $32 billion endowment</p>
+            <p>• <a href="https://www.opensocietyfoundations.org/" target="_blank">OSF official site</a></p>
+          </div>
+        </div>
+        
+        <h2>📚 Whistleblowers & Investigators</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>John Perkins</h3>
+            <p><strong>Former Economic Hit Man</strong></p>
+            <p>• Confessed to engineering coups</p>
+            <p>• Debt trap methodology exposed</p>
+            <p>• Books: "Confessions of an Economic Hit Man"</p>
+            <p>• <a href="https://johnperkins.org/" target="_blank">Official website</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Philip Agee</h3>
+            <p><strong>Former CIA Officer</strong></p>
+            <p>• Exposed CIA operations in Latin America</p>
+            <p>• "Inside the Company: CIA Diary" (1975)</p>
+            <p>• Revealed covert action methods</p>
+            <p>• Died in exile (Cuba, 2008)</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>William Blum</h3>
+            <p><strong>Former State Department</strong></p>
+            <p>• "Killing Hope: US Military Interventions"</p>
+            <p>• Documented 70+ regime changes</p>
+            <p>• "Rogue State" author</p>
+            <p>• <a href="https://williamblum.org/" target="_blank">Archive of work</a></p>
+          </div>
+        </div>
+        
+        <h2>🔍 Research Resources</h2>
+        <div class="message-box">
+          <h3>Declassified Document Archives</h3>
+          <p>• <a href="https://nsarchive.gwu.edu/" target="_blank">National Security Archive</a> - George Washington University</p>
+          <p>• <a href="https://www.cia.gov/library/readingroom/" target="_blank">CIA Reading Room</a> - Declassified documents</p>
+          <p>• <a href="https://history.state.gov/historicaldocuments" target="_blank">State Department Historical Documents</a></p>
+          <p>• <a href="https://www.archives.gov/research/foreign-policy" target="_blank">National Archives - Foreign Policy</a></p>
+          <p>• <a href="https://www.wilsoncenter.org/digital-archive" target="_blank">Wilson Center Digital Archive</a></p>
+        </div>
+        
+        <div class="https-info">
+          <h3>🎯 Pattern Recognition</h3>
+          <p><strong>Common Coup Indicators:</strong></p>
+          <p>1. Country nationalizes resources (oil, minerals)</p>
+          <p>2. Leader rejects US/Western demands</p>
+          <p>3. Sudden "pro-democracy" protests appear</p>
+          <p>4. Western media demonizes leader</p>
+          <p>5. Economic sanctions imposed</p>
+          <p>6. Opposition receives foreign funding</p>
+          <p>7. Military trained by US turns on government</p>
+          <p>8. "Humanitarian intervention" threatened</p>
+        </div>
+        
+        <br>
+        <a href="/history" style="display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">← Back to History</a>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// COLONIALISM PAGE
+app.get('/history/colonialism', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Colonialism & Neo-Colonialism</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>🌍 Colonialism & Neo-Colonialism - Exploitation Never Ended</h1>
+        <p>From overt colonial rule to modern economic colonialism through debt and corporations.</p>
+        
+        <h2>📜 Historical Colonialism (1500s-1960s)</h2>
+        
+        <div class="message-box">
+          <h3>European Colonial Empires</h3>
+          
+          <p><strong>British Empire (Largest)</strong></p>
+          <p>• Controlled 25% of world's land and population</p>
+          <p>• India: $45 trillion stolen over 200 years (research by Utsa Patnaik)</p>
+          <p>• Artificial famines killed millions (Bengal 1943: 3 million dead)</p>
+          <p>• Opium Wars forced drug trade on China</p>
+          <p>• <a href="https://www.aljazeera.com/opinions/2018/12/19/how-britain-stole-45-trillion-from-india" target="_blank">Al Jazeera - Britain's theft from India</a></p>
+          
+          <p><strong>Belgian Congo (King Leopold II)</strong></p>
+          <p>• 10-15 million Congolese killed (1885-1908)</p>
+          <p>• Rubber extraction through forced labor</p>
+          <p>• Hands cut off for not meeting quotas</p>
+          <p>• Personal property of Belgian king (not even state colony)</p>
+          <p>• <a href="https://www.bbc.com/news/world-europe-53017188" target="_blank">BBC - Belgium's colonial atrocities</a></p>
+          
+          <p><strong>French Colonial Empire</strong></p>
+          <p>• Algeria: 1.5 million killed in independence war</p>
+          <p>• "Colonial tax" continues today (CFA Franc)</p>
+          <p>• 14 African countries forced to keep reserves in French treasury</p>
+          <p>• France has veto power over their monetary policy</p>
+          <p>• <a href="https://www.aljazeera.com/opinions/2019/5/6/is-france-looting-africa" target="_blank">Al Jazeera - France's continued exploitation</a></p>
+        </div>
+        
+        <h2>💰 Neo-Colonialism Through Debt</h2>
+        
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>IMF & World Bank</h3>
+            <p><strong>The Debt Trap</strong></p>
+            <p>• Created at Bretton Woods (1944)</p>
+            <p>• Loan conditions ("structural adjustment")</p>
+            <p>• Force privatization of state assets</p>
+            <p>• Cut social spending (health, education)</p>
+            <p>• Open markets to foreign corporations</p>
+            <p>• Remove capital controls</p>
+            
+            <p><strong>Result:</strong> Perpetual debt, asset stripping</p>
+            <p>• <a href="https://www.cadtm.org/spip.php?page=imprimer&id_article=16964" target="_blank">CADTM - Debt abolition movement</a></p>
+            <p>• "The Shock Doctrine" by Naomi Klein</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Resource Extraction</h3>
+            <p><strong>Modern Plunder</strong></p>
+            <p>• Western mining companies in Africa</p>
+            <p>• Oil corporations in Middle East</p>
+            <p>• Agricultural land grabs</p>
+            <p>• Water privatization</p>
+            <p>• Profits flow to West, poverty remains</p>
+            
+            <p><strong>Example: DRC (Congo)</strong></p>
+            <p>• Richest in minerals (coltan, cobalt, diamonds)</p>
+            <p>• Population among world's poorest</p>
+            <p>• Ongoing proxy wars for resource control</p>
+            <p>• <a href="https://www.theguardian.com/global-development/2019/dec/16/apple-and-google-named-in-us-lawsuit-over-congolese-child-cobalt-mining-deaths" target="_blank">Guardian - Child labor for tech companies</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Corporate Colonialism</h3>
+            <p><strong>Transnational Corporations</strong></p>
+            <p>• Chevron, Shell, BP oil extraction</p>
+            <p>• Monsanto (Bayer) agriculture control</p>
+            <p>• Mining: Rio Tinto, Glencore</p>
+            <p>• Coca-Cola water depletion</p>
+            <p>• Nike, Apple sweatshop labor</p>
+            
+            <p><strong>Tactics:</strong></p>
+            <p>• Bribe local officials</p>
+            <p>• Fund military/police</p>
+            <p>• Exploit lax environmental laws</p>
+            <p>• Tax havens to avoid paying countries</p>
+            <p>• <a href="https://www.corpwatch.org/" target="_blank">CorpWatch - Corporate accountability</a></p>
+          </div>
+        </div>
+        
+        <h2>🗺️ Artificial Borders & Divide-and-Rule</h2>
+        
+        <div class="message-box">
+          <h3>Colonial Border Drawing</h3>
+          <p><strong>Africa - Berlin Conference (1884-1885)</strong></p>
+          <p>• European powers carved up Africa</p>
+          <p>• Borders drawn with rulers, no regard for ethnicities</p>
+          <p>• Created artificial nations (Nigeria: 250+ ethnic groups)</p>
+          <p>• Designed to create conflict and prevent unity</p>
+          <p>• <a href="https://www.bbc.com/news/world-africa-47115384" target="_blank">BBC - How colonial borders affect Africa today</a></p>
+          
+          <p><strong>Middle East - Sykes-Picot Agreement (1916)</strong></p>
+          <p>• Britain and France divided Ottoman territories</p>
+          <p>• Iraq, Syria, Lebanon, Jordan created artificially</p>
+          <p>• Israel creation displaced Palestinians (1948)</p>
+          <p>• Ongoing conflicts result from colonial borders</p>
+          <p>• <a href="https://www.bbc.com/news/world-middle-east-36300224" target="_blank">BBC - Sykes-Picot 100 years later</a></p>
+          
+          <p><strong>India-Pakistan Partition (1947)</strong></p>
+          <p>• Hastily drawn border by British lawyer (Cyril Radcliffe)</p>
+          <p>• 2 million killed in communal violence</p>
+          <p>• 15 million displaced</p>
+          <p>• Kashmir conflict continues today</p>
+          <p>• "Divide and rule" succeeded in preventing unity</p>
+        </div>
+        
+        <h2>🏭 Resource Theft Statistics</h2>
+        
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Africa to West</h3>
+            <p>• <strong>$192 billion/year</strong> flows OUT of Africa</p>
+            <p>• Only $134 billion flows IN (aid, investment)</p>
+            <p>• <strong>Net loss: $58 billion/year</strong></p>
+            <p>• Tax evasion by corporations: $30 billion/year</p>
+            <p>• Debt payments: $18 billion/year</p>
+            <p><strong>Source:</strong> <a href="https://www.globaljustice.org.uk/resources/honest-accounts-2017-how-world-profits-africas-wealth" target="_blank">Global Justice Now report</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Latin America Plunder</h3>
+            <p>• <strong>$420 billion</strong> stolen since 1980 (capital flight)</p>
+            <p>• United Fruit (now Chiquita) land theft</p>
+            <p>• Mining companies pay <5% royalties</p>
+            <p>• Oil companies in Venezuela, Ecuador</p>
+            <p>• Environmental destruction unpaid</p>
+            <p><strong>Source:</strong> <a href="https://www.cepal.org/en" target="_blank">ECLAC - Economic data</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Asia Exploitation</h3>
+            <p>• Sweatshop wages: $1-3/day</p>
+            <p>• Product sells in West for 100x cost</p>
+            <p>• Bangladesh garment workers: 4,000 dead since 1990</p>
+            <p>• Apple suppliers: worker suicides at Foxconn</p>
+            <p>• Nike: $0.20/hour wages, sells shoes for $100+</p>
+            <p><strong>Source:</strong> <a href="https://cleanclothes.org/" target="_blank">Clean Clothes Campaign</a></p>
+          </div>
+        </div>
+        
+        <h2>📚 Essential Reading</h2>
+        <div class="message-box">
+          <h3>Books Exposing Neo-Colonialism</h3>
+          <p>• <strong>"How Europe Underdeveloped Africa"</strong> by Walter Rodney</p>
+          <p>• <strong>"The Divide"</strong> by Jason Hickel</p>
+          <p>• <strong>"Confessions of an Economic Hit Man"</strong> by John Perkins</p>
+          <p>• <strong>"The Shock Doctrine"</strong> by Naomi Klein</p>
+          <p>• <strong>"Open Veins of Latin America"</strong> by Eduardo Galeano</p>
+          <p>• <strong>"The Wretched of the Earth"</strong> by Frantz Fanon</p>
+          <p>• <strong>"Discourse on Colonialism"</strong> by Aimé Césaire</p>
+        </div>
+        
+        <h2>🔍 Research Organizations</h2>
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Global Justice</h3>
+            <p>• <a href="https://www.globaljustice.org.uk/" target="_blank">Global Justice Now</a></p>
+            <p>• <a href="https://www.cadtm.org/spip.php?page=sommaire&lang=en" target="_blank">CADTM (Debt abolition)</a></p>
+            <p>• <a href="https://jubileedebt.org.uk/" target="_blank">Jubilee Debt Campaign</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Corporate Accountability</h3>
+            <p>• <a href="https://www.corpwatch.org/" target="_blank">CorpWatch</a></p>
+            <p>• <a href="https://www.business-humanrights.org/" target="_blank">Business & Human Rights</a></p>
+            <p>• <a href="https://www.foei.org/" target="_blank">Friends of the Earth International</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Data & Research</h3>
+            <p>• <a href="https://data.worldbank.org/" target="_blank">World Bank Data</a></p>
+            <p>• <a href="https://www.un.org/development/desa/en/" target="_blank">UN Development Data</a></p>
+            <p>• <a href="https://www.oxfam.org/en/research" target="_blank">Oxfam Research</a></p>
+          </div>
+        </div>
+        
+        <div class="https-info">
+          <h3>💡 Key Takeaways</h3>
+          <p><strong>Colonialism never ended - it evolved:</strong></p>
+          <p>1. <strong>Overt military control</strong> → Economic control through debt</p>
+          <p>2. <strong>Direct resource theft</strong> → Corporate "legal" extraction</p>
+          <p>3. <strong>Colonial governors</strong> → IMF/World Bank conditions</p>
+          <p>4. <strong>Explicit racism</strong> → "Development" and "modernization" rhetoric</p>
+          <p>5. <strong>European empires</strong> → US-led Western dominance</p>
+          <p><br><strong>The result:</strong> Global South remains poor while enriching the West</p>
+        </div>
+        
+        <br>
+        <a href="/history" style="display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">← Back to History</a>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// BANKING & FINANCE CONTROL PAGE
+app.get('/history/banking', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Banking & Finance Control</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>🏦 Banking & Finance Control - The Hidden Power</h1>
+        <p>How central banks, private bankers, and the financial system control nations.</p>
+        
+        <div class="https-info">
+          <h3>⚠️ "Give me control of a nation's money, and I care not who makes its laws"</h3>
+          <p>- Mayer Amschel Rothschild (founder of Rothschild banking dynasty)</p>
+        </div>
+        
+        <h2>🏛️ The Federal Reserve (1913) - A Private Bank</h2>
+        
+        <div class="message-box">
+          <h3>Creation & Deception</h3>
+          
+          <p><strong>Jekyll Island Meeting (1910)</strong></p>
+          <p>• Secret meeting of 7 men representing 1/4 of world's wealth</p>
+          <p>• J.P. Morgan, Rockefeller, Rothschild agents</p>
+          <p>• Drafted Federal Reserve Act in secret</p>
+          <p>• Passed Congress on December 23, 1913 (most members gone for holiday)</p>
+          <p>• President Woodrow Wilson signed it (later regretted)</p>
+          
+          <p><strong>The Deception:</strong></p>
+          <p>• Name "Federal Reserve" implies government control</p>
+          <p>• <strong>It is NOT federal</strong> - it's a private corporation</p>
+          <p>• <strong>It has no reserves</strong> - it creates money from nothing</p>
+          <p>• Owned by private banks (shareholders secret until 2011)</p>
+          <p>• Never been audited by government</p>
+          
+          <p><strong>Evidence:</strong></p>
+          <p>• <a href="https://www.federalreserve.gov/aboutthefed/section7.htm" target="_blank">Federal Reserve Act - Section 7</a></p>
+          <p>• "The Creature from Jekyll Island" by G. Edward Griffin</p>
+          <p>• <a href="https://www.amazon.com/Secrets-Federal-Reserve-Eustace-Mullins/dp/0979917654" target="_blank">"Secrets of the Federal Reserve" by Eustace Mullins</a></p>
+        </div>
+        
+        <div class="message-box">
+          <h3>How the Fed Creates Money (Debt-Based Currency)</h3>
+          
+          <p><strong>The Scam Explained:</strong></p>
+          <p>1. US Government needs money</p>
+          <p>2. Government prints Treasury Bonds (IOUs)</p>
+          <p>3. Federal Reserve "buys" bonds by creating money electronically</p>
+          <p>4. Money enters circulation with INTEREST owed</p>
+          <p>5. More money owed than exists (impossible to repay)</p>
+          <p>6. Government taxes citizens to pay interest to private bankers</p>
+          <p>7. National debt grows forever (now $34 trillion)</p>
+          
+          <p><strong>The Trap:</strong></p>
+          <p>• If US Government simply printed its own money (no debt)</p>
+          <p>• No national debt, no interest payments to bankers</p>
+          <p>• This is what Lincoln did (Greenbacks) - assassinated shortly after</p>
+          <p>• This is what JFK tried (Executive Order 11110) - assassinated</p>
+          <p>• This is what Libya's Gaddafi did (gold dinar) - overthrown and killed</p>
+          
+          <p><strong>Video Explanation:</strong></p>
+          <p>• <a href="https://www.youtube.com/watch?v=iFDe5kUUyT0" target="_blank">"Money as Debt" - Animated documentary</a></p>
+          <p>• <a href="https://www.youtube.com/watch?v=mII9NZ8MMVM" target="_blank">"The Biggest Scam In The History Of Mankind"</a></p>
+        </div>
+        
+        <h2>🌍 Bank for International Settlements (BIS)</h2>
+        
+        <div class="message-box">
+          <h3>The Central Bank of Central Banks</h3>
+            <p><strong>Founded:</strong> 1930, Basel, Switzerland</p>
+            <p><strong>Purpose:</strong> Coordinate world's central banks</p>
+            <p><strong>Power:</strong> Above all governments, immune from prosecution</p>
+            <p><strong>Members:</strong> 63 central banks representing 95% of world GDP</p>
+            <p><strong>Immunity & Secrecy:</strong></p>
+      <p>• Cannot be prosecuted by any government</p>
+      <p>• Cannot be raided, assets cannot be seized</p>
+      <p>• Staff have diplomatic immunity</p>
+      <p>• No taxes paid</p>
+      <p>• Meetings are secret</p>
+      <p>• Sets global banking regulations (Basel Accords)</p>
+      
+      <p><strong>Historical Note:</strong></p>
+      <p>• Helped Nazi Germany launder gold during WWII</p>
+      <p>• American and British directors stayed on board during war</p>
+      <p>• Continued operating throughout WWII</p>
+      
+      <p><strong>Sources:</strong></p>
+      <p>• "Tower of Basel" by Adam LeBor</p>
+      <p>• <a href="https://www.bis.org/" target="_blank">BIS official website</a></p>
+      <p>• <a href="https://www.nytimes.com/1997/08/05/opinion/the-bank-that-rules-the-world.html" target="_blank">NYT - The Bank That Rules the World</a></p>
+    </div>
+    
+    <h2>👑 Banking Dynasties</h2>
+    
+    <div class="link-grid">
+      <div class="link-card">
+        <h3>Rothschild Family</h3>
+        <p><strong>Founded:</strong> 1760s, Frankfurt</p>
+        <p><strong>Strategy:</strong> Five sons sent to 5 European capitals</p>
+        <p><strong>Method:</strong> Finance both sides of wars</p>
+        <p><strong>Estimated wealth:</strong> $2+ trillion (family combined)</p>
+        
+        <p><strong>Historical Facts:</strong></p>
+        <p>• Financed British Empire expansion</p>
+        <p>• Funded Napoleon AND his enemies</p>
+        <p>• Created Israel (Balfour Declaration to Lord Rothschild)</p>
+        <p>• Control central banks worldwide</p>
+        <p>• Own Bank of England</p>
+        
+        <p><strong>Research:</strong></p>
+        <p>• "The Rothschilds: A Family Portrait" by Frederic Morton</p>
+        <p>• <a href="https://www.rothschildandco.com/en/our-history/" target="_blank">Rothschild & Co - Official history</a></p>
+      </div>
+      
+      <div class="link-card">
+        <h3>Rockefeller Family</h3>
+        <p><strong>Founded:</strong> John D. Rockefeller (Standard Oil)</p>
+        <p><strong>Wealth:</strong> $1.4 billion in 1937 ($340 billion today)</p>
+        <p><strong>Control:</strong> Banking, oil, pharmaceuticals, media</p>
+        
+        <p><strong>Key Holdings:</strong></p>
+        <p>• Chase Manhattan Bank (now JPMorgan Chase)</p>
+        <p>• ExxonMobil, Chevron (from Standard Oil breakup)</p>
+        <p>• Council on Foreign Relations (CFR) - founded by Rockefeller</p>
+        <p>• Trilateral Commission</p>
+        <p>• Major influence over Federal Reserve</p>
+        
+        <p><strong>Quote:</strong></p>
+        <p><em>"We are grateful to the Washington Post, NY Times, Time Magazine and other great publications whose directors have attended our meetings and respected their promises of discretion for almost forty years... It would have been impossible for us to develop our plan for the world if we had been subject to the bright lights of publicity during those years."</em></p>
+        <p>- David Rockefeller, 1991 Bilderberg meeting</p>
+      </div>
+      
+      <div class="link-card">
+        <h3>Morgan Family</h3>
+        <p><strong>J.P. Morgan</strong> - Most powerful banker in US history</p>
+        <p><strong>Role:</strong> Created Federal Reserve system</p>
+        <p><strong>Power:</strong> Bailed out US Government (1895, 1907)</p>
+        
+        <p><strong>Revelations:</strong></p>
+        <p>• Was agent for Rothschild interests in America</p>
+        <p>• Most of "his" wealth actually belonged to Rothschilds</p>
+        <p>• Discovered after his death (1913)</p>
+        <p>• His bank: JPMorgan Chase (now largest US bank)</p>
+        
+        <p><strong>Titanic Connection:</strong></p>
+        <p>• Owned White Star Line (Titanic's company)</p>
+        <p>• Canceled his Titanic voyage at last minute</p>
+        <p>• 3 opponents of Federal Reserve died on Titanic</p>
+        <p>• Fed created months after Titanic sinking</p>
+      </div>
+    </div>
+    
+    <h2>💀 Leaders Who Opposed Private Banking - All Killed</h2>
+    
+    <div class="message-box">
+      <h3>Pattern of Assassination</h3>
+      
+      <p><strong>Abraham Lincoln (1865)</strong></p>
+      <p>• Refused Rothschild loans at 24-36% interest for Civil War</p>
+      <p>• Printed government money ("Greenbacks") - no debt</p>
+      <p>• Assassinated shortly after war ended</p>
+      <p>• Greenbacks immediately removed from circulation</p>
+      
+      <p><strong>James Garfield (1881)</strong></p>
+      <p>• President for only 4 months</p>
+      <p>• Spoke against banking power</p>
+      <p>• Quote: "Whoever controls the volume of money in any country is absolute master of all industry and commerce"</p>
+      <p>• Assassinated within weeks of quote</p>
+      
+      <p><strong>John F. Kennedy (1963)</strong></p>
+      <p>• Executive Order 11110 (June 4, 1963)</p>
+      <p>• Authorized US Treasury to issue silver certificates</p>
+      <p>• Bypassed Federal Reserve</p>
+      <p>• $4.3 billion issued</p>
+      <p>• Assassinated November 22, 1963</p>
+      <p>• LBJ reversed order immediately</p>
+      <p>• <a href="https://www.presidency.ucsb.edu/documents/executive-order-11110-amendment-executive-order-no-10289-amended-relating-the-performance" target="_blank">EO 11110 - Official text</a></p>
+      
+      <p><strong>Muammar Gaddafi (2011)</strong></p>
+      <p>• Proposed gold-backed African currency (gold dinar)</p>
+      <p>• Would end African dependence on dollar</p>
+      <p>• Would end French CFA Franc domination</p>
+      <p>• NATO intervention (Hillary Clinton: "We came, we saw, he died")</p>
+      <p>• Libya destroyed, gold reserves stolen</p>
+      <p>• <a href="https://www.foreignpolicyjournal.com/2016/01/06/new-hillary-emails-reveal-true-motive-for-libya-intervention/" target="_blank">Hillary emails reveal Libya invasion motive</a></p>
+    </div>
+    
+    <h2>🌐 Global Banking Control Today</h2>
+    
+    <div class="link-grid">
+      <div class="link-card">
+        <h3>Countries WITHOUT Rothschild Central Bank</h3>
+        <p><strong>Before 2000:</strong></p>
+        <p>• Afghanistan, Iraq, Libya, Sudan, North Korea, Iran, Syria, Cuba</p>
+        
+        <p><strong>After US "interventions":</strong></p>
+        <p>• Afghanistan - invaded 2001 (central bank created)</p>
+        <p>• Iraq - invaded 2003 (central bank created)</p>
+        <p>• Libya - destroyed 2011 (central bank created)</p>
+        <p>• Sudan - split 2011 (central bank created)</p>
+        
+        <p><strong>Remaining (2024):</strong></p>
+        <p>• Iran, Syria, North Korea, Cuba</p>
+        <p>• All labeled "enemies" by US</p>
+        <p>• All face sanctions</p>
+        <p>• All targets of regime change</p>
+      </div>
+      
+      <div class="link-card">
+        <h3>SWIFT System Control</h3>
+        <p><strong>Society for Worldwide Interbank Financial Telecommunication</strong></p>
+        <p>• Controls international money transfers</p>
+        <p>• Based in Belgium, controlled by US/EU</p>
+        <p>• Used as weapon (sanctions)</p>
+        <p>• Russia cut off (2022) → led to BRICS alternative</p>
+        <p>• Iran, North Korea excluded</p>
+        <p>• Any country can be cut off instantly</p>
+        <p>• <a href="https://www.swift.com/" target="_blank">SWIFT official site</a></p>
+      </div>
+      
+      <div class="link-card">
+        <h3>Petrodollar System</h3>
+        <p><strong>1974 - US-Saudi Deal</strong></p>
+        <p>• Oil only sold in US dollars</p>
+        <p>• Creates artificial dollar demand</p>
+        <p>• US can print infinite dollars</p>
+        <p>• Countries need dollars to buy oil</p>
+        <p>• Countries overthrown for challenging this:</p>
+        <p>&nbsp;&nbsp;- Iraq (2003) - switched to euros</p>
+        <p>&nbsp;&nbsp;- Libya (2011) - proposed gold dinar</p>
+        <p>&nbsp;&nbsp;- Syria, Iran - reject petrodollar</p>
+        <p>• <a href="https://www.bloomberg.com/news/articles/2016-04-01/the-untold-story-behind-saudi-arabia-s-41-year-u-s-debt-secret" target="_blank">Bloomberg - Petrodollar secret deal</a></p>
+      </div>
+    </div>
+    
+    <h2>📚 Essential Reading & Resources</h2>
+    
+    <div class="message-box">
+      <h3>Books</h3>
+      <p>• <strong>"The Creature from Jekyll Island"</strong> by G. Edward Griffin</p>
+      <p>• <strong>"Secrets of the Federal Reserve"</strong> by Eustace Mullins</p>
+      <p>• <strong>"A History of Central Banking"</strong> by Stephen Goodson</p>
+      <p>• <strong>"The Money Masters"</strong> (documentary - 3.5 hours)</p>
+      <p>• <strong>"Web of Debt"</strong> by Ellen Hodgson Brown</p>
+      <p>• <strong>"Tower of Basel"</strong> by Adam LeBor</p>
+      <p>• <strong>"The Ascent of Money"</strong> by Niall Ferguson</p>
+      
+      <h3>Documentaries</h3>
+      <p>• <a href="https://www.youtube.com/watch?v=5IJeemTQ7Vk" target="_blank">"The Money Masters" (1996)</a></p>
+      <p>• <a href="https://www.youtube.com/watch?v=iFDe5kUUyT0" target="_blank">"Money as Debt" (2006)</a></p>
+      <p>• <a href="https://www.youtube.com/watch?v=mII9NZ8MMVM" target="_blank">"The Biggest Scam in History"</a></p>
+      <p>• <a href="https://www.youtube.com/watch?v=L29McL7LVhE" target="_blank">"All Wars Are Bankers' Wars"</a></p>
+    </div>
+    
+    <div class="https-info">
+      <h3>💡 Key Understanding</h3>
+      <p><strong>Money is created as DEBT:</strong></p>
+      <p>• Every dollar is loaned into existence</p>
+      <p>• Interest is owed on all money</p>
+      <p>• More money owed than exists</p>
+      <p>• System requires perpetual growth (impossible)</p>
+      <p>• Economic crashes are BUILT IN by design</p>
+      <p>• Bankers own everything after each crash</p>
+      <p><br><strong>Solution:</strong> Government-issued, debt-free currency (like Lincoln's Greenbacks)</p>
+      <p><strong>Why it won't happen:</strong> Anyone who tries gets killed</p>
+    </div>
+    
+    <br>
+    <a href="/history" style="display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">← Back to History</a>
+  </div>
+</body>
+</html>
+`);
+});
 
 // ===== 404 ERROR HANDLER =====
 app.use((req, res) => {
