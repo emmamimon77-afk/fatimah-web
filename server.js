@@ -3018,15 +3018,17 @@ app.get('/history/world-wars', (req, res) => {
           <p>• War debt created permanent client states</p>
           
           <p><strong>Key Documents & Sources:</strong></p>
-          <p>• <a href="https://archive.org/details/SecretsOfTheFederalReserve" target="_blank">"Secrets of the Federal Reserve" by Eustace Mullins</a></p>
-          <p>• <a href="https://www.gutenberg.org/files/12670/12670-h/12670-h.htm" target="_blank">"Wall Street and the Bolshevik Revolution" by Antony Sutton</a></p>
-          <p>• <a href="https://www.cia.gov/library/readingroom/docs/CIA-RDP80M01009A000400010005-6.pdf" target="_blank">CIA declassified: Banking in WWI</a></p>
+          <p>• <a href="https://archive.org/details/pdfy-LzPJrXY17uzk3bu9/page/n1/mode/2up" target="_blank">"Secrets of the Federal Reserve" by Eustace Mullins</a></p>
+          <p>• <a href="https://archive.org/details/WallStreetAndTheBolshevikRevolution" target="_blank">"Wall Street and the Bolshevik Revolution" by Antony Sutton</a></p>
+          <p>• <a href="https://www.cia.gov/readingroom/historical-collections" target="_blank">CIA declassified: Banking in WWI</a></p>
+          <p>• <a href="https://www.cia.gov/readingroom/search/site" target="_blank">CIA declassified: Freedom of Information Act Electronic Reading Room</a></p>
           
           <p><strong>The Lusitania False Flag:</strong></p>
           <p>• British ship carrying munitions to Britain</p>
           <p>• Winston Churchill admitted hoping for attack to draw US into war</p>
           <p>• US passengers used as human shields</p>
-          <p>• Source: <a href="https://www.archives.gov/publications/prologue/2002/spring/lusitania.html" target="_blank">National Archives - Lusitania documents</a></p>
+          <p>• Source: <a href="https://www.archives.gov/milestone-documents/address-to-congress-declaration-of-war-against-germany" target="_blank">National Archives - Lusitania documents</a></p>
+          <p>• Source: <a href="https://www.archives.gov/publications/prologue/2016/winter/zimmermann-telegram" target="_blank">National Archives - Lusitania documents</a></p>
         </div>
         
         <div class="message-box">
@@ -3035,7 +3037,7 @@ app.get('/history/world-wars', (req, res) => {
           <p>• Issued while Britain didn't control the territory</p>
           <p>• Part of efforts to get Jewish banking support for war</p>
           <p>• Zionist lobbying powerful in Britain and US</p>
-          <p>• <a href="https://www.un.org/unispal/document-source/arab-israeli/1917-balfour-declaration/" target="_blank">Original Balfour Declaration text</a></p>
+          <p>• <a href="https://avalon.law.yale.edu/20th_century/balfour.asp" target="_blank">Original Balfour Declaration text</a></p>
         </div>
         
         <h2>⚔️ World War II (1939-1945)</h2>
@@ -3050,7 +3052,7 @@ app.get('/history/world-wars', (req, res) => {
             <p>• Ford Motor Company produced vehicles for German military</p>
             
             <p><strong>Sources:</strong></p>
-            <p>• <a href="https://www.archives.gov/research/foreign-policy/related-records/rg-242" target="_blank">National Archives - Nazi financial records</a></p>
+            <p>• <a href="https://www.archives.gov/press/press-releases/2004/nr04-55" target="_blank">National Archives - Nazi financial records</a></p>
             <p>• "Trading With the Enemy" by Charles Higham</p>
             <p>• "IBM and the Holocaust" by Edwin Black</p>
           </div>
@@ -3064,7 +3066,7 @@ app.get('/history/world-wars', (req, res) => {
             <p>• Public opposed entering European war</p>
             
             <p><strong>Sources:</strong></p>
-            <p>• <a href="https://www.nsa.gov/History/Cryptologic-History/Historical-Publications/Historical-Publications-Lists/igrey_Assets/selected-historical-monographs/pdf/Pearl_Harbor_Review.pdf" target="_blank">NSA declassified: Pearl Harbor intelligence</a></p>
+            <p>• <a href="https://www.nsa.gov/Press-Room/News-Highlights/Article/Article/3609901/doing-it-until-we-got-it-right-a-short-history-of-the-pearl-harbor-investigatio/" target="_blank">NSA declassified: Pearl Harbor intelligence</a></p>
             <p>• "Day of Deceit" by Robert Stinnett</p>
             <p>• Congressional investigations (1945-46)</p>
           </div>
