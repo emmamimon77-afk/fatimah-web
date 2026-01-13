@@ -3437,7 +3437,7 @@ app.get('/history/colonialism', (req, res) => {
             <p>• Remove capital controls</p>
             
             <p><strong>Result:</strong> Perpetual debt, asset stripping</p>
-            <p>• <a href="https://www.cadtm.org/spip.php?page=imprimer&id_article=16964" target="_blank">CADTM - Debt abolition movement</a></p>
+            <p>• <a href="https://www.cadtm.org/ABC" target="_blank">CADTM - Debt abolition movement</a></p>
             <p>• "The Shock Doctrine" by Naomi Klein</p>
           </div>
           
@@ -3492,6 +3492,7 @@ app.get('/history/colonialism', (req, res) => {
           <p>• Israel creation displaced Palestinians (1948)</p>
           <p>• Ongoing conflicts result from colonial borders</p>
           <p>• <a href="https://www.bbc.com/news/world-middle-east-36300224" target="_blank">BBC - Sykes-Picot 100 years later</a></p>
+          <p>• <a href="https://www.reuters.com/world/middle-east/" target="_blank">Reuters - how US and Israel forment the unrest in the Arabs and middle East</a></p>
           
           <p><strong>India-Pakistan Partition (1947)</strong></p>
           <p>• Hastily drawn border by British lawyer (Cyril Radcliffe)</p>
@@ -3631,8 +3632,9 @@ app.get('/history/banking', (req, res) => {
           
           <p><strong>Evidence:</strong></p>
           <p>• <a href="https://www.federalreserve.gov/aboutthefed/section7.htm" target="_blank">Federal Reserve Act - Section 7</a></p>
-          <p>• "The Creature from Jekyll Island" by G. Edward Griffin</p>
-          <p>• <a href="https://www.amazon.com/Secrets-Federal-Reserve-Eustace-Mullins/dp/0979917654" target="_blank">"Secrets of the Federal Reserve" by Eustace Mullins</a></p>
+          <p>• <a href="https://archive.org/details/church-state-g-edward-griffin-the-creature-from-jekyll-island_202301/page/n9/mode/2up" target="_blank">Church & State G Edward Griffin The Creature From Jekyll Island</a></p>
+          <p>• <a href="https://archive.org/details/secretsoffederal00mull/page/n11/mode/2up" target="_blank">Secrets of the Federal Reserve : the London Connection</a></p>
+          <p>• <a href="https://www.tacticalreport.com/daily/62809-saudi-mbs-on-the-petrodollar-agreement-with-us" target="_blank">TackticalReport- Saudi MBS on the petrodollar agreement with U.S.</a></p>
         </div>
         
         <div class="message-box">
@@ -3682,8 +3684,11 @@ app.get('/history/banking', (req, res) => {
       
       <p><strong>Sources:</strong></p>
       <p>• "Tower of Basel" by Adam LeBor</p>
+      <p>• <a href="https://archive.org/details/towerofbaselshad0000lebo" target="_blank">Tower of Basel : the shadowy history of the secret bank that runs the world</a></p>
       <p>• <a href="https://www.bis.org/" target="_blank">BIS official website</a></p>
       <p>• <a href="https://www.nytimes.com/1997/08/05/opinion/the-bank-that-rules-the-world.html" target="_blank">NYT - The Bank That Rules the World</a></p>
+      <p>• <a href="https://www.forex-central.net/video-goldman-sachs-documentary.php" target="_blank">Goldman Sachs - The Bank That Rules the World</a></p>
+      <p>• <a href="https://www.youtube.com/watch?v=J5Npf2xJpag" target="_blank">Goldman Sachs - The Bank That Rules the World | 2023 Documentary</a></p>
     </div>
     
     <h2>👑 Banking Dynasties</h2>
@@ -3705,7 +3710,7 @@ app.get('/history/banking', (req, res) => {
         
         <p><strong>Research:</strong></p>
         <p>• "The Rothschilds: A Family Portrait" by Frederic Morton</p>
-        <p>• <a href="https://www.rothschildandco.com/en/our-history/" target="_blank">Rothschild & Co - Official history</a></p>
+        <p>• <a href="https://www.rothschildandco.com/en/" target="_blank">Rothschild & Co - Official history</a></p>
       </div>
       
       <div class="link-card">
