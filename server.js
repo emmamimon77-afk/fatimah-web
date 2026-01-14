@@ -4771,6 +4771,481 @@ app.get('/history/wealth', (req, res) => {
     res.send(wealthContent);
 });
 
+// ============================================
+// /history/resources - Resource Control & Management
+// ============================================
+
+app.get('/history/resources', (req, res) => {
+    const resourcesContent = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Resource Control & Management - Historical Analysis</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+            
+            body {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: #333;
+                line-height: 1.6;
+                min-height: 100vh;
+                padding: 20px;
+                background-attachment: fixed;
+            }
+            
+            .container {
+                max-width: 1400px;
+                margin: 0 auto;
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 25px;
+                box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+                overflow: hidden;
+                backdrop-filter: blur(10px);
+            }
+            
+            header {
+                background: linear-gradient(90deg, #0f3460, #16213e, #1a1a2e);
+                color: white;
+                padding: 60px 40px;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .header-animation {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                overflow: hidden;
+            }
+            
+            .floating-resource {
+                position: absolute;
+                font-size: 2rem;
+                opacity: 0.1;
+                animation: floatAround 15s linear infinite;
+            }
+            
+            .oil { top: 10%; left: 5%; animation-delay: 0s; }
+            .water { top: 20%; right: 10%; animation-delay: -3s; }
+            .gold { bottom: 30%; left: 15%; animation-delay: -5s; }
+            .food { bottom: 20%; right: 20%; animation-delay: -8s; }
+            
+            @keyframes floatAround {
+                0% { transform: translate(0,0) rotate(0deg); }
+                25% { transform: translate(50px,50px) rotate(90deg); }
+                50% { transform: translate(0,100px) rotate(180deg); }
+                75% { transform: translate(-50px,50px) rotate(270deg); }
+                100% { transform: translate(0,0) rotate(360deg); }
+            }
+            
+            h1 {
+                font-size: 3.5rem;
+                margin-bottom: 15px;
+                background: linear-gradient(45deg, #00b4db, #0083b0);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+                position: relative;
+                z-index: 1;
+            }
+            
+            .subtitle {
+                font-size: 1.4rem;
+                opacity: 0.9;
+                margin-bottom: 10px;
+                position: relative;
+                z-index: 1;
+            }
+            
+            .explore-btn {
+                display: inline-block;
+                padding: 15px 40px;
+                background: linear-gradient(45deg, #00b4db, #0083b0);
+                color: white;
+                text-decoration: none;
+                border-radius: 30px;
+                font-weight: bold;
+                margin-top: 20px;
+                transition: all 0.3s ease;
+                box-shadow: 0 5px 15px rgba(0,131,176,0.4);
+                position: relative;
+                z-index: 1;
+            }
+            
+            .explore-btn:hover {
+                transform: translateY(-3px) scale(1.05);
+                box-shadow: 0 8px 20px rgba(0,131,176,0.6);
+            }
+            
+            .resources-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+                gap: 30px;
+                padding: 50px;
+            }
+            
+            .resource-card {
+                background: white;
+                border-radius: 20px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                transition: all 0.4s ease;
+                position: relative;
+                border: 1px solid rgba(0,0,0,0.1);
+            }
+            
+            .resource-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            }
+            
+            .card-header {
+                padding: 25px;
+                color: white;
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .card-1 .card-header { background: linear-gradient(135deg, #f46b45, #eea849); }
+            .card-2 .card-header { background: linear-gradient(135deg, #36d1dc, #5b86e5); }
+            .card-3 .card-header { background: linear-gradient(135deg, #834d9b, #d04ed6); }
+            .card-4 .card-header { background: linear-gradient(135deg, #11998e, #38ef7d); }
+            .card-5 .card-header { background: linear-gradient(135deg, #ff416c, #ff4b2b); }
+            
+            .card-icon {
+                font-size: 3.5rem;
+                margin-bottom: 15px;
+                text-align: center;
+                animation: bounce 2s infinite;
+            }
+            
+            @keyframes bounce {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-10px); }
+            }
+            
+            .card-title {
+                font-size: 1.8rem;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+            
+            .card-body {
+                padding: 30px;
+            }
+            
+            .info-list {
+                list-style: none;
+            }
+            
+            .info-list li {
+                padding: 12px 0;
+                border-bottom: 1px dashed #eee;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .info-list li:before {
+                content: "▶";
+                color: #00b4db;
+                font-size: 0.8rem;
+            }
+            
+            .key-events {
+                background: #f8f9fa;
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 20px;
+            }
+            
+            .event {
+                padding: 8px;
+                margin: 5px 0;
+                background: rgba(0,180,219,0.1);
+                border-radius: 5px;
+                border-left: 3px solid #00b4db;
+            }
+            
+            .navigation {
+                display: flex;
+                justify-content: space-between;
+                padding: 40px;
+                background: #16213e;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            .nav-button {
+                padding: 15px 30px;
+                background: linear-gradient(45deg, #667eea, #764ba2);
+                color: white;
+                text-decoration: none;
+                border-radius: 15px;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-weight: bold;
+            }
+            
+            .nav-button:hover {
+                transform: scale(1.05);
+                box-shadow: 0 5px 20px rgba(102,126,234,0.6);
+            }
+            
+            .stats {
+                display: flex;
+                justify-content: space-around;
+                padding: 40px;
+                background: linear-gradient(135deg, #0f3460, #16213e);
+                color: white;
+            }
+            
+            .stat-item {
+                text-align: center;
+            }
+            
+            .stat-number {
+                font-size: 2.5rem;
+                font-weight: bold;
+                color: #00b4db;
+            }
+            
+            .stat-label {
+                font-size: 0.9rem;
+                opacity: 0.8;
+            }
+            
+            @media (max-width: 768px) {
+                .resources-grid {
+                    grid-template-columns: 1fr;
+                    padding: 20px;
+                    gap: 20px;
+                }
+                
+                h1 {
+                    font-size: 2.2rem;
+                }
+                
+                .navigation {
+                    flex-direction: column;
+                    gap: 15px;
+                    padding: 20px;
+                }
+                
+                .stats {
+                    flex-direction: column;
+                    gap: 25px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <div class="header-animation">
+                    <div class="floating-resource oil">🛢️</div>
+                    <div class="floating-resource water">💧</div>
+                    <div class="floating-resource gold">💰</div>
+                    <div class="floating-resource food">🌾</div>
+                </div>
+                <h1>Resource Control & Management</h1>
+                <div class="subtitle">The Historical Battle for Earth's Most Valuable Assets</div>
+                <a href="#resources" class="explore-btn">Explore Resource Histories</a>
+            </header>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" data-count="80">0</div>
+                    <div class="stat-label">of world's resources controlled by 20%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="4000">0</div>
+                    <div class="stat-label">Water-related conflicts in history</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="65">0</div>
+                    <div class="stat-label">Oil wars since 1900</div>
+                </div>
+            </div>
+            
+            <div id="resources" class="resources-grid">
+                <!-- Oil & Energy Resources -->
+                <div class="resource-card card-1">
+                    <div class="card-header">
+                        <div class="card-icon">🛢️</div>
+                        <div class="card-title">Oil & Energy Resources</div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="info-list">
+                            <li><strong>Peak Control:</strong> 7 sisters, OPEC, state-owned companies</li>
+                            <li><strong>Historical Conflicts:</strong> Middle East wars, pipeline politics</li>
+                            <li><strong>Strategic Reserves:</strong> US Strategic Petroleum Reserve</li>
+                            <li><strong>Transition:</strong> From coal to oil to renewables</li>
+                        </ul>
+                        <div class="key-events">
+                            <div class="event">1901 - First oil discovery in Persia</div>
+                            <div class="event">1960 - OPEC founded</div>
+                            <div class="event">1973 - Oil embargo crisis</div>
+                            <a href="#" class="explore-btn" style="padding: 10px 20px; margin-top: 15px; display: inline-block;">Explore Oil Wars</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Water Resources -->
+                <div class="resource-card card-2">
+                    <div class="card-header">
+                        <div class="card-icon">💧</div>
+                        <div class="card-title">Water & Hydropolitics</div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="info-list">
+                            <li><strong>Key Battles:</strong> Nile, Mekong, Colorado River disputes</li>
+                            <li><strong>Control Methods:</strong> Dams, irrigation, privatization</li>
+                            <li><strong>Corporate Control:</strong> Nestlé, Coca-Cola water rights</li>
+                            <li><strong>Future Wars:</strong> Predicted water scarcity conflicts</li>
+                        </ul>
+                        <div class="key-events">
+                            <div class="event">1960 - Indus Water Treaty</div>
+                            <div class="event">1990s - Cochabamba Water War</div>
+                            <div class="event">2010 - UN declares water as human right</div>
+                            <a href="#" class="explore-btn" style="padding: 10px 20px; margin-top: 15px; display: inline-block;">Explore Water Wars</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mineral Resources -->
+                <div class="resource-card card-3">
+                    <div class="card-header">
+                        <div class="card-icon">⛏️</div>
+                        <div class="card-title">Minerals & Rare Earths</div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="info-list">
+                            <li><strong>Critical Minerals:</strong> Lithium, cobalt, rare earth elements</li>
+                            <li><strong>Control Points:</strong> Democratic Republic of Congo, China</li>
+                            <li><strong>Tech Dependency:</strong> Smartphones, EVs, military tech</li>
+                            <li><strong>Historical:</strong> Gold rushes, diamond conflicts</li>
+                        </ul>
+                        <div class="key-events">
+                            <div class="event">1848 - California Gold Rush</div>
+                            <div class="event">1867 - Diamond discovery in South Africa</div>
+                            <div class="event">2010 - China restricts rare earth exports</div>
+                            <a href="#" class="explore-btn" style="padding: 10px 20px; margin-top: 15px; display: inline-block;">Explore Mineral Conflicts</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Agricultural Resources -->
+                <div class="resource-card card-4">
+                    <div class="card-header">
+                        <div class="card-icon">🌾</div>
+                        <div class="card-title">Food & Agricultural Control</div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="info-list">
+                            <li><strong>Land Grabbing:</strong> 200M hectares since 2000</li>
+                            <li><strong>Seed Control:</strong> Monsanto/Bayer patent monopoly</li>
+                            <li><strong>Grain Cartels:</strong> ABCD companies (ADM, Bunge, Cargill, Dreyfus)</li>
+                            <li><strong>Historical:</strong> Potato famine, Green Revolution</li>
+                        </ul>
+                        <div class="key-events">
+                            <div class="event">1845 - Irish Potato Famine</div>
+                            <div class="event">1960s - Green Revolution</div>
+                            <div class="event">2008 - Global food price crisis</div>
+                            <a href="#" class="explore-btn" style="padding: 10px 20px; margin-top: 15px; display: inline-block;">Explore Food Systems</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Land & Territory -->
+                <div class="resource-card card-5">
+                    <div class="card-header">
+                        <div class="card-icon">🗺️</div>
+                        <div class="card-title">Land & Strategic Territory</div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="info-list">
+                            <li><strong>Geopolitical:</strong> Straits, canals, choke points</li>
+                            <li><strong>Modern Grabbing:</strong> Africa, Amazon, Arctic claims</li>
+                            <li><strong>Urban Control:</strong> Real estate as wealth storage</li>
+                            <li><strong>Historical:</strong> Colonial land divisions, homesteading</li>
+                        </ul>
+                        <div class="key-events">
+                            <div class="event">1884 - Berlin Conference partitions Africa</div>
+                            <div class="event">1919 - Versailles Treaty redraws borders</div>
+                            <div class="event">2007 - Arctic territorial claims escalate</div>
+                            <a href="#" class="explore-btn" style="padding: 10px 20px; margin-top: 15px; display: inline-block;">Explore Land Conflicts</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <a href="/history/wealth" class="nav-button">
+                    ⬅️ Previous: Wealth & Power Structures
+                </a>
+                <a href="/history/money" class="nav-button">
+                    Next: Monetary Systems ➡️
+                </a>
+            </div>
+        </div>
+        
+        <script>
+            // Animate the statistics counting
+            function animateCounters() {
+                const counters = document.querySelectorAll('.stat-number');
+                counters.forEach(counter => {
+                    const target = parseInt(counter.getAttribute('data-count'));
+                    const increment = target / 100;
+                    let current = 0;
+                    
+                    const updateCounter = () => {
+                        if (current < target) {
+                            current += increment;
+                            counter.textContent = Math.floor(current);
+                            setTimeout(updateCounter, 20);
+                        } else {
+                            counter.textContent = target + '%';
+                        }
+                    };
+                    
+                    updateCounter();
+                });
+            }
+            
+            // Run animation when page loads
+            window.addEventListener('load', animateCounters);
+            
+            // Add hover effects to resource cards
+            document.querySelectorAll('.resource-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.zIndex = '100';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.zIndex = '1';
+                });
+            });
+        </script>
+    </body>
+    </html>
+    `;
+    
+    res.send(resourcesContent);
+});
+
 // ===== 404 ERROR HANDLER =====
 app.use((req, res) => {
   res.status(404).send(`
