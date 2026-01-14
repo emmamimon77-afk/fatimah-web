@@ -3054,10 +3054,13 @@ app.get('/history/world-wars', (req, res) => {
             <p><strong>Sources:</strong></p>
             <p>• <a href="https://www.archives.gov/press/press-releases/2004/nr04-55" target="_blank">National Archives - Nazi financial records</a></p>
             <p>• "Trading With the Enemy" by Charles Higham</p>
-            <p>• "IBM and the Holocaust" by Edwin Black</p>
+            <p>• <a href="https://archive.org/details/charles-higham-trading-with-the-enemy-an-expose-of-the-nazi-american-money-plot-_202012/page/n2/mode/1up" target="_blank">"Trading With the Enemy" by Charles Higham</a></p>
+            <p>• <a href="https://archive.org/details/EssentialDissent-EdwinBlackIBMAndTheHolocaustPart1Of2281-2" target="_blank">"IBM and the Holocaust,Part 1" by Edwin Black</a></p>
+            <p>• <a href="https://archive.org/details/EssentialDissent-EdwinBlackIBMAndTheHolocaustPart2Of2335" target="_blank">"IBM and the Holocaust,Part 2" by Edwin Black</a></p>
           </div>
           
-          <div class="link-card">
+        <div class="link-card">
+
             <h3>Pearl Harbor Foreknowledge</h3>
             <p><strong>Declassified Evidence:</strong></p>
             <p>• US broke Japanese codes before attack</p>
@@ -3068,6 +3071,7 @@ app.get('/history/world-wars', (req, res) => {
             <p><strong>Sources:</strong></p>
             <p>• <a href="https://www.nsa.gov/Press-Room/News-Highlights/Article/Article/3609901/doing-it-until-we-got-it-right-a-short-history-of-the-pearl-harbor-investigatio/" target="_blank">NSA declassified: Pearl Harbor intelligence</a></p>
             <p>• "Day of Deceit" by Robert Stinnett</p>
+            <p>• <a href="https://archive.org/details/dayofdeceit" target="_blank">Day Of Deceit The Truth About FDR And Pearl Harbor by ROBERT B. STSNNETT</a></p>
             <p>• Congressional investigations (1945-46)</p>
           </div>
         </div>
@@ -3084,11 +3088,15 @@ app.get('/history/world-wars', (req, res) => {
           <p><strong>Suppressed Stories:</strong></p>
           <p>• <a href="https://www.nytimes.com/1996/05/23/world/swiss-banks-and-nazi-gold-the-story-that-won-t-go-away.html" target="_blank">Swiss banks and Nazi gold</a></p>
           <p>• IBM's role in Holocaust administration</p>
+          <p>• <a href="https://www.theguardian.com/world/2002/mar/29/humanities.highereducation" target="_blank">IBM dealt directly with Holocaust organisers</a></p>
           <p>• Ford, GM, and Standard Oil war profiteering</p>
-          
+          <p>• <a href="https://dogandlemon.com/sites/default/files/cars_nazis.pdf" target="_blank">Ford, GM and Stardard Oil war profiteering</a></p>
+          <p>• <a href="https://archive.org/details/hitlerssilentpar0000vinc_w4a0" target="_blank">Swiss banks, Nazi gold and the pursuit of justice</a></p>
           <p><strong>Whistleblower Accounts:</strong></p>
           <p>• John Loftus - former US Justice Department Nazi hunter</p>
+          <p>• <a href="https://remember.org/loftus.html" target="_blank">John Loftus-Finding and prosecuting Nazi war criminals</a></p>
           <p>• "The Secret War Against the Jews" documentation</p>
+          <p>• <a href="https://archive.org/details/secretwaragainst0000loft" target="_blank">John Loftus-The secret war against the jews:how western espionage betrayed the Jewish people</a></p>
         </div>
         
         <h2>💰 War Profiteering & Economic Motives</h2>
