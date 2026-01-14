@@ -5251,669 +5251,668 @@ app.get('/history/resources', (req, res) => {
 // ============================================
 
 app.get('/history/money', (req, res) => {
-    const moneyContent = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Monetary Systems - Currency History & Hidden Truths</title>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                font-family: 'Arial', sans-serif;
+    const moneyContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monetary Systems - Currency History & Hidden Truths</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        :root {
+            --gold: #FFD700;
+            --silver: #C0C0C0;
+            --crypto-blue: #00b4db;
+            --fiat-red: #ff416c;
+            --document-green: #11998e;
+        }
+        
+        body {
+            background: radial-gradient(circle at center, #0a0a0a, #000000);
+            color: #f0f0f0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .money-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .floating-coin {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.1;
+            animation: floatCoin 20s linear infinite;
+        }
+        
+        @keyframes floatCoin {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
             }
-            
-            :root {
-                --gold: #FFD700;
-                --silver: #C0C0C0;
-                --crypto-blue: #00b4db;
-                --fiat-red: #ff416c;
-                --document-green: #11998e;
-            }
-            
-            body {
-                background: radial-gradient(circle at center, #0a0a0a, #000000);
-                color: #f0f0f0;
-                min-height: 100vh;
-                overflow-x: hidden;
-            }
-            
-            .money-animation {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                pointer-events: none;
-                z-index: 1;
-            }
-            
-            .floating-coin {
-                position: absolute;
-                font-size: 2rem;
+            10% {
                 opacity: 0.1;
-                animation: floatCoin 20s linear infinite;
             }
-            
-            @keyframes floatCoin {
-                0% {
-                    transform: translateY(100vh) rotate(0deg);
-                    opacity: 0;
-                }
-                10% {
-                    opacity: 0.1;
-                }
-                90% {
-                    opacity: 0.1;
-                }
-                100% {
-                    transform: translateY(-100px) rotate(360deg);
-                    opacity: 0;
-                }
+            90% {
+                opacity: 0.1;
             }
-            
-            .container {
-                position: relative;
-                z-index: 2;
-                max-width: 1400px;
-                margin: 0 auto;
-                padding: 20px;
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
             }
-            
-            header {
-                text-align: center;
-                padding: 80px 20px;
-                background: linear-gradient(45deg, 
-                    rgba(255, 215, 0, 0.1), 
-                    rgba(192, 192, 192, 0.1), 
-                    rgba(0, 180, 219, 0.1));
-                border-radius: 30px;
-                margin-bottom: 50px;
-                border: 1px solid rgba(255, 215, 0, 0.2);
-                box-shadow: 0 0 50px rgba(255, 215, 0, 0.1);
-                position: relative;
-                overflow: hidden;
-            }
-            
-            .holographic-effect {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(
-                    45deg,
-                    transparent 30%,
-                    rgba(255, 255, 255, 0.05) 50%,
-                    transparent 70%
-                );
-                animation: holographic 3s linear infinite;
-            }
-            
-            @keyframes holographic {
-                0% { transform: translateX(-100%); }
-                100% { transform: translateX(100%); }
-            }
-            
+        }
+        
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(45deg, 
+                rgba(255, 215, 0, 0.1), 
+                rgba(192, 192, 192, 0.1), 
+                rgba(0, 180, 219, 0.1));
+            border-radius: 30px;
+            margin-bottom: 50px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .holographic-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.05) 50%,
+                transparent 70%
+            );
+            animation: holographic 3s linear infinite;
+        }
+        
+        @keyframes holographic {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        h1 {
+            font-size: 4rem;
+            background: linear-gradient(45deg, var(--gold), var(--silver), var(--crypto-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+        
+        .tagline {
+            font-size: 1.3rem;
+            color: #aaa;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+        
+        .era-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .era-card {
+            background: rgba(20, 20, 30, 0.8);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .era-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .era-1 { border-color: var(--gold); }
+        .era-2 { border-color: var(--silver); }
+        .era-3 { border-color: #8B4513; }
+        .era-4 { border-color: var(--fiat-red); }
+        .era-5 { border-color: var(--crypto-blue); }
+        
+        .era-header {
+            padding: 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        
+        .era-title {
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .era-icon {
+            font-size: 2rem;
+        }
+        
+        .toggle-btn {
+            background: none;
+            border: 2px solid currentColor;
+            color: inherit;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-btn:hover {
+            transform: rotate(180deg);
+        }
+        
+        .era-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        .era-content.expanded {
+            padding: 30px;
+            max-height: 2000px;
+        }
+        
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .document-card {
+            background: rgba(30, 30, 40, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid var(--document-green);
+            transition: all 0.3s ease;
+        }
+        
+        .document-card:hover {
+            background: rgba(40, 40, 50, 0.9);
+            transform: translateY(-3px);
+        }
+        
+        .doc-title {
+            color: var(--document-green);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .doc-source {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .doc-link {
+            display: inline-block;
+            padding: 8px 15px;
+            background: var(--document-green);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .doc-link:hover {
+            background: #0d7c6f;
+            transform: scale(1.05);
+        }
+        
+        .hidden-archive {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px dashed #666;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            position: relative;
+        }
+        
+        .archive-toggle {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+        }
+        
+        .archive-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+        }
+        
+        .archive-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            margin-top: 0;
+        }
+        
+        .archive-content.expanded {
+            max-height: 2000px;
+            margin-top: 20px;
+        }
+        
+        .secret-link {
+            color: #aaa;
+            text-decoration: none;
+            border-bottom: 1px dashed #666;
+            padding: 5px 0;
+            display: block;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .secret-link:hover {
+            color: var(--gold);
+            border-bottom-color: var(--gold);
+        }
+        
+        .verification-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(17, 153, 142, 0.2);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 40px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .nav-button {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, rgba(255,215,0,0.1), rgba(192,192,192,0.1));
+            color: var(--gold);
+            text-decoration: none;
+            border-radius: 15px;
+            border: 1px solid rgba(255,215,0,0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-button:hover {
+            background: linear-gradient(45deg, rgba(255,215,0,0.2), rgba(192,192,192,0.2));
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(255,215,0,0.2);
+        }
+        
+        .disclaimer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 768px) {
             h1 {
-                font-size: 4rem;
-                background: linear-gradient(45deg, var(--gold), var(--silver), var(--crypto-blue));
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                margin-bottom: 20px;
-                text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-            }
-            
-            .tagline {
-                font-size: 1.3rem;
-                color: #aaa;
-                margin-bottom: 40px;
-                font-style: italic;
-            }
-            
-            .era-timeline {
-                display: flex;
-                flex-direction: column;
-                gap: 40px;
-                margin-bottom: 60px;
-            }
-            
-            .era-card {
-                background: rgba(20, 20, 30, 0.8);
-                border-radius: 20px;
-                overflow: hidden;
-                border: 1px solid;
-                transition: all 0.4s ease;
-                backdrop-filter: blur(10px);
-            }
-            
-            .era-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-            }
-            
-            .era-1 { border-color: var(--gold); }
-            .era-2 { border-color: var(--silver); }
-            .era-3 { border-color: #8B4513; }
-            .era-4 { border-color: var(--fiat-red); }
-            .era-5 { border-color: var(--crypto-blue); }
-            
-            .era-header {
-                padding: 25px;
-                border-bottom: 1px solid rgba(255,255,255,0.1);
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                cursor: pointer;
+                font-size: 2.5rem;
             }
             
             .era-title {
-                font-size: 1.8rem;
-                display: flex;
-                align-items: center;
-                gap: 15px;
-            }
-            
-            .era-icon {
-                font-size: 2rem;
-            }
-            
-            .toggle-btn {
-                background: none;
-                border: 2px solid currentColor;
-                color: inherit;
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                font-size: 1.5rem;
-                cursor: pointer;
-                transition: all 0.3s ease;
-            }
-            
-            .toggle-btn:hover {
-                transform: rotate(180deg);
-            }
-            
-            .era-content {
-                padding: 0;
-                max-height: 0;
-                overflow: hidden;
-                transition: all 0.5s ease;
-            }
-            
-            .era-content.expanded {
-                padding: 30px;
-                max-height: 2000px;
+                font-size: 1.4rem;
             }
             
             .documents-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 20px;
-                margin-top: 20px;
-            }
-            
-            .document-card {
-                background: rgba(30, 30, 40, 0.8);
-                padding: 20px;
-                border-radius: 15px;
-                border: 1px solid var(--document-green);
-                transition: all 0.3s ease;
-            }
-            
-            .document-card:hover {
-                background: rgba(40, 40, 50, 0.9);
-                transform: translateY(-3px);
-            }
-            
-            .doc-title {
-                color: var(--document-green);
-                margin-bottom: 10px;
-                font-size: 1.1rem;
-            }
-            
-            .doc-source {
-                color: #888;
-                font-size: 0.9rem;
-                margin-bottom: 10px;
-            }
-            
-            .doc-link {
-                display: inline-block;
-                padding: 8px 15px;
-                background: var(--document-green);
-                color: white;
-                text-decoration: none;
-                border-radius: 5px;
-                font-size: 0.9rem;
-                transition: all 0.3s ease;
-            }
-            
-            .doc-link:hover {
-                background: #0d7c6f;
-                transform: scale(1.05);
-            }
-            
-            .hidden-archive {
-                background: rgba(0, 0, 0, 0.5);
-                border: 2px dashed #666;
-                border-radius: 15px;
-                padding: 20px;
-                margin-top: 20px;
-                position: relative;
-            }
-            
-            .archive-toggle {
-                background: linear-gradient(45deg, #ff416c, #ff4b2b);
-                color: white;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 25px;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                margin: 0 auto;
-                transition: all 0.3s ease;
-            }
-            
-            .archive-toggle:hover {
-                transform: scale(1.05);
-                box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
-            }
-            
-            .archive-content {
-                max-height: 0;
-                overflow: hidden;
-                transition: all 0.5s ease;
-                margin-top: 0;
-            }
-            
-            .archive-content.expanded {
-                max-height: 2000px;
-                margin-top: 20px;
-            }
-            
-            .secret-link {
-                color: #aaa;
-                text-decoration: none;
-                border-bottom: 1px dashed #666;
-                padding: 5px 0;
-                display: block;
-                margin: 5px 0;
-                transition: all 0.3s ease;
-            }
-            
-            .secret-link:hover {
-                color: var(--gold);
-                border-bottom-color: var(--gold);
-            }
-            
-            .verification-badge {
-                display: inline-flex;
-                align-items: center;
-                gap: 8px;
-                background: rgba(17, 153, 142, 0.2);
-                padding: 5px 10px;
-                border-radius: 15px;
-                font-size: 0.8rem;
-                margin-left: 10px;
+                grid-template-columns: 1fr;
             }
             
             .navigation {
-                display: flex;
-                justify-content: space-between;
-                padding: 40px 0;
-                border-top: 1px solid rgba(255,255,255,0.1);
+                flex-direction: column;
+                gap: 15px;
             }
-            
-            .nav-button {
-                padding: 15px 30px;
-                background: linear-gradient(45deg, rgba(255,215,0,0.1), rgba(192,192,192,0.1));
-                color: var(--gold);
-                text-decoration: none;
-                border-radius: 15px;
-                border: 1px solid rgba(255,215,0,0.3);
-                transition: all 0.3s ease;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-            }
-            
-            .nav-button:hover {
-                background: linear-gradient(45deg, rgba(255,215,0,0.2), rgba(192,192,192,0.2));
-                transform: translateY(-3px);
-                box-shadow: 0 5px 20px rgba(255,215,0,0.2);
-            }
-            
-            .disclaimer {
-                text-align: center;
-                padding: 20px;
-                color: #666;
-                font-size: 0.9rem;
-                border-top: 1px solid rgba(255,255,255,0.1);
-                margin-top: 40px;
-            }
-            
-            @media (max-width: 768px) {
-                h1 {
-                    font-size: 2.5rem;
-                }
-                
-                .era-title {
-                    font-size: 1.4rem;
-                }
-                
-                .documents-grid {
-                    grid-template-columns: 1fr;
-                }
-                
-                .navigation {
-                    flex-direction: column;
-                    gap: 15px;
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <div class="money-animation" id="moneyAnimation"></div>
+        }
+    </style>
+</head>
+<body>
+    <div class="money-animation" id="moneyAnimation"></div>
+    
+    <div class="container">
+        <header>
+            <div class="holographic-effect"></div>
+            <h1>Monetary Systems</h1>
+            <div class="tagline">From Gold Standard to Digital Currency - The Hidden Architecture of Power</div>
+            <div class="verification-badge">
+                <span>🔒</span> Sources Verified | Archived Documents Available
+            </div>
+        </header>
         
-        <div class="container">
-            <header>
-                <div class="holographic-effect"></div>
-                <h1>Monetary Systems</h1>
-                <div class="tagline">From Gold Standard to Digital Currency - The Hidden Architecture of Power</div>
-                <div class="verification-badge">
-                    <span>🔒</span> Sources Verified | Archived Documents Available
+        <div class="era-timeline">
+            <!-- Era 1: Commodity Money -->
+            <div class="era-card era-1">
+                <div class="era-header" onclick="toggleEra('era1')">
+                    <div class="era-title">
+                        <span class="era-icon">💰</span>
+                        Commodity Money Era (Ancient - 1700)
+                    </div>
+                    <button class="toggle-btn">▼</button>
                 </div>
-            </header>
-            
-            <div class="era-timeline">
-                <!-- Era 1: Commodity Money -->
-                <div class="era-card era-1">
-                    <div class="era-header" onclick="toggleEra('era1')">
-                        <div class="era-title">
-                            <span class="era-icon">💰</span>
-                            Commodity Money Era (Ancient - 1700)
-                        </div>
-                        <button class="toggle-btn">▼</button>
-                    </div>
-                    <div class="era-content" id="era1">
-                        <p><strong>Primary Forms:</strong> Gold, silver, shells, salt, cattle</p>
-                        <p><strong>Key Feature:</strong> Money had intrinsic value</p>
-                        
-                        <div class="documents-grid">
-                            <div class="document-card">
-                                <div class="doc-title">Code of Hammurabi (1754 BCE)</div>
-                                <div class="doc-source">Babylonian Law Code - First monetary regulations</div>
-                                <a href="https://avalon.law.yale.edu/ancient/hamframe.asp" target="_blank" class="doc-link">
-                                    View Original Text
-                                </a>
-                            </div>
-                            
-                            <div class="document-card">
-                                <div class="doc-title">Lydia's Electrum Coins (7th Century BCE)</div>
-                                <div class="doc-source">First standardized metal coinage</div>
-                                <a href="https://www.britishmuseum.org/collection/object/G_1920-0214-1" target="_blank" class="doc-link">
-                                    British Museum Archive
-                                </a>
-                            </div>
+                <div class="era-content" id="era1">
+                    <p><strong>Primary Forms:</strong> Gold, silver, shells, salt, cattle</p>
+                    <p><strong>Key Feature:</strong> Money had intrinsic value</p>
+                    
+                    <div class="documents-grid">
+                        <div class="document-card">
+                            <div class="doc-title">Code of Hammurabi (1754 BCE)</div>
+                            <div class="doc-source">Babylonian Law Code - First monetary regulations</div>
+                            <a href="https://avalon.law.yale.edu/ancient/hamframe.asp" target="_blank" class="doc-link">
+                                View Original Text
+                            </a>
                         </div>
                         
-                        <div class="hidden-archive">
-                            <button class="archive-toggle" onclick="toggleArchive('archive1')">
-                                <span>🔍</span> Hidden Sources & Research
-                            </button>
-                            <div class="archive-content" id="archive1">
-                                <a href="https://www.federalreserve.gov/faqs/currency_12771.htm" target="_blank" class="secret-link">
-                                    Federal Reserve History of Currency
-                                </a>
-                                <a href="https://www.imf.org/external/np/exr/center/mm/eng/mm_dt_01.htm" target="_blank" class="secret-link">
-                                    IMF Monetary Systems Timeline
-                                </a>
-                                <a href="https://www.bis.org/publ/work133.pdf" target="_blank" class="secret-link">
-                                    BIS: History of Monetary Systems (PDF)
-                                </a>
-                                <a href="https://fraser.stlouisfed.org/" target="_blank" class="secret-link">
-                                    Federal Reserve Economic Data Archive
-                                </a>
-                            </div>
+                        <div class="document-card">
+                            <div class="doc-title">Lydia's Electrum Coins (7th Century BCE)</div>
+                            <div class="doc-source">First standardized metal coinage</div>
+                            <a href="https://www.britishmuseum.org/collection/object/G_1920-0214-1" target="_blank" class="doc-link">
+                                British Museum Archive
+                            </a>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Era 2: Gold Standard -->
-                <div class="era-card era-2">
-                    <div class="era-header" onclick="toggleEra('era2')">
-                        <div class="era-title">
-                            <span class="era-icon">🥇</span>
-                            Gold Standard Era (1717 - 1971)
-                        </div>
-                        <button class="toggle-btn">▼</button>
-                    </div>
-                    <div class="era-content" id="era2">
-                        <p><strong>Key Event:</strong> 1944 Bretton Woods Agreement - USD tied to gold</p>
-                        <p><strong>End Date:</strong> August 15, 1971 - Nixon closes gold window</p>
-                        
-                        <div class="documents-grid">
-                            <div class="document-card">
-                                <div class="doc-title">Bretton Woods Agreements (1944)</div>
-                                <div class="doc-source">Established IMF and World Bank</div>
-                                <a href="https://www.imf.org/external/np/exr/center/mm/eng/mm_bt_01.htm" target="_blank" class="doc-link">
-                                    IMF Original Documents
-                                </a>
-                            </div>
-                            
-                            <div class="document-card">
-                                <div class="doc-title">Nixon's Executive Order 11615 (1971)</div>
-                                <div class="doc-source">"Nixon Shock" - Ended gold convertibility</div>
-                                <a href="https://www.presidency.ucsb.edu/documents/executive-order-11615-providing-stabilization-economic-prices-rents-wages-and-salaries" target="_blank" class="doc-link">
-                                    Presidential Archive
-                                </a>
-                            </div>
-                            
-                            <div class="document-card">
-                                <div class="doc-title">Bank of England Gold Archives</div>
-                                <div class="doc-source">Historical gold reserve data</div>
-                                <a href="https://www.bankofengland.co.uk/statistics/gold-and-foreign-currency-reserves" target="_blank" class="doc-link">
-                                    BOE Statistics
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Era 3: Fiat Currency -->
-                <div class="era-card era-3">
-                    <div class="era-header" onclick="toggleEra('era3')">
-                        <div class="era-title">
-                            <span class="era-icon">🏦</span>
-                            Fiat Currency Era (1971 - Present)
-                        </div>
-                        <button class="toggle-btn">▼</button>
-                    </div>
-                    <div class="era-content" id="era3">
-                        <p><strong>Definition:</strong> Government-decreed money with no intrinsic value</p>
-                        <p><strong>Central Control:</strong> Federal Reserve, ECB, Bank of Japan</p>
-                        
-                        <div class="documents-grid">
-                            <div class="document-card">
-                                <div class="doc-title">Federal Reserve Act (1913)</div>
-                                <div class="doc-source">Created US central banking system</div>
-                                <a href="https://www.federalreserve.gov/aboutthefed/fract.htm" target="_blank" class="doc-link">
-                                    Full Text
-                                </a>
-                            </div>
-                            
-                            <div class="document-card">
-                                <div class="doc-title">ECB Monetary Policy Framework</div>
-                                <div class="doc-source">European Central Bank documentation</div>
-                                <a href="https://www.ecb.europa.eu/mopo/html/index.en.html" target="_blank" class="doc-link">
-                                    ECB Official Site
-                                </a>
-                            </div>
-                            
-                            <div class="document-card">
-                                <div class="doc-title">Quantitative Easing Programs</div>
-                                <div class="doc-source">2008-2020 central bank balance sheets</div>
-                                <a href="https://www.federalreserve.gov/monetarypolicy/bst_recenttrends.htm" target="_blank" class="doc-link">
-                                    Fed Balance Sheet Data
-                                </a>
-                            </div>
-                        </div>
-                        
-                        <div class="hidden-archive">
-                            <button class="archive-toggle" onclick="toggleArchive('archive3')">
-                                <span>📊</span> Central Bank Research Archives
-                            </button>
-                            <div class="archive-content" id="archive3">
-                                <a href="https://www.bis.org/publ/work781.pdf" target="_blank" class="secret-link">
-                                    BIS: The Future of Monetary Policy
-                                </a>
-                                <a href="https://www.frbsf.org/economic-research/publications/economic-letter/2021/january/why-is-u-s-inflation-higher-than-in-other-countries/" target="_blank" class="secret-link">
-                                    SF Fed Inflation Research
-                                </a>
-                                <a href="https://www.ecb.europa.eu/pub/pdf/scpwps/ecb.wp2480~07f3d7f4c3.en.pdf" target="_blank" class="secret-link">
-                                    ECB Digital Currency Research
-                                </a>
-                                <a href="https://www.imf.org/en/Publications/WP/Issues/2021/01/29/The-Rise-of-Digital-Money-50027" target="_blank" class="secret-link">
-                                    IMF Digital Money Report
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Era 4: Cryptocurrency -->
-                <div class="era-card era-5">
-                    <div class="era-header" onclick="toggleEra('era4')">
-                        <div class="era-title">
-                            <span class="era-icon">₿</span>
-                            Digital & Cryptocurrency Era (2009 - Present)
-                        </div>
-                        <button class="toggle-btn">▼</button>
-                    </div>
-                    <div class="era-content" id="era4">
-                        <p><strong>Genesis:</strong> Bitcoin Whitepaper - October 31, 2008</p>
-                        <p><strong>Key Innovation:</strong> Decentralized, trustless systems</p>
-                        
-                        <div class="documents-grid">
-                            <div class="document-card">
-                                <div class="doc-title">Bitcoin Whitepaper (2008)</div>
-                                <div class="doc-source">Satoshi Nakamoto - Original PDF</div>
-                                <a href="https://bitcoin.org/bitcoin.pdf" target="_blank" class="doc-link">
-                                    Download PDF
-                                </a>
-                            </div>
-                            
-                            <div class="document-card">
-                                <div class="doc-title">SEC Crypto Regulation Framework</div>
-                                <div class="doc-source">US regulatory position</div>
-                                <a href="https://www.sec.gov/corpfin/framework-investment-contract-analysis-digital-assets" target="_blank" class="doc-link">
-                                    SEC Official Guidance
-                                </a>
-                            </div>
-                            
-                            <div class="document-card">
-                                <div class="doc-title">CBDC Research by Central Banks</div>
-                                <div class="doc-source">Digital currency experiments</div>
-                                <a href="https://www.atlanticcouncil.org/cbdctracker/" target="_blank" class="doc-link">
-                                    CBDC Tracker
-                                </a>
-                            </div>
-                        </div>
-                        
-                        <div class="hidden-archive">
-                            <button class="archive-toggle" onclick="toggleArchive('archive4')">
-                                <span>🔗</span> Blockchain Research & Analytics
-                            </button>
-                            <div class="archive-content" id="archive4">
-                                <a href="https://www.blockchain.com/explorer" target="_blank" class="secret-link">
-                                    Blockchain Explorer - Live Transactions
-                                </a>
-                                <a href="https://coinmetrics.io/" target="_blank" class="secret-link">
-                                    Coin Metrics - Crypto Data
-                                </a>
-                                <a href="https://messari.io/" target="_blank" class="secret-link">
-                                    Messari Crypto Research
-                                </a>
-                                <a href="https://www.gemini.com/cryptopedia" target="_blank" class="secret-link">
-                                    Cryptopedia - Educational Resource
-                                </a>
-                            </div>
+                    
+                    <div class="hidden-archive">
+                        <button class="archive-toggle" onclick="toggleArchive('archive1')">
+                            <span>🔍</span> Hidden Sources & Research
+                        </button>
+                        <div class="archive-content" id="archive1">
+                            <a href="https://www.federalreserve.gov/faqs/currency_12771.htm" target="_blank" class="secret-link">
+                                Federal Reserve History of Currency
+                            </a>
+                            <a href="https://www.imf.org/external/np/exr/center/mm/eng/mm_dt_01.htm" target="_blank" class="secret-link">
+                                IMF Monetary Systems Timeline
+                            </a>
+                            <a href="https://www.bis.org/publ/work133.pdf" target="_blank" class="secret-link">
+                                BIS: History of Monetary Systems (PDF)
+                            </a>
+                            <a href="https://fraser.stlouisfed.org/" target="_blank" class="secret-link">
+                                Federal Reserve Economic Data Archive
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="navigation">
-                <a href="/history/resources" class="nav-button">
-                    ⬅️ Previous: Resource Control
-                </a>
-                <a href="/history/usa" class="nav-button">
-                    Next: United States History ➡️
-                </a>
+            <!-- Era 2: Gold Standard -->
+            <div class="era-card era-2">
+                <div class="era-header" onclick="toggleEra('era2')">
+                    <div class="era-title">
+                        <span class="era-icon">🥇</span>
+                        Gold Standard Era (1717 - 1971)
+                    </div>
+                    <button class="toggle-btn">▼</button>
+                </div>
+                <div class="era-content" id="era2">
+                    <p><strong>Key Event:</strong> 1944 Bretton Woods Agreement - USD tied to gold</p>
+                    <p><strong>End Date:</strong> August 15, 1971 - Nixon closes gold window</p>
+                    
+                    <div class="documents-grid">
+                        <div class="document-card">
+                            <div class="doc-title">Bretton Woods Agreements (1944)</div>
+                            <div class="doc-source">Established IMF and World Bank</div>
+                            <a href="https://www.imf.org/external/np/exr/center/mm/eng/mm_bt_01.htm" target="_blank" class="doc-link">
+                                IMF Original Documents
+                            </a>
+                        </div>
+                        
+                        <div class="document-card">
+                            <div class="doc-title">Nixon's Executive Order 11615 (1971)</div>
+                            <div class="doc-source">"Nixon Shock" - Ended gold convertibility</div>
+                            <a href="https://www.presidency.ucsb.edu/documents/executive-order-11615-providing-stabilization-economic-prices-rents-wages-and-salaries" target="_blank" class="doc-link">
+                                Presidential Archive
+                            </a>
+                        </div>
+                        
+                        <div class="document-card">
+                            <div class="doc-title">Bank of England Gold Archives</div>
+                            <div class="doc-source">Historical gold reserve data</div>
+                            <a href="https://www.bankofengland.co.uk/statistics/gold-and-foreign-currency-reserves" target="_blank" class="doc-link">
+                                BOE Statistics
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <div class="disclaimer">
-                <p>⚠️ This page contains verified historical documents and educational resources. All sources are from official archives, central banks, and academic institutions.</p>
-                <p style="margin-top: 10px; font-size: 0.8rem; color: #555;">
-                    Last Updated: 2024 | Educational Use Only | Cross-Reference Recommended
-                </p>
+            <!-- Era 3: Fiat Currency -->
+            <div class="era-card era-3">
+                <div class="era-header" onclick="toggleEra('era3')">
+                    <div class="era-title">
+                        <span class="era-icon">🏦</span>
+                        Fiat Currency Era (1971 - Present)
+                    </div>
+                    <button class="toggle-btn">▼</button>
+                </div>
+                <div class="era-content" id="era3">
+                    <p><strong>Definition:</strong> Government-decreed money with no intrinsic value</p>
+                    <p><strong>Central Control:</strong> Federal Reserve, ECB, Bank of Japan</p>
+                    
+                    <div class="documents-grid">
+                        <div class="document-card">
+                            <div class="doc-title">Federal Reserve Act (1913)</div>
+                            <div class="doc-source">Created US central banking system</div>
+                            <a href="https://www.federalreserve.gov/aboutthefed/fract.htm" target="_blank" class="doc-link">
+                                Full Text
+                            </a>
+                        </div>
+                        
+                        <div class="document-card">
+                            <div class="doc-title">ECB Monetary Policy Framework</div>
+                            <div class="doc-source">European Central Bank documentation</div>
+                            <a href="https://www.ecb.europa.eu/mopo/html/index.en.html" target="_blank" class="doc-link">
+                                ECB Official Site
+                            </a>
+                        </div>
+                        
+                        <div class="document-card">
+                            <div class="doc-title">Quantitative Easing Programs</div>
+                            <div class="doc-source">2008-2020 central bank balance sheets</div>
+                            <a href="https://www.federalreserve.gov/monetarypolicy/bst_recenttrends.htm" target="_blank" class="doc-link">
+                                Fed Balance Sheet Data
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden-archive">
+                        <button class="archive-toggle" onclick="toggleArchive('archive3')">
+                            <span>📊</span> Central Bank Research Archives
+                        </button>
+                        <div class="archive-content" id="archive3">
+                            <a href="https://www.bis.org/publ/work781.pdf" target="_blank" class="secret-link">
+                                BIS: The Future of Monetary Policy
+                            </a>
+                            <a href="https://www.frbsf.org/economic-research/publications/economic-letter/2021/january/why-is-u-s-inflation-higher-than-in-other-countries/" target="_blank" class="secret-link">
+                                SF Fed Inflation Research
+                            </a>
+                            <a href="https://www.ecb.europa.eu/pub/pdf/scpwps/ecb.wp2480~07f3d7f4c3.en.pdf" target="_blank" class="secret-link">
+                                ECB Digital Currency Research
+                            </a>
+                            <a href="https://www.imf.org/en/Publications/WP/Issues/2021/01/29/The-Rise-of-Digital-Money-50027" target="_blank" class="secret-link">
+                                IMF Digital Money Report
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Era 4: Cryptocurrency -->
+            <div class="era-card era-5">
+                <div class="era-header" onclick="toggleEra('era4')">
+                    <div class="era-title">
+                        <span class="era-icon">₿</span>
+                        Digital & Cryptocurrency Era (2009 - Present)
+                    </div>
+                    <button class="toggle-btn">▼</button>
+                </div>
+                <div class="era-content" id="era4">
+                    <p><strong>Genesis:</strong> Bitcoin Whitepaper - October 31, 2008</p>
+                    <p><strong>Key Innovation:</strong> Decentralized, trustless systems</p>
+                    
+                    <div class="documents-grid">
+                        <div class="document-card">
+                            <div class="doc-title">Bitcoin Whitepaper (2008)</div>
+                            <div class="doc-source">Satoshi Nakamoto - Original PDF</div>
+                            <a href="https://bitcoin.org/bitcoin.pdf" target="_blank" class="doc-link">
+                                Download PDF
+                            </a>
+                        </div>
+                        
+                        <div class="document-card">
+                            <div class="doc-title">SEC Crypto Regulation Framework</div>
+                            <div class="doc-source">US regulatory position</div>
+                            <a href="https://www.sec.gov/corpfin/framework-investment-contract-analysis-digital-assets" target="_blank" class="doc-link">
+                                SEC Official Guidance
+                            </a>
+                        </div>
+                        
+                        <div class="document-card">
+                            <div class="doc-title">CBDC Research by Central Banks</div>
+                            <div class="doc-source">Digital currency experiments</div>
+                            <a href="https://www.atlanticcouncil.org/cbdctracker/" target="_blank" class="doc-link">
+                                CBDC Tracker
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden-archive">
+                        <button class="archive-toggle" onclick="toggleArchive('archive4')">
+                            <span>🔗</span> Blockchain Research & Analytics
+                        </button>
+                        <div class="archive-content" id="archive4">
+                            <a href="https://www.blockchain.com/explorer" target="_blank" class="secret-link">
+                                Blockchain Explorer - Live Transactions
+                            </a>
+                            <a href="https://coinmetrics.io/" target="_blank" class="secret-link">
+                                Coin Metrics - Crypto Data
+                            </a>
+                            <a href="https://messari.io/" target="_blank" class="secret-link">
+                                Messari Crypto Research
+                            </a>
+                            <a href="https://www.gemini.com/cryptopedia" target="_blank" class="secret-link">
+                                Cryptopedia - Educational Resource
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
-        <script>
-            // Create floating coins animation
-            function createFloatingCoins() {
-                const animationDiv = document.getElementById('moneyAnimation');
-                const coins = ['💰', '🥇', '💵', '💎', '₿', '🏦', '💳'];
-                
-                for (let i = 0; i < 30; i++) {
-                    const coin = document.createElement('div');
-                    coin.className = 'floating-coin';
-                    coin.textContent = coins[Math.floor(Math.random() * coins.length)];
-                    coin.style.left = `${Math.random() * 100}%`;
-                    coin.style.animationDelay = `${Math.random() * 20}s`;
-                    coin.style.fontSize = `${1 + Math.random() * 3}rem`;
-                    animationDiv.appendChild(coin);
-                }
-            }
+        <div class="navigation">
+            <a href="/history/resources" class="nav-button">
+                ⬅️ Previous: Resource Control
+            </a>
+            <a href="/history/usa" class="nav-button">
+                Next: United States History ➡️
+            </a>
+        </div>
+        
+        <div class="disclaimer">
+            <p>⚠️ This page contains verified historical documents and educational resources. All sources are from official archives, central banks, and academic institutions.</p>
+            <p style="margin-top: 10px; font-size: 0.8rem; color: #555;">
+                Last Updated: 2024 | Educational Use Only | Cross-Reference Recommended
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Create floating coins animation
+        function createFloatingCoins() {
+            const animationDiv = document.getElementById('moneyAnimation');
+            const coins = ['💰', '🥇', '💵', '💎', '₿', '🏦', '💳'];
             
-            // Toggle era content
-            function toggleEra(eraId) {
-                const content = document.getElementById(eraId);
-                const button = content.previousElementSibling.querySelector('.toggle-btn');
-                
-                content.classList.toggle('expanded');
-                button.textContent = content.classList.contains('expanded') ? '▲' : '▼';
+            for (let i = 0; i < 30; i++) {
+                const coin = document.createElement('div');
+                coin.className = 'floating-coin';
+                coin.textContent = coins[Math.floor(Math.random() * coins.length)];
+                coin.style.left = (Math.random() * 100) + '%';
+                coin.style.animationDelay = (Math.random() * 20) + 's';
+                coin.style.fontSize = (1 + Math.random() * 3) + 'rem';
+                animationDiv.appendChild(coin);
             }
+        }
+        
+        // Toggle era content
+        function toggleEra(eraId) {
+            const content = document.getElementById(eraId);
+            const button = content.previousElementSibling.querySelector('.toggle-btn');
             
-            // Toggle archive content
-            function toggleArchive(archiveId) {
-                const content = document.getElementById(archiveId);
-                content.classList.toggle('expanded');
-            }
+            content.classList.toggle('expanded');
+            button.textContent = content.classList.contains('expanded') ? '▲' : '▼';
+        }
+        
+        // Toggle archive content
+        function toggleArchive(archiveId) {
+            const content = document.getElementById(archiveId);
+            content.classList.toggle('expanded');
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingCoins();
             
-            // Initialize on page load
-            document.addEventListener('DOMContentLoaded', function() {
-                createFloatingCoins();
-                
-                // Auto-expand first era
-                setTimeout(() => {
-                    toggleEra('era1');
-                }, 500);
-            });
-        </script>
-    </body>
-    </html>
-    `;
+            // Auto-expand first era
+            setTimeout(function() {
+                toggleEra('era1');
+            }, 500);
+        });
+    </script>
+</body>
+</html>`;
     
     res.send(moneyContent);
 });
+
 
 // ===== 404 ERROR HANDLER =====
 app.use((req, res) => {
