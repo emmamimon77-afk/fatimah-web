@@ -3882,6 +3882,895 @@ app.get('/history/banking', (req, res) => {
 `);
 });
 
+// Add this route to your server.js after the banking section
+
+app.get('/history/ruling-families', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Ruling Families & Dynasties</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>👑 Ruling Families & Dynasties - The Hidden Aristocracy</h1>
+        <p>Banking dynasties, royal families, and corporate oligarchs who wield real power behind political scenes.</p>
+        
+        <div class="https-info">
+          <h3>🔍 "The aristocracy of our moneyed corporations... dare not to defy them."</h3>
+          <p>- President Grover Cleveland, 1888</p>
+        </div>
+        
+        <h2>🏦 Banking Dynasties</h2>
+        
+        <div class="message-box">
+          <h3>The Rothschild Family - $2+ Trillion (Estimated)</h3>
+          <p><strong>Founded:</strong> 1760s, Frankfurt by Mayer Amschel Rothschild</p>
+          <p><strong>Strategy:</strong> Five sons established in 5 European capitals</p>
+          <p><strong>Power Base:</strong> Central banking, gold, government bonds</p>
+          
+          <p><strong>Key Holdings & Influence:</strong></p>
+          <p>• Bank of England (founding shareholders)</p>
+          <p>• Federal Reserve (major influence)</p>
+          <p>• European Central Banks</p>
+          <p>• De Beers diamonds (historical control)</p>
+          <p>• Rio Tinto mining (historical influence)</p>
+          
+          <p><strong>Historical Events:</strong></p>
+          <p>• Funded both sides of Napoleonic Wars</p>
+          <p>• Financed British Empire expansion</p>
+          <p>• Balfour Declaration addressed to Lord Rothschild</p>
+          <p>• Austrian-Hungarian Empire financing</p>
+          
+          <p><strong>Modern Operations:</strong></p>
+          <p>• Rothschild & Co (investment banking)</p>
+          <p>• Edmond de Rothschild Group</p>
+          <p>• RIT Capital Partners (Jacob Rothschild)</p>
+          <p>• Major art collectors (largest private collection)</p>
+          
+          <p><strong>Research Resources:</strong></p>
+          <p>• <a href="https://www.rothschildandco.com/en/our-history/" target="_blank">Rothschild & Co Official History</a></p>
+          <p>• "The House of Rothschild" by Niall Ferguson</p>
+          <p>• <a href="https://www.bloomberg.com/news/articles/2015-03-26/rothschild-scion-builds-3-billion-fortune-outside-dynasty" target="_blank">Bloomberg - Rothschild Wealth</a></p>
+        </div>
+        
+        <div class="message-box">
+          <h3>The Rockefeller Family - $340 Billion+ (Peak)</h3>
+          <p><strong>Origin:</strong> John D. Rockefeller (Standard Oil monopoly)</p>
+          <p><strong>Peak Wealth:</strong> $1.4 billion in 1937 = $340+ billion today</p>
+          <p><strong>Modern Fortune:</strong> Estimated $8-10 billion (publicly known)</p>
+          
+          <p><strong>Key Holdings & Foundations:</strong></p>
+          <p>• Rockefeller Foundation ($6.3 billion endowment)</p>
+          <p>• Rockefeller University</p>
+          <p>• Chase Manhattan Bank (now JPMorgan Chase)</p>
+          <p>• ExxonMobil, Chevron (Standard Oil descendants)</p>
+          <p>• Major real estate (Rockefeller Center)</p>
+          
+          <p><strong>Political Influence:</strong></p>
+          <p>• Council on Foreign Relations (founded by Rockefeller)</p>
+          <p>• Trilateral Commission (founding member)</p>
+          <p>• Bilderberg Group (regular participants)</p>
+          <p>• UN headquarters land donation</p>
+          
+          <p><strong>Philanthropic Control:</strong></p>
+          <p>• Medical research funding</p>
+          <p>• Education system influence</p>
+          <p>• Population control programs</p>
+          <p>• Green Revolution agriculture</p>
+          
+          <p><strong>Famous Quote:</strong></p>
+          <p><em>"We are grateful to the Washington Post, the New York Times, Time Magazine and other great publications whose directors have attended our meetings and respected their promises of discretion for almost forty years. It would have been impossible for us to develop our plan for the world if we had been subject to the bright lights of publicity during those years."</em></p>
+          <p>- David Rockefeller, 1991 Bilderberg meeting</p>
+        </div>
+        
+        <h2>👥 Other Powerful Families</h2>
+        
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Morgan Family</h3>
+            <p>• J.P. Morgan (Rothschild agent in America)</p>
+            <p>• JPMorgan Chase (largest US bank)</p>
+            <p>• Titanic connection (opponents of Fed died)</p>
+            <p>• Federal Reserve creation</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Warburg Family</h3>
+            <p>• Paul Warburg (Fed architect)</p>
+            <p>• Max Warburg (German intelligence WWI)</p>
+            <p>• Kuhn, Loeb & Co investment bank</p>
+            <p>• Federal Reserve Board members</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Schiff Family</h3>
+            <p>• Jacob Schiff financed Japanese-Russian War</p>
+            <p>• Financed Bolshevik Revolution</p>
+            <p>• Kuhn, Loeb & Co partners</p>
+            <p>• Anti-Czarist activities</p>
+          </div>
+        </div>
+        
+        <h2>👑 European Royal Families Still in Power</h2>
+        
+        <div class="message-box">
+          <h3>British Royal Family - $28+ Billion</h3>
+          <p><strong>Wealth Sources:</strong></p>
+          <p>• Crown Estate ($19.5 billion portfolio)</p>
+          <p>• Duchy of Lancaster ($1 billion)</p>
+          <p>• Duchy of Cornwall ($1.3 billion)</p>
+          <p>• Art collection (priceless)</p>
+          <p>• Jewel collection ($4+ billion)</p>
+          
+          <p><strong>Hidden Power:</strong></p>
+          <p>• 1/6 of Earth's land surface (historical)</p>
+          <p>• Commonwealth of Nations (54 countries)</p>
+          <p>• City of London Corporation (separate sovereignty)</p>
+          <p>• Crown dependencies (tax havens)</p>
+        </div>
+        
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Saudi Royal Family</h3>
+            <p>• 15,000+ princes</p>
+            <p>• $1.4 trillion wealth (family)</p>
+            <p>• Oil control (16% world reserves)</p>
+            <p>• Petrodollar system</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Dutch Royal Family</h3>
+            <p>• House of Orange-Nassau</p>
+            <p>• Dutch East India Company legacy</p>
+            <p>• Shell Oil founding</p>
+            <p>• Unilever control</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Vatican/Black Nobility</h3>
+            <p>• Oldest continuous institution</p>
+            <p>• $10-15 billion wealth</p>
+            <p>• 5,000+ years of art/treasure</p>
+            <p>• Global diplomatic network</p>
+          </div>
+        </div>
+        
+        <h2>💼 Modern Corporate Dynasties</h2>
+        
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Walton Family (Walmart)</h3>
+            <p>• $250+ billion wealth</p>
+            <p>• Richest family in world</p>
+            <p>• Walmart: $600+ billion revenue</p>
+            <p>• Political influence through donations</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Mars Family (Candy)</h3>
+            <p>• $160+ billion wealth</p>
+            <p>• Mars Inc: $45 billion revenue</p>
+            <p>• Pet care monopoly</p>
+            <p>• Secretive family</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Koch Family (Oil)</h3>
+            <p>• $120+ billion wealth</p>
+            <p>• Koch Industries: $125 billion revenue</p>
+            <p>• Americans for Prosperity</p>
+            <p>• Political network funding</p>
+          </div>
+        </div>
+        
+        <h2>🔍 Intermarriage & Alliance Patterns</h2>
+        
+        <div class="message-box">
+          <h3>Historical Intermarriages</h3>
+          <p><strong>Banking Families:</strong></p>
+          <p>• Rothschild-Warburg marriages</p>
+          <p>• Schiff-Warburg connections</p>
+          <p>• Rockefeller-Percy (British aristocracy)</p>
+          <p>• Morgan-European nobility</p>
+          
+          <p><strong>Business-Political Marriages:</strong></p>
+          <p>• Kennedy family (banking-political)</p>
+          <p>• Bush family (banking-oil-political)</p>
+          <p>• Clinton family (political-legal)</p>
+          <p>• Gates family (tech-philanthropy)</p>
+          
+          <p><strong>Modern Tech Dynasties:</strong></p>
+          <p>• Bezos (Amazon monopoly)</p>
+          <p>• Musk (Tesla, SpaceX, Twitter)</p>
+          <p>• Zuckerberg (Facebook/Meta)</p>
+          <p>• Page/Brin (Google/Alphabet)</p>
+        </div>
+        
+        <h2>📚 Research Resources</h2>
+        
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Books</h3>
+            <p>• "Tragedy and Hope" by Carroll Quigley</p>
+            <p>• "The House of Rothschild" by Niall Ferguson</p>
+            <p>• "The Rockefeller Files" by Gary Allen</p>
+            <p>• "Bloodlines of the Illuminati" by Fritz Springmeier</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Documentaries</h3>
+            <p>• <a href="https://www.youtube.com/watch?v=U1Qt6a-vaNM" target="_blank">"The Rothschild Dynasty"</a></p>
+            <p>• <a href="https://www.youtube.com/watch?v=d8XWEV-sKX8" target="_blank">"The Rockefeller Family"</a></p>
+            <p>• <a href="https://www.youtube.com/watch?v=54adG6VY5lM" target="_blank">"The World's Richest Families"</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Data Sources</h3>
+            <p>• <a href="https://www.forbes.com/wealth/families/" target="_blank">Forbes World's Richest Families</a></p>
+            <p>• <a href="https://www.bloomberg.com/billionaires/" target="_blank">Bloomberg Billionaires Index</a></p>
+            <p>• <a href="https://www.openscrets.org/" target="_blank">OpenSecrets - Money in Politics</a></p>
+          </div>
+        </div>
+        
+        <div class="https-info">
+          <h3>🎯 Key Understanding</h3>
+          <p><strong>Family dynasties maintain power through:</strong></p>
+          <p>1. <strong>Intergenerational wealth transfer</strong> (trust funds, tax avoidance)</p>
+          <p>2. <strong>Strategic marriages</strong> (consolidating power blocks)</p>
+          <p>3. <strong>Philanthropic foundations</strong> (tax-free influence vehicles)</p>
+          <p>4. <strong>Educational institutions</strong> (grooming next generations)</p>
+          <p>5. <strong>Think tanks and NGOs</strong> (policy influence without accountability)</p>
+          <p><br><strong>Result:</strong> While 99% focus on political theater, real power remains in hands of ~100-200 families worldwide.</p>
+        </div>
+        
+        <br>
+        <a href="/history" style="display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">← Back to History</a>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// ===== INTELLIGENCE AGENCIES PAGE =====
+app.get('/history/intelligence', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Intelligence Agencies - Covert Operations</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        ${navigation}
+        <h1>🕵️ Intelligence Agencies - The Deep State's Hidden Hand</h1>
+        <p>Covert operations, mind control programs, false flags, and the secret history of intelligence agencies.</p>
+        
+        <div class="https-info">
+          <h3>🔍 "The CIA owns everyone of any significance in the major media."</h3>
+          <p>- William Colby, former CIA Director</p>
+        </div>
+        
+        <h2>🇺🇸 Central Intelligence Agency (CIA) - Founded 1947</h2>
+        
+        <div class="message-box">
+          <h3>Documented Covert Operations</h3>
+          
+          <p><strong>Regime Change Operations:</strong></p>
+          <p>• 1953 Iran (Operation Ajax) - Overthrew Mosaddegh</p>
+          <p>• 1954 Guatemala (Operation PBSuccess) - Overthrew Árbenz</p>
+          <p>• 1961 Cuba (Bay of Pigs) - Failed invasion</p>
+          <p>• 1973 Chile (Project FUBELT) - Overthrew Allende</p>
+          <p>• 1979 Afghanistan (Operation Cyclone) - Created Mujahideen</p>
+          <p>• 1980s Nicaragua (Contras) - Illegal funding</p>
+          
+          <p><strong>Assassination Programs:</strong></p>
+          <p>• ZR/RIFLE (Castro assassination attempts)</p>
+          <p>• Phoenix Program (Vietnam, 26,000+ killed)</p>
+          <p>• Targeted drone strikes (post-9/11)</p>
+          
+          <p><strong>Evidence Sources:</strong></p>
+          <p>• <a href="https://nsarchive2.gwu.edu/NSAEBB/NSAEBB435/" target="_blank">National Security Archive - Iran Coup</a></p>
+          <p>• <a href="https://www.cia.gov/readingroom/document/0000134974" target="_blank">CIA Guatemala Documents</a></p>
+          <p>• Church Committee Reports (1975-76)</p>
+          <p>• <a href="https://www.archives.gov/research/jfk/select-committee-report" target="_blank">JFK Assassination Records</a></p>
+        </div>
+        
+        <div class="message-box">
+          <h3>MKUltra & Mind Control Programs</h3>
+          
+          <p><strong>Project MKUltra (1953-1973):</strong></p>
+          <p>• CIA's mind control research program</p>
+          <p>• LSD testing on unwitting subjects</p>
+          <p>• Hypnosis, sensory deprivation, torture</p>
+          <p>• Destroyed most records in 1973</p>
+          
+          <p><strong>Subprojects:</strong></p>
+          <p>• Operation Midnight Climax (prostitutes, LSD)</p>
+          <p>• Project Artichoke (torture, interrogation)</p>
+          <p>• Project Bluebird (mind control)</p>
+          <p>• Subproject 68 (LSD on mental patients)</p>
+          
+          <p><strong>Victims & Whistleblowers:</strong></p>
+          <p>• Frank Olson (scientist, suicide/murder)</p>
+          <p>• Whitey Bulger (prisoner experiments)</p>
+          <p>• Thousands of unwitting subjects</p>
+          
+          <p><strong>Declassified Evidence:</strong></p>
+          <p>• <a href="https://www.cia.gov/readingroom/collection/mkultra" target="_blank">CIA MKUltra Documents</a></p>
+          <p>• <a href="https://www.nytimes.com/1977/08/03/archives/cia-data-about-drug-tests-on-humans-stolen-files-show.html" target="_blank">NYT 1977 MKUltra Exposure</a></p>
+          <p>• Church Committee Hearings</p>
+        </div>
+        
+        <h2>🇬🇧 MI6 & 🇮🇱 Mossad Operations</h2>
+        
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>MI6 (British Secret Intelligence)</h3>
+            <p><strong>Historical Operations:</strong></p>
+            <p>• Sykes-Picot Agreement (1916)</p>
+            <p>• Balfour Declaration (1917)</p>
+            <p>• Iranian Coup (1953, with CIA)</p>
+            <p>• Libyan intervention (2011)</p>
+            <p>• Syrian conflict involvement</p>
+            
+            <p><strong>Notorious Agents:</strong></p>
+            <p>• Kim Philby (Soviet double agent)</p>
+            <p>• T.E. Lawrence (Lawrence of Arabia)</p>
+            <p>• Daphne Park (Africa operations)</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Mossad (Israeli Intelligence)</h3>
+            <p><strong>Assassinations:</strong></p>
+            <p>• Munich Olympics perpetrators</p>
+            <p>• Nuclear scientists (Iran, Iraq)</p>
+            <p>• Hamas leaders</p>
+            
+            <p><strong>Covert Actions:</strong></p>
+            <p>• Operation Entebbe (1976)</p>
+            <p>• Stuxnet virus (Iran nuclear)</p>
+            <p>• Iranian nuclear sabotage</p>
+            
+            <p><strong>Controversies:</strong></p>
+            <p>• Lavon Affair (1954 false flag)</p>
+            <p>• USS Liberty attack (1967)</p>
+            <p>• Dubai assassination (2010)</p>
+          </div>
+        </div>
+        
+        <h2>🏠 Domestic Surveillance Programs</h2>
+        
+        <div class="message-box">
+          <h3>COINTELPRO (1956-1971)</h3>
+          <p><strong>FBI domestic surveillance program</strong></p>
+          
+          <p><strong>Targeted Groups:</strong></p>
+          <p>• Civil Rights Movement (MLK, Malcolm X)</p>
+          <p>• Black Panthers</p>
+          <p>• American Indian Movement</p>
+          <p>• Anti-war activists</p>
+          <p>• Feminist organizations</p>
+          <p>• Communist Party USA</p>
+          
+          <p><strong>Methods Used:</strong></p>
+          <p>• Infiltration and provocation</p>
+          <p>• Psychological warfare</p>
+          <p>• Illegal surveillance</p>
+          <p>• Fabrication of evidence</p>
+          <p>• Assassination of leaders</p>
+          
+          <p><strong>Exposed by:</strong></p>
+          <p>• Citizens' Commission to Investigate FBI</p>
+          <p>• Media leaks (1971)</p>
+          <p>• Church Committee (1975)</p>
+          
+          <p><strong>Documents:</strong></p>
+          <p>• <a href="https://vault.fbi.gov/cointel-pro" target="_blank">FBI COINTELPRO Files</a></p>
+          <p>• Church Committee Final Report</p>
+        </div>
+        
+        <div class="message-box">
+          <h3>Operation Mockingbird (1948-1976+)</h3>
+          <p><strong>CIA media control program</strong></p>
+          
+          <p><strong>Methodology:</strong></p>
+          <p>• Recruiting journalists as assets</p>
+          <p>• Owning media outlets outright</p>
+          <p>• Placing agents in newsrooms</p>
+          <p>• Controlling publishing houses</p>
+          
+          <p><strong>Confirmed Outlets:</strong></p>
+          <p>• The New York Times</p>
+          <p>• The Washington Post</p>
+          <p>• Time Magazine</p>
+          <p>• CBS News</p>
+          <p>• Associated Press</p>
+          <p>• United Press International</p>
+          
+          <p><strong>Whistleblower Testimony:</strong></p>
+          <p>• Carl Bernstein (1977 Rolling Stone article)</p>
+          <p>• Deborah Davis ("Katharine the Great")</p>
+          <p>• Former CIA officers' confessions</p>
+        </div>
+        
+        <h2>🛰️ Modern Surveillance State</h2>
+        
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>PRISM (NSA Program)</h3>
+            <p>• Direct access to tech company servers</p>
+            <p>• Google, Facebook, Apple, Microsoft</p>
+            <p>• Exposed by Edward Snowden (2013)</p>
+            <p>• <a href="https://www.theguardian.com/world/prism" target="_blank">Guardian PRISM Coverage</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>XKeyscore (NSA)</h3>
+            <p>• "Collects nearly everything"</p>
+            <p>• Email, browsing history, searches</p>
+            <p>• Real-time data collection</p>
+            <p>• Global surveillance network</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>ECHELON (Five Eyes)</h3>
+            <p>• US, UK, Canada, Australia, NZ</p>
+            <p>• Global communications interception</p>
+            <p>• Satellite and cable tapping</p>
+            <p>• Since Cold War era</p>
+          </div>
+        </div>
+        
+        <h2>📚 Whistleblowers & Investigators</h2>
+        
+        <div class="link-grid">
+          <div class="link-card">
+            <h3>Edward Snowden</h3>
+            <p>• Former NSA contractor</p>
+            <p>• Exposed PRISM, XKeyscore</p>
+            <p>• Currently in Russia</p>
+            <p>• <a href="https://www.theguardian.com/us-news/ng-interactive/2021/sep/21/edward-snowden-interview-permanent-record" target="_blank">Guardian Interview</a></p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Julian Assange</h3>
+            <p>• WikiLeaks founder</p>
+            <p>• Published diplomatic cables</p>
+            <p>• Iraq/Afghanistan war logs</p>
+            <p>• Currently imprisoned</p>
+          </div>
+          
+          <div class="link-card">
+            <h3>Chelsea Manning</h3>
+            <p>• US Army intelligence analyst</p>
+            <p>• Leaked to WikiLeaks</p>
+            <p>• Iraq war crimes video</p>
+            <p>• Served 7 years prison</p>
+          </div>
+        </div>
+        
+        <h2>🔍 Research Resources</h2>
+        
+        <div class="message-box">
+          <h3>Document Archives</h3>
+          <p>• <a href="https://nsarchive.gwu.edu/" target="_blank">National Security Archive</a></p>
+          <p>• <a href="https://www.cia.gov/readingroom/" target="_blank">CIA Reading Room</a></p>
+          <p>• <a href="https://vault.fbi.gov/" target="_blank">FBI Vault</a></p>
+          <p>• <a href="https://www.snowdenarchive.ca/" target="_blank">Snowden Surveillance Archive</a></p>
+          <p>• <a href="https://wikileaks.org/" target="_blank">WikiLeaks</a></p>
+        </div>
+        
+        <div class="message-box">
+          <h3>Books & Documentaries</h3>
+          <p><strong>Books:</strong></p>
+          <p>• "The CIA as Organized Crime" by Douglas Valentine</p>
+          <p>• "A Legacy of Ashes" by Tim Weiner</p>
+          <p>• "The Brothers" by Stephen Kinzer</p>
+          <p>• "Permanent Record" by Edward Snowden</p>
+          
+          <p><strong>Documentaries:</strong></p>
+          <p>• <a href="https://www.youtube.com/watch?v=5rXPrfnU3G0" target="_blank">"The CIA's Secret Experiments"</a></p>
+          <p>• <a href="https://www.youtube.com/watch?v=7bHmuhX_wIs" target="_blank">"Citizenfour" (Snowden)</a></p>
+          <p>• <a href="https://www.youtube.com/watch?v=6rxWc-TNIJI" target="_blank">"The War on Democracy"</a></p>
+        </div>
+        
+        <div class="https-info">
+          <h3>⚠️ Pattern Recognition</h3>
+          <p><strong>Intelligence Agency Modus Operandi:</strong></p>
+          <p>1. <strong>Create problem</strong> (fund extremists, stage false flags)</p>
+          <p>2. <strong>Public reaction</strong> (media manipulates public opinion)</p>
+          <p>3. <strong>Offer solution</strong> (more power, funding, surveillance)</p>
+          <p>4. <strong>Repeat cycle</strong> (perpetual "war on terror")</p>
+          <p><br><strong>Result:</strong> Gradual erosion of civil liberties, permanent surveillance state, unaccountable secret government.</p>
+        </div>
+        
+        <br>
+        <a href="/history" style="display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">← Back to History</a>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// ============================================
+// /history/wealth - Wealth & Power Structures
+// ============================================
+
+app.get('/history/wealth', (req, res) => {
+    const wealthContent = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Wealth & Power Structures - Historical Analysis</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+            
+            body {
+                background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                color: #333;
+                line-height: 1.6;
+                min-height: 100vh;
+                padding: 20px;
+            }
+            
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                overflow: hidden;
+            }
+            
+            header {
+                background: linear-gradient(90deg, #1a237e, #283593, #3949ab);
+                color: white;
+                padding: 40px;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+            }
+            
+            header::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+                background-size: 50px 50px;
+                animation: float 20s linear infinite;
+            }
+            
+            @keyframes float {
+                0% { transform: translate(0,0) rotate(0deg); }
+                100% { transform: translate(-50px,-50px) rotate(360deg); }
+            }
+            
+            h1 {
+                font-size: 2.8rem;
+                margin-bottom: 10px;
+                position: relative;
+                z-index: 1;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+                opacity: 0.9;
+                margin-bottom: 20px;
+                position: relative;
+                z-index: 1;
+            }
+            
+            .timeline-container {
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+                padding: 40px;
+            }
+            
+            .era {
+                background: linear-gradient(145deg, #ffffff, #f0f0f0);
+                border-radius: 15px;
+                padding: 25px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+                border-left: 5px solid;
+                transition: transform 0.3s ease;
+            }
+            
+            .era:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            }
+            
+            .era-1 { border-color: #4CAF50; }
+            .era-2 { border-color: #2196F3; }
+            .era-3 { border-color: #9C27B0; }
+            .era-4 { border-color: #FF9800; }
+            .era-5 { border-color: #F44336; }
+            
+            .era-title {
+                font-size: 1.5rem;
+                color: #1a237e;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .era-icon {
+                font-size: 1.8rem;
+            }
+            
+            .wealth-structure {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin: 15px 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .wealth-title {
+                font-weight: bold;
+                color: #283593;
+                margin-bottom: 10px;
+                font-size: 1.1rem;
+            }
+            
+            .key-symbols {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-top: 15px;
+            }
+            
+            .symbol {
+                background: #e3f2fd;
+                padding: 8px 15px;
+                border-radius: 20px;
+                font-size: 0.9rem;
+                color: #1565c0;
+                border: 1px solid #bbdefb;
+            }
+            
+            .navigation {
+                display: flex;
+                justify-content: space-between;
+                padding: 30px 40px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            .nav-button {
+                padding: 12px 25px;
+                background: linear-gradient(90deg, #3949ab, #283593);
+                color: white;
+                text-decoration: none;
+                border-radius: 10px;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            
+            .nav-button:hover {
+                background: linear-gradient(90deg, #283593, #1a237e);
+                transform: scale(1.05);
+            }
+            
+            .footer {
+                text-align: center;
+                padding: 20px;
+                color: #666;
+                font-size: 0.9rem;
+                background: #f1f3f4;
+                border-top: 1px solid #ddd;
+            }
+            
+            @media (max-width: 768px) {
+                .container {
+                    margin: 10px;
+                    border-radius: 15px;
+                }
+                
+                header {
+                    padding: 25px 20px;
+                }
+                
+                h1 {
+                    font-size: 2rem;
+                }
+                
+                .timeline-container {
+                    padding: 20px;
+                }
+                
+                .navigation {
+                    flex-direction: column;
+                    gap: 15px;
+                    padding: 20px;
+                }
+                
+                .nav-button {
+                    justify-content: center;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>💰 Wealth & Power Structures</h1>
+                <div class="subtitle">A Historical Analysis of Wealth Accumulation, Storage, and Transfer</div>
+            </header>
+            
+            <div class="timeline-container">
+                <!-- Era 1: Ancient Wealth -->
+                <div class="era era-1">
+                    <div class="era-title">
+                        <span class="era-icon">🏺</span>
+                        Ancient Wealth Systems (3000 BCE - 500 CE)
+                    </div>
+                    <p><strong>Primary Forms:</strong> Land ownership, agricultural surplus, precious metals, slave labor</p>
+                    
+                    <div class="wealth-structure">
+                        <div class="wealth-title">Key Characteristics:</div>
+                        <ul>
+                            <li>Wealth tied directly to agricultural production</li>
+                            <li>Storage in physical goods: grain silos, gold/silver hoards</li>
+                            <li>Wealth concentrated in royal/temple complexes</li>
+                            <li>Trade networks (Silk Road, Incense Route) for luxury goods</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="key-symbols">
+                        <span class="symbol">👑 Royal Treasuries</span>
+                        <span class="symbol">🌾 Grain Storage</span>
+                        <span class="symbol">💰 Gold Coins</span>
+                        <span class="symbol">⚓ Trade Routes</span>
+                    </div>
+                </div>
+                
+                <!-- Era 2: Medieval Wealth -->
+                <div class="era era-2">
+                    <div class="era-title">
+                        <span class="era-icon">🏰</span>
+                        Feudal & Medieval Systems (500 - 1500 CE)
+                    </div>
+                    <p><strong>Primary Forms:</strong> Land tenure (fiefs), feudal obligations, church tithes, guild monopolies</p>
+                    
+                    <div class="wealth-structure">
+                        <div class="wealth-title">Power Structures:</div>
+                        <ul>
+                            <li>Manorial system with serf-based agriculture</li>
+                            <li>Church as largest landowner and wealth accumulator</li>
+                            <li>Italian banking families (Medici, Bardi, Peruzzi)</li>
+                            <li>Hanseatic League trade monopoly in Northern Europe</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="key-symbols">
+                        <span class="symbol">⚔️ Feudal Oaths</span>
+                        <span class="symbol">⛪ Church Lands</span>
+                        <span class="symbol">🏦 Merchant Banks</span>
+                        <span class="symbol">📜 Guild Charters</span>
+                    </div>
+                </div>
+                
+                <!-- Era 3: Mercantile Capitalism -->
+                <div class="era era-3">
+                    <div class="era-title">
+                        <span class="era-icon">🚢</span>
+                        Mercantile Capitalism & Colonialism (1500 - 1800)
+                    </div>
+                    <p><strong>Primary Forms:</strong> Precious metals, colonial commodities, slave trade profits, joint-stock companies</p>
+                    
+                    <div class="wealth-structure">
+                        <div class="wealth-title">Wealth Mechanisms:</div>
+                        <ul>
+                            <li>Triangular Trade (Europe-Africa-Americas)</li>
+                            <li>Spanish Silver from Potosí and Mexican mines</li>
+                            <li>Chartered Companies (East India Companies)</li>
+                            <li>First stock exchanges (Amsterdam, 1602)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="key-symbols">
+                        <span class="symbol">📈 Joint-Stock Companies</span>
+                        <span class="symbol">⛓️ Slave Trade</span>
+                        <span class="symbol">🏭 Colonial Plantations</span>
+                        <span class="symbol">💎 Precious Metals</span>
+                    </div>
+                </div>
+                
+                <!-- Era 4: Industrial Wealth -->
+                <div class="era era-4">
+                    <div class="era-title">
+                        <span class="era-icon">🏭</span>
+                        Industrial Revolution & Gilded Age (1800 - 1914)
+                    </div>
+                    <p><strong>Primary Forms:</strong> Industrial capital, railways, steel, oil, banking networks</p>
+                    
+                    <div class="wealth-structure">
+                        <div class="wealth-title">New Wealth Structures:</div>
+                        <ul>
+                            <li>Robber Barons and industrial monopolies</li>
+                            <li>Global banking families (Rothschild, Morgan, Rockefeller)</li>
+                            <li>Corporation as legal person with limited liability</li>
+                            <li>Mass production and consumer markets</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="key-symbols">
+                        <span class="symbol">🤖 Factory System</span>
+                        <span class="symbol">🛤️ Railway Networks</span>
+                        <span class="symbol">🏦 Investment Banks</span>
+                        <span class="symbol">🛢️ Oil Monopolies</span>
+                    </div>
+                </div>
+                
+                <!-- Era 5: Modern Financialization -->
+                <div class="era era-5">
+                    <div class="era-title">
+                        <span class="era-icon">💻</span>
+                        Financialization & Digital Wealth (1970 - Present)
+                    </div>
+                    <p><strong>Primary Forms:</strong> Financial instruments, intellectual property, data, cryptocurrencies</p>
+                    
+                    <div class="wealth-structure">
+                        <div class="wealth-title">Contemporary Systems:</div>
+                        <ul>
+                            <li>Derivatives and complex financial engineering</li>
+                            <li>Tech monopolies and data as new oil</li>
+                            <li>Offshore wealth havens and tax optimization</li>
+                            <li>Cryptocurrencies and decentralized finance</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="key-symbols">
+                        <span class="symbol">📊 Derivatives</span>
+                        <span class="symbol">🌐 Digital Platforms</span>
+                        <span class="symbol">🏝️ Offshore Trusts</span>
+                        <span class="symbol">₿ Cryptocurrency</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <a href="/history/banking" class="nav-button">
+                    ← Previous: Banking History
+                </a>
+                <a href="/history/resources" class="nav-button">
+                    Next: Resources & Commodities →
+                </a>
+            </div>
+            
+            <div class="footer">
+                <p>Historical Analysis Project • Wealth as a measure of power through time</p>
+                <p style="margin-top: 5px; font-size: 0.8rem; color: #888;">
+                    Note: This timeline shows the evolution of wealth storage from physical goods to abstract financial instruments
+                </p>
+            </div>
+        </div>
+    </body>
+    </html>
+    `;
+    
+    res.send(wealthContent);
+});
+
 // ===== 404 ERROR HANDLER =====
 app.use((req, res) => {
   res.status(404).send(`
