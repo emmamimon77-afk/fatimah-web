@@ -6695,6 +6695,899 @@ app.get('/history/usa', (req, res) => {
     res.send(usaContent);
 });
 
+// ============================================
+// /history/europe - European History
+// ============================================
+
+app.get('/history/europe', (req, res) => {
+    const europeContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>European History - From Ancient Civilizations to European Union</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Garamond', 'Palatino', serif;
+        }
+        
+        :root {
+            --eu-blue: #003399;
+            --eu-gold: #FFCC00;
+            --eu-stars: #FFFFFF;
+            --renaissance-red: #C8102E;
+            --enlightenment-blue: #0055A4;
+            --modern-green: #008000;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e6e9ff 100%);
+            color: #333;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .eu-stars-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--eu-blue);
+            opacity: 0.03;
+            z-index: -1;
+        }
+        
+        .eu-star {
+            position: absolute;
+            color: var(--eu-gold);
+            font-size: 1.5rem;
+            opacity: 0.1;
+            animation: twinkle 3s infinite alternate;
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.05; transform: scale(1); }
+            100% { opacity: 0.15; transform: scale(1.1); }
+        }
+        
+        .ring-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 30% 30%, transparent 20%, rgba(0, 51, 153, 0.02) 21%, transparent 22%),
+                radial-gradient(circle at 70% 70%, transparent 20%, rgba(255, 204, 0, 0.02) 21%, transparent 22%);
+            background-size: 100px 100px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, var(--eu-blue), #1a4dcc);
+            color: var(--eu-stars);
+            border-radius: 25px;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 51, 153, 0.2);
+            border: 4px solid var(--eu-gold);
+        }
+        
+        .eu-circle {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border: 3px solid var(--eu-gold);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.1;
+        }
+        
+        .eu-circle:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            opacity: 0.05;
+        }
+        
+        h1 {
+            font-size: 3.8rem;
+            margin-bottom: 15px;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .title-gradient {
+            background: linear-gradient(45deg, var(--eu-stars), var(--eu-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 25px;
+            font-style: italic;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .verification-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 204, 0, 0.2);
+            padding: 12px 25px;
+            border-radius: 30px;
+            border: 2px solid var(--eu-gold);
+            margin-top: 20px;
+        }
+        
+        .timeline-container {
+            position: relative;
+            margin: 60px 0;
+            padding-left: 50px;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 25px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--eu-blue), var(--eu-gold));
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 60px;
+            padding-left: 50px;
+        }
+        
+        .timeline-marker {
+            position: absolute;
+            left: -35px;
+            top: 0;
+            width: 60px;
+            height: 60px;
+            background: var(--eu-blue);
+            border: 4px solid var(--eu-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--eu-stars);
+            font-size: 1.5rem;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-marker:hover {
+            transform: scale(1.2);
+            background: var(--eu-gold);
+            color: var(--eu-blue);
+        }
+        
+        .era-card {
+            background: var(--eu-stars);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(0, 51, 153, 0.1);
+            border: 2px solid transparent;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .era-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 51, 153, 0.15);
+            border-color: var(--eu-gold);
+        }
+        
+        .era-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--eu-blue), var(--eu-gold));
+        }
+        
+        .era-title {
+            font-size: 1.8rem;
+            color: var(--eu-blue);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .era-period {
+            background: var(--eu-gold);
+            color: var(--eu-blue);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-left: auto;
+        }
+        
+        .key-documents {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+        
+        .document-card {
+            background: #f8f9ff;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid #e0e5ff;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .document-card:hover {
+            border-color: var(--eu-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 51, 153, 0.1);
+        }
+        
+        .doc-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--eu-blue);
+            color: var(--eu-stars);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .doc-title {
+            color: var(--eu-blue);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .doc-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .doc-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .doc-link {
+            display: inline-block;
+            padding: 8px 18px;
+            background: var(--eu-blue);
+            color: var(--eu-stars);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .doc-link:hover {
+            background: var(--eu-stars);
+            color: var(--eu-blue);
+            border-color: var(--eu-blue);
+            transform: translateY(-2px);
+        }
+        
+        .archive-section {
+            background: linear-gradient(135deg, rgba(0, 51, 153, 0.05), rgba(255, 204, 0, 0.05));
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            border: 2px dashed var(--eu-gold);
+        }
+        
+        .archive-toggle {
+            background: linear-gradient(135deg, var(--eu-blue), #1a4dcc);
+            color: var(--eu-stars);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .archive-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 51, 153, 0.3);
+        }
+        
+        .archive-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            margin-top: 0;
+        }
+        
+        .archive-content.expanded {
+            max-height: 2000px;
+            margin-top: 30px;
+        }
+        
+        .archive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .archive-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e0e5ff;
+        }
+        
+        .archive-item a {
+            color: var(--eu-blue);
+            text-decoration: none;
+            display: block;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e5ff;
+            transition: all 0.3s ease;
+        }
+        
+        .archive-item a:hover {
+            color: var(--eu-gold);
+            padding-left: 10px;
+        }
+        
+        .stats-eu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin: 50px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, var(--eu-blue), #1a4dcc);
+            border-radius: 20px;
+            color: var(--eu-stars);
+        }
+        
+        .stat-eu {
+            text-align: center;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .stat-number-eu {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--eu-gold);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label-eu {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 40px 0;
+            border-top: 2px solid #e0e5ff;
+            margin-top: 50px;
+        }
+        
+        .nav-button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--eu-blue), var(--eu-gold));
+            color: var(--eu-stars);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 5px 15px rgba(0, 51, 153, 0.2);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 51, 153, 0.3);
+        }
+        
+        .disclaimer {
+            text-align: center;
+            padding: 25px;
+            color: #666;
+            font-size: 0.9rem;
+            background: #f8f9ff;
+            border-radius: 15px;
+            margin-top: 40px;
+            border: 1px solid #e0e5ff;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .timeline-container {
+                padding-left: 30px;
+            }
+            
+            .timeline-marker {
+                width: 50px;
+                height: 50px;
+                left: -25px;
+                font-size: 1.2rem;
+            }
+            
+            .era-card {
+                padding: 25px;
+            }
+            
+            .key-documents {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .stats-eu {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="eu-stars-bg" id="euStarsBg"></div>
+    <div class="ring-pattern"></div>
+    
+    <div class="container">
+        <header>
+            <div class="eu-circle"></div>
+            <div class="eu-circle"></div>
+            <h1><span class="title-gradient">European History</span></h1>
+            <div class="subtitle">From Ancient Civilizations to European Union - The Continental Journey</div>
+            <div class="verification-badge">
+                <span>🏛️</span> EU Official Archives & Historical Institutions
+            </div>
+        </header>
+        
+        <div class="stats-eu">
+            <div class="stat-eu">
+                <div class="stat-number-eu" data-count="27">27</div>
+                <div class="stat-label-eu">European Union Member States</div>
+            </div>
+            <div class="stat-eu">
+                <div class="stat-number-eu" data-count="2000">2000+</div>
+                <div class="stat-label-eu">Years of Recorded History</div>
+            </div>
+            <div class="stat-eu">
+                <div class="stat-number-eu" data-count="24">24</div>
+                <div class="stat-label-eu">Official EU Languages</div>
+            </div>
+            <div class="stat-eu">
+                <div class="stat-number-eu" data-count="447">447M</div>
+                <div class="stat-label-eu">EU Population</div>
+            </div>
+        </div>
+        
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
+            
+            <!-- Ancient Civilizations -->
+            <div class="timeline-item">
+                <div class="timeline-marker" onclick="toggleEra('era1')">🏺</div>
+                <div class="era-card" id="era1">
+                    <div class="era-title">
+                        Ancient Civilizations
+                        <div class="era-period">3000 BCE - 500 CE</div>
+                    </div>
+                    <p><strong>Key Civilizations:</strong> Greek democracy, Roman Empire, Celtic cultures</p>
+                    
+                    <div class="key-documents">
+                        <div class="document-card">
+                            <div class="doc-badge">🇬🇷</div>
+                            <div class="doc-title">Code of Justinian (529-534 CE)</div>
+                            <div class="doc-description">Corpus Juris Civilis - Foundation of Roman law and modern legal systems</div>
+                            <div class="doc-links">
+                                <a href="https://droitromain.univ-grenoble-alpes.fr/" target="_blank" class="doc-link">
+                                    Roman Law Archive
+                                </a>
+                                <a href="https://www.britannica.com/topic/Code-of-Justinian" target="_blank" class="doc-link">
+                                    Encyclopedia
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="document-card">
+                            <div class="doc-badge">🏛️</div>
+                            <div class="doc-title">Magna Graecia Collections</div>
+                            <div class="doc-description">Greek colonies in Southern Italy archaeological records</div>
+                            <div class="doc-links">
+                                <a href="https://www.metmuseum.org/toah/hd/grarc/hd_grarc.htm" target="_blank" class="doc-link">
+                                    Metropolitan Museum
+                                </a>
+                                <a href="https://www.britishmuseum.org/collection/galleries/greece-and-rome" target="_blank" class="doc-link">
+                                    British Museum
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Middle Ages -->
+            <div class="timeline-item">
+                <div class="timeline-marker" onclick="toggleEra('era2')">🏰</div>
+                <div class="era-card" id="era2">
+                    <div class="era-title">
+                        Middle Ages & Feudalism
+                        <div class="era-period">500 - 1500 CE</div>
+                    </div>
+                    <p><strong>Key Developments:</strong> Holy Roman Empire, Crusades, Magna Carta, Black Death</p>
+                    
+                    <div class="key-documents">
+                        <div class="document-card">
+                            <div class="doc-badge">🇬🇧</div>
+                            <div class="doc-title">Magna Carta (1215)</div>
+                            <div class="doc-description">Great Charter limiting royal power, foundation of constitutional law</div>
+                            <div class="doc-links">
+                                <a href="https://www.bl.uk/magna-carta" target="_blank" class="doc-link">
+                                    British Library
+                                </a>
+                                <a href="https://www.nationalarchives.gov.uk/education/resources/magna-carta/" target="_blank" class="doc-link">
+                                    National Archives UK
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="document-card">
+                            <div class="doc-badge">🇻🇦</div>
+                            <div class="doc-title">Papal Bull Archive</div>
+                            <div class="doc-description">Vatican documents from medieval period</div>
+                            <div class="doc-links">
+                                <a href="https://www.vatican.va/archive/index.htm" target="_blank" class="doc-link">
+                                    Vatican Archives
+                                </a>
+                                <a href="https://sourcebooks.fordham.edu/source/source-med.html" target="_blank" class="doc-link">
+                                    Medieval Sourcebook
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Renaissance -->
+            <div class="timeline-item">
+                <div class="timeline-marker" onclick="toggleEra('era3')">🎨</div>
+                <div class="era-card" id="era3">
+                    <div class="era-title">
+                        Renaissance & Reformation
+                        <div class="era-period">1300 - 1600 CE</div>
+                    </div>
+                    <p><strong>Key Movements:</strong> Italian Renaissance, Protestant Reformation, Scientific Revolution</p>
+                    
+                    <div class="key-documents">
+                        <div class="document-card">
+                            <div class="doc-badge">🇮🇹</div>
+                            <div class="doc-title">Treaty of Tordesillas (1494)</div>
+                            <div class="doc-description">Divided New World between Spain and Portugal</div>
+                            <div class="doc-links">
+                                <a href="https://avalon.law.yale.edu/15th_century/mod001.asp" target="_blank" class="doc-link">
+                                    Yale Law Archive
+                                </a>
+                                <a href="https://www.archives.gov/milestone-documents/treaty-of-tordesillas" target="_blank" class="doc-link">
+                                    US National Archives
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="document-card">
+                            <div class="doc-badge">🇩🇪</div>
+                            <div class="doc-title">95 Theses (1517)</div>
+                            <div class="doc-description">Martin Luther's protest that started Protestant Reformation</div>
+                            <div class="doc-links">
+                                <a href="https://www.luther.de/en/95thesen.html" target="_blank" class="doc-link">
+                                    Luther 95 Theses
+                                </a>
+                                <a href="https://www.projectwittenberg.org/pub/resources/text/wittenberg/luther/web/ninetyfive.html" target="_blank" class="doc-link">
+                                    Project Wittenberg
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Enlightenment -->
+            <div class="timeline-item">
+                <div class="timeline-marker" onclick="toggleEra('era4')">💡</div>
+                <div class="era-card" id="era4">
+                    <div class="era-title">
+                        Enlightenment & Revolution
+                        <div class="era-period">1600 - 1800 CE</div>
+                    </div>
+                    <p><strong>Key Events:</strong> French Revolution, Napoleonic Wars, Industrial Revolution begins</p>
+                    
+                    <div class="key-documents">
+                        <div class="document-card">
+                            <div class="doc-badge">🇫🇷</div>
+                            <div class="doc-title">Declaration of the Rights of Man (1789)</div>
+                            <div class="doc-description">French Revolution's foundational document</div>
+                            <div class="doc-links">
+                                <a href="https://www.conseil-constitutionnel.fr/en/declaration-of-the-rights-of-man-and-of-the-citizen-of-26-august-1789" target="_blank" class="doc-link">
+                                    Constitutional Council
+                                </a>
+                                <a href="https://avalon.law.yale.edu/18th_century/rightsof.asp" target="_blank" class="doc-link">
+                                    Yale Avalon Project
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="document-card">
+                            <div class="doc-badge">🌍</div>
+                            <div class="doc-title">Congress of Vienna (1815)</div>
+                            <div class="doc-description">Redrew European map after Napoleonic Wars</div>
+                            <div class="doc-links">
+                                <a href="https://history.state.gov/milestones/1801-1829/congress-vienna" target="_blank" class="doc-link">
+                                    US State Department
+                                </a>
+                                <a href="https://www.britannica.com/event/Congress-of-Vienna" target="_blank" class="doc-link">
+                                    Encyclopedia Britannica
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- World Wars -->
+            <div class="timeline-item">
+                <div class="timeline-marker" onclick="toggleEra('era5')">⚔️</div>
+                <div class="era-card" id="era5">
+                    <div class="era-title">
+                        World Wars Era
+                        <div class="era-period">1914 - 1945</div>
+                    </div>
+                    <p><strong>Key Events:</strong> Treaty of Versailles, Rise of Fascism, Holocaust, WWII</p>
+                    
+                    <div class="key-documents">
+                        <div class="document-card">
+                            <div class="doc-badge">🇫🇷</div>
+                            <div class="doc-title">Treaty of Versailles (1919)</div>
+                            <div class="doc-description">Ended WWI, imposed reparations on Germany</div>
+                            <div class="doc-links">
+                                <a href="https://www.loc.gov/law/help/us-treaties/bevans/m-ust000002-0043.pdf" target="_blank" class="doc-link">
+                                    Library of Congress PDF
+                                </a>
+                                <a href="https://www.archives.gov/milestone-documents/treaty-of-versailles" target="_blank" class="doc-link">
+                                    US National Archives
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="document-card">
+                            <div class="doc-badge">🇺🇳</div>
+                            <div class="doc-title">Universal Declaration of Human Rights (1948)</div>
+                            <div class="doc-description">Response to WWII atrocities, drafted with European leadership</div>
+                            <div class="doc-links">
+                                <a href="https://www.un.org/en/about-us/universal-declaration-of-human-rights" target="_blank" class="doc-link">
+                                    United Nations
+                                </a>
+                                <a href="https://www.ohchr.org/en/human-rights/universal-declaration/translations/english" target="_blank" class="doc-link">
+                                    OHCHR Official
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- European Union -->
+            <div class="timeline-item">
+                <div class="timeline-marker" onclick="toggleEra('era6')">🇪🇺</div>
+                <div class="era-card" id="era6">
+                    <div class="era-title">
+                        European Union Formation
+                        <div class="era-period">1951 - Present</div>
+                    </div>
+                    <p><strong>Key Developments:</strong> ECSC, Treaty of Rome, Maastricht Treaty, Euro currency</p>
+                    
+                    <div class="key-documents">
+                        <div class="document-card">
+                            <div class="doc-badge">🇪🇺</div>
+                            <div class="doc-title">Treaty of Rome (1957)</div>
+                            <div class="doc-description">Established European Economic Community, foundation of EU</div>
+                            <div class="doc-links">
+                                <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:11957E/TXT" target="_blank" class="doc-link">
+                                    EUR-Lex Official
+                                </a>
+                                <a href="https://www.cvce.eu/en/education/unit-content/-/unit/02bb76df-d066-4c08-a58a-d4686a3e68ff/61c5b2ae-fc5a-4b08-b3c0-9a9bb8f77f9f" target="_blank" class="doc-link">
+                                    CVCE Historical Archives
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="document-card">
+                            <div class="doc-badge">🇪🇺</div>
+                            <div class="doc-title">Maastricht Treaty (1992)</div>
+                            <div class="doc-description">Formally established European Union and Euro currency</div>
+                            <div class="doc-links">
+                                <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex%3A11992M%2FTXT" target="_blank" class="doc-link">
+                                    EUR-Lex Official
+                                </a>
+                                <a href="https://europa.eu/european-union/sites/default/files/archives/docs/maastricht_en.pdf" target="_blank" class="doc-link">
+                                    Official PDF
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="archive-section">
+                        <button class="archive-toggle" onclick="toggleArchive('euArchive')">
+                            <span>📚</span> European Union Digital Archives
+                        </button>
+                        <div class="archive-content" id="euArchive">
+                            <div class="archive-grid">
+                                <div class="archive-item">
+                                    <h4>EU Official Portals</h4>
+                                    <a href="https://eur-lex.europa.eu/" target="_blank">EUR-Lex: EU Law Database</a>
+                                    <a href="https://publications.europa.eu/" target="_blank">EU Publications Office</a>
+                                    <a href="https://www.consilium.europa.eu/en/documents-publications/" target="_blank">Council of EU Documents</a>
+                                </div>
+                                <div class="archive-item">
+                                    <h4>Historical Archives</h4>
+                                    <a href="https://www.cvce.eu/" target="_blank">CVCE: European Integration Studies</a>
+                                    <a href="https://archives.eui.eu/" target="_blank">European University Institute Archives</a>
+                                    <a href="https://www.europarl.europa.eu/thinktank/en/home.html" target="_blank">EPRS: European Parliament Research</a>
+                                </div>
+                                <div class="archive-item">
+                                    <h4>National Archives</h4>
+                                    <a href="https://www.nationalarchives.gov.uk/" target="_blank">UK National Archives</a>
+                                    <a href="https://www.archives-nationales.culture.gouv.fr/" target="_blank">French National Archives</a>
+                                    <a href="https://www.bundesarchiv.de/" target="_blank">German Federal Archives</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <a href="/history/usa" class="nav-button">
+                ⬅️ Previous: United States History
+            </a>
+            <a href="/history/middle-east" class="nav-button">
+                Next: Middle Eastern History ➡️
+            </a>
+        </div>
+        
+        <div class="disclaimer">
+            <p>🇪🇺 This page contains documents from European Union institutions, national archives, and verified historical sources.</p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">
+                European Historical Resource | Multilingual Sources | Regularly Updated
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Create EU stars background
+        function createEUStars() {
+            const starsBg = document.getElementById('euStarsBg');
+            for (let i = 0; i < 80; i++) {
+                const star = document.createElement('div');
+                star.className = 'eu-star';
+                star.innerHTML = '★';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = (Math.random() * 5) + 's';
+                star.style.fontSize = (10 + Math.random() * 20) + 'px';
+                starsBg.appendChild(star);
+            }
+        }
+        
+        // Toggle era content
+        function toggleEra(eraId) {
+            const content = document.getElementById(eraId);
+            content.classList.toggle('expanded');
+            
+            // Scroll to era if expanding
+            if (content.classList.contains('expanded')) {
+                content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+        
+        // Toggle archive content
+        function toggleArchive(archiveId) {
+            const content = document.getElementById(archiveId);
+            content.classList.toggle('expanded');
+        }
+        
+        // Animate EU statistics
+        function animateEUStats() {
+            const stats = document.querySelectorAll('.stat-number-eu');
+            stats.forEach(stat => {
+                const target = parseInt(stat.getAttribute('data-count'));
+                let current = 0;
+                const increment = target / 60;
+                
+                const update = () => {
+                    if (current < target) {
+                        current += increment;
+                        if (target > 100) {
+                            stat.textContent = Math.floor(current) + 'M';
+                        } else {
+                            stat.textContent = Math.floor(current);
+                        }
+                        setTimeout(update, 20);
+                    } else {
+                        stat.textContent = target > 100 ? target + 'M' : target;
+                    }
+                };
+                update();
+            });
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            createEUStars();
+            animateEUStats();
+            
+            // Auto-expand first era
+            setTimeout(function() {
+                toggleEra('era1');
+            }, 800);
+        });
+    </script>
+</body>
+</html>`;
+    
+    res.send(europeContent);
+});
+
 // ===== 404 ERROR HANDLER =====
 app.use((req, res) => {
   res.status(404).send(`
