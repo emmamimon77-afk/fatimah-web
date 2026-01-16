@@ -2941,7 +2941,8 @@ app.get('/history', (req, res) => {
             <p>• Colonial exploitation</p>
             <p>• Resource wars</p>
             <p>• Development trap</p>
-            <p><a href="/history/asia-africa"><button>📖 Explore</button></a></p>
+            <p><a href="/history/asia"><button>📖 Explore Asia</button></a></p>
+            <p><a href="/history/africa"><button>📖 Explore Africa</button></a></p>
           </div>
         </div>
         
@@ -8207,8 +8208,8 @@ app.get('/history/middle-east', (req, res) => {
             <a href="/history/europe" class="nav-button">
                 ⬅️ Previous: European History
             </a>
-            <a href="/history/asia-africa" class="nav-button">
-                Next: Asia & Africa History ➡️
+            <a href="/history/asia" class="nav-button">
+                Next: Asian Civilizations ➡️
             </a>
         </div>
         
@@ -10032,6 +10033,10 @@ app.get('/history/africa', (req, res) => {
     
     res.send(africaContent);
 });
+// Redirect for old asia-africa links
+app.get('/history/asia-africa', (req, res) => {
+    res.redirect('/history/asia');
+});
 
 // ===== 404 ERROR HANDLER =====
 app.use((req, res) => {
@@ -10054,7 +10059,6 @@ app.use((req, res) => {
 // ===== START SERVERS =====
 
 // Start server for Render (single port)
-const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Fatimah's Server running on port ${PORT}`);
   console.log(`📝 Messages: ${messages.length} loaded`);
   console.log(`   Render URL: https://fatimah-web.onrender.com`);
