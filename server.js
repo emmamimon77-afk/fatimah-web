@@ -8259,6 +8259,836 @@ app.get('/history/middle-east', (req, res) => {
     res.send(middleEastContent);
 });
 
+// ============================================
+// /history/asia - Asian History & Civilizations
+// ============================================
+
+app.get('/history/asia', (req, res) => {
+    const asiaContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asian History - Ancient Civilizations to Modern Nations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --imperial-red: #DE2910;
+            --golden-yellow: #FFDE00;
+            --jade-green: #00A86B;
+            --lotus-pink: #E0115F;
+            --silk-white: #FAF0E6;
+            --bamboo-green: #7BA05B;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #fffaf0 0%, #fff5ee 100%);
+            color: #333;
+            min-height: 100vh;
+            font-family: 'Segoe UI', 'Noto Sans', 'Microsoft YaHei', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .asian-pattern-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(222, 41, 16, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(0, 168, 107, 0.03) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        .lotus-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M50,20 C60,10 80,10 90,20 C100,30 100,50 90,60 C80,70 60,70 50,60 C40,70 20,70 10,60 C0,50 0,30 10,20 C20,10 40,10 50,20 Z" fill="none" stroke="%2300A86B" stroke-width="0.5" opacity="0.1"/></svg>');
+            background-size: 100px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            text-align: center;
+            padding: 70px 40px;
+            background: linear-gradient(135deg, var(--imperial-red), #ff4d4d);
+            color: var(--silk-white);
+            border-radius: 25px;
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(222, 41, 16, 0.2);
+            border: 6px solid var(--golden-yellow);
+        }
+        
+        .dragon-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><path d="M20,100 Q50,50 100,50 Q150,50 180,100 Q150,150 100,150 Q50,150 20,100 Z" fill="none" stroke="%23FFDE00" stroke-width="2" opacity="0.1"/></svg>');
+            background-size: 200px;
+            opacity: 0.2;
+        }
+        
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            position: relative;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            font-weight: 800;
+        }
+        
+        .title-characters {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--golden-yellow), white, var(--jade-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        .subtitle {
+            font-size: 1.6rem;
+            opacity: 0.95;
+            margin-bottom: 30px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        
+        .verification-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 222, 0, 0.2);
+            padding: 15px 30px;
+            border-radius: 40px;
+            border: 3px solid var(--golden-yellow);
+            font-size: 1.1rem;
+            margin-top: 25px;
+        }
+        
+        .region-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 35px;
+            margin: 60px 0;
+        }
+        
+        .region-card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.5s ease;
+            border: 3px solid transparent;
+            position: relative;
+        }
+        
+        .region-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            border-color: var(--imperial-red);
+        }
+        
+        .card-header {
+            padding: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .east-asia { background: linear-gradient(135deg, #DE2910, #FF4D00); }
+        .south-asia { background: linear-gradient(135deg, #FF9933, #138808); }
+        .se-asia { background: linear-gradient(135deg, #FF0000, #FFCC00); }
+        .central-asia { background: linear-gradient(135deg, #0066CC, #00CCCC); }
+        .west-asia { background: linear-gradient(135deg, #CE1126, #239F40); }
+        
+        .region-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+        }
+        
+        .region-title {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .countries {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+        
+        .card-body {
+            padding: 30px;
+        }
+        
+        .dynasty-timeline {
+            position: relative;
+            margin: 25px 0;
+            padding-left: 30px;
+        }
+        
+        .dynasty-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--imperial-red), var(--jade-green));
+            border-radius: 2px;
+        }
+        
+        .dynasty-item {
+            position: relative;
+            margin-bottom: 25px;
+            padding-left: 25px;
+        }
+        
+        .dynasty-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 8px;
+            width: 16px;
+            height: 16px;
+            background: var(--golden-yellow);
+            border: 3px solid var(--imperial-red);
+            border-radius: 50%;
+            z-index: 2;
+        }
+        
+        .dynasty-name {
+            font-weight: bold;
+            color: var(--imperial-red);
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .dynasty-period {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .dynasty-achievements {
+            color: #555;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+        
+        .resources-section {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px dashed #eee;
+        }
+        
+        .resource-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .resource-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--jade-green);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .resource-link:hover {
+            background: white;
+            color: var(--jade-green);
+            border-color: var(--jade-green);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 168, 107, 0.2);
+        }
+        
+        .archive-section {
+            background: linear-gradient(135deg, rgba(222, 41, 16, 0.05), rgba(0, 168, 107, 0.05));
+            border-radius: 25px;
+            padding: 40px;
+            margin: 70px 0;
+            border: 4px solid var(--golden-yellow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .archive-section::before {
+            content: '文';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            font-size: 300px;
+            color: rgba(0, 168, 107, 0.05);
+            font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+            font-weight: bold;
+            transform: rotate(15deg);
+        }
+        
+        .archive-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--imperial-red);
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .archive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .archive-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .archive-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .archive-card-title {
+            color: var(--imperial-red);
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--golden-yellow);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .archive-list {
+            list-style: none;
+        }
+        
+        .archive-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .archive-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .archive-list a {
+            color: #555;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 8px 0;
+        }
+        
+        .archive-list a:hover {
+            color: var(--imperial-red);
+            padding-left: 10px;
+        }
+        
+        .philosophy-section {
+            background: linear-gradient(135deg, #8B4513, #D2691E);
+            color: white;
+            border-radius: 25px;
+            padding: 50px;
+            margin: 60px 0;
+            text-align: center;
+        }
+        
+        .philosophy-title {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: var(--golden-yellow);
+        }
+        
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .philosophy-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 222, 0, 0.3);
+        }
+        
+        .philosophy-name {
+            font-size: 1.4rem;
+            color: var(--golden-yellow);
+            margin-bottom: 15px;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 50px 0;
+            border-top: 3px solid #f0e6d6;
+            margin-top: 60px;
+        }
+        
+        .nav-button {
+            padding: 18px 35px;
+            background: linear-gradient(135deg, var(--imperial-red), var(--jade-green));
+            color: white;
+            text-decoration: none;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 10px 25px rgba(222, 41, 16, 0.3);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(222, 41, 16, 0.4);
+        }
+        
+        .disclaimer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 0.95rem;
+            background: #f8f4e9;
+            border-radius: 20px;
+            margin-top: 50px;
+            border: 2px solid #e6dcc3;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            .region-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .archive-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 25px;
+            }
+            
+            .philosophy-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="asian-pattern-bg"></div>
+    <div class="lotus-pattern"></div>
+    
+    <div class="container">
+        <header>
+            <div class="dragon-pattern"></div>
+            <h1><span class="title-characters">亞洲歷史</span><br><span style="font-size: 2.5rem;">Asian History & Civilizations</span></h1>
+            <div class="subtitle">From the Yellow River to the Ganges • From the Silk Road to the Digital Age • 5,000 Years of Continuous Civilization</div>
+            <div class="verification-badge">
+                <span>🏯</span> Authentic Asian Sources • Indigenous Perspectives • Non-Western Scholarship
+            </div>
+        </header>
+        
+        <div class="region-grid">
+            <!-- East Asia -->
+            <div class="region-card">
+                <div class="card-header east-asia">
+                    <div class="region-icon">🐉</div>
+                    <div class="region-title">East Asia</div>
+                    <div class="countries">China • Japan • Korea • Taiwan • Mongolia</div>
+                </div>
+                <div class="card-body">
+                    <div class="dynasty-timeline">
+                        <div class="dynasty-item">
+                            <div class="dynasty-name">Chinese Dynasties</div>
+                            <div class="dynasty-period">2100 BCE - 1912 CE</div>
+                            <div class="dynasty-achievements">Xia, Shang, Zhou, Qin, Han, Tang, Song, Yuan, Ming, Qing</div>
+                        </div>
+                        <div class="dynasty-item">
+                            <div class="dynasty-name">Japanese Periods</div>
+                            <div class="dynasty-period">300 BCE - Present</div>
+                            <div class="dynasty-achievements">Jōmon, Yayoi, Kofun, Nara, Heian, Kamakura, Edo, Meiji</div>
+                        </div>
+                        <div class="dynasty-item">
+                            <div class="dynasty-name">Korean Dynasties</div>
+                            <div class="dynasty-period">2333 BCE - 1910 CE</div>
+                            <div class="dynasty-achievements">Gojoseon, Three Kingdoms, Goryeo, Joseon</div>
+                        </div>
+                    </div>
+                    
+                    <div class="resources-section">
+                        <div class="resource-links">
+                            <a href="https://www.npm.gov.tw/" target="_blank" class="resource-link" title="National Palace Museum, Taiwan">
+                                國立故宮博物院
+                            </a>
+                            <a href="https://www.dpm.org.cn/" target="_blank" class="resource-link" title="The Palace Museum, Beijing">
+                                故宫博物院
+                            </a>
+                            <a href="https://www.kunaicho.go.jp/" target="_blank" class="resource-link" title="Imperial Household Agency, Japan">
+                                宮内庁
+                            </a>
+                            <a href="https://www.museum.go.kr/" target="_blank" class="resource-link" title="National Museum of Korea">
+                                국립중앙박물관
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- South Asia -->
+            <div class="region-card">
+                <div class="card-header south-asia">
+                    <div class="region-icon">🕉️</div>
+                    <div class="region-title">South Asia</div>
+                    <div class="countries">India • Pakistan • Bangladesh • Sri Lanka • Nepal • Bhutan</div>
+                </div>
+                <div class="card-body">
+                    <div class="dynasty-timeline">
+                        <div class="dynasty-item">
+                            <div class="dynasty-name">Indus Valley Civilization</div>
+                            <div class="dynasty-period">3300 - 1300 BCE</div>
+                            <div class="dynasty-achievements">Harappa, Mohenjo-daro, world's first urban sanitation</div>
+                        </div>
+                        <div class="dynasty-item">
+                            <div class="dynasty-name">Indian Empires</div>
+                            <div class="dynasty-period">322 BCE - 1857 CE</div>
+                            <div class="dynasty-achievements">Maurya, Gupta, Delhi Sultanate, Mughal, Maratha</div>
+                        </div>
+                        <div class="dynasty-item">
+                            <div class="dynasty-name">Classical Kingdoms</div>
+                            <div class="dynasty-period">543 BCE - 1815 CE</div>
+                            <div class="dynasty-achievements">Anuradhapura (Sri Lanka), Licchavi (Nepal), Tibetan Empire</div>
+                        </div>
+                    </div>
+                    
+                    <div class="resources-section">
+                        <div class="resource-links">
+                            <a href="https://www.nationalmuseumindia.gov.in/" target="_blank" class="resource-link">
+                                National Museum, India
+                            </a>
+                            <a href="https://asi.nic.in/" target="_blank" class="resource-link">
+                                Archaeological Survey of India
+                            </a>
+                            <a href="https://www.colombomuseum.gov.lk/" target="_blank" class="resource-link">
+                                Colombo National Museum
+                            </a>
+                            <a href="https://www.skb museum.gov.np/" target="_blank" class="resource-link">
+                                National Museum, Nepal
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Southeast Asia -->
+            <div class="region-card">
+                <div class="card-header se-asia">
+                    <div class="region-icon">🏮</div>
+                    <div class="region-title">Southeast Asia</div>
+                    <div class="countries">Indonesia • Thailand • Vietnam • Philippines • Malaysia • Singapore • Myanmar • Cambodia • Laos</div>
+                </div>
+                <div class="card-body">
+                    <div class="dynasty-timeline">
+                        <div class="dynasty-item">
+                            <div class="dynasty-name">Ancient Kingdoms</div>
+                            <div class="dynasty-period">1st - 15th Century CE</div>
+                            <div class="dynasty-achievements">Funan, Chenla, Champa, Srivijaya, Majapahit</div>
+                        </div>
+                        <div class="dynasty-item">
+                            <div class="dynasty-name">Classical Empires</div>
+                            <div class="dynasty-period">802 - 1832 CE</div>
+                            <div class="dynasty-achievements">Khmer Empire, Pagan Kingdom, Ayutthaya, Đại Việt</div>
+                        </div>
+                        <div class="dynasty-item">
+                            <div class="dynasty-name">Colonial & Modern</div>
+                            <div class="dynasty-period">16th Century - Present</div>
+                            <div class="dynasty-achievements">European colonization, independence movements, ASEAN</div>
+                        </div>
+                    </div>
+                    
+                    <div class="resources-section">
+                        <div class="resource-links">
+                            <a href="https://www.museumnasional.or.id/" target="_blank" class="resource-link">
+                                Museum Nasional Indonesia
+                            </a>
+                            <a href="https://www.nationalmuseum.or.th/" target="_blank" class="resource-link">
+                                National Museum, Thailand
+                            </a>
+                            <a href="https://baotanglichsu.vn/" target="_blank" class="resource-link">
+                                National Museum of History, Vietnam
+                            </a>
+                            <a href="https://www.nationalmuseum.gov.ph/" target="_blank" class="resource-link">
+                                National Museum, Philippines
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Central Asia -->
+            <div class="region-card">
+                <div class="card-header central-asia">
+                    <div class="region-icon">🏔️</div>
+                    <div class="region-title">Central Asia</div>
+                    <div class="countries">Kazakhstan • Uzbekistan • Turkmenistan • Kyrgyzstan • Tajikistan • Afghanistan</div>
+                </div>
+                <div class="card-body">
+                    <div class="dynasty-timeline">
+                        <div class="dynasty-item">
+                            <div class="dynasty-name">Silk Road Civilizations</div>
+                            <div class="dynasty-period">200 BCE - 1400 CE</div>
+                            <div class="dynasty-achievements">Sogdian traders, Bactria, Samarkand, Bukhara, Khiva</div>
+                        </div>
+                        <div class="dynasty-item">
+                            <div class="dynasty-name">Turkic & Mongol Empires</div>
+                            <div class="dynasty-period">552 - 1502 CE</div>
+                            <div class="dynasty-achievements">Göktürks, Timurid Empire, Mongol Khanates</div>
+                        </div>
+                        <div class="dynasty-item">
+                            <div class="dynasty-name">Islamic Golden Age Centers</div>
+                            <div class="dynasty-period">8th - 14th Century CE</div>
+                            <div class="dynasty-achievements">Al-Khwarizmi, Avicenna, Al-Biruni, Ulugh Beg</div>
+                        </div>
+                    </div>
+                    
+                    <div class="resources-section">
+                        <div class="resource-links">
+                            <a href="https://www.kaznm.kz/" target="_blank" class="resource-link">
+                                National Museum, Kazakhstan
+                            </a>
+                            <a href="https://www.museum.uz/" target="_blank" class="resource-link">
+                                State Museum, Uzbekistan
+                            </a>
+                            <a href="https://www.nationalmuseum.af/" target="_blank" class="resource-link">
+                                National Museum, Afghanistan
+                            </a>
+                            <a href="http://orientalstudies.ru/" target="_blank" class="resource-link">
+                                Institute of Oriental Studies
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- West Asia (Middle East) -->
+            <div class="region-card">
+                <div class="card-header west-asia">
+                    <div class="region-icon">🕌</div>
+                    <div class="region-title">West Asia</div>
+                    <div class="countries">Iran • Turkey • Arabia • Levant • Caucasus</div>
+                </div>
+                <div class="card-body">
+                    <div class="dynasty-timeline">
+                        <div class="dynasty-item">
+                            <div class="dynasty-name">Persian Empires</div>
+                            <div class="dynasty-period">550 BCE - 1979 CE</div>
+                            <div class="dynasty-achievements">Achaemenid, Parthian, Sassanian, Safavid, Qajar</div>
+                        </div>
+                        <div class="dynasty-item">
+                            <div class="dynasty-name">Islamic Caliphates</div>
+                            <div class="dynasty-period">632 - 1924 CE</div>
+                            <div class="dynasty-achievements">Rashidun, Umayyad, Abbasid, Ottoman</div>
+                        </div>
+                        <div class="dynasty-item">
+                            <div class="dynasty-name">Ancient Anatolia</div>
+                            <div class="dynasty-period">2000 BCE - 1453 CE</div>
+                            <div class="dynasty-achievements">Hittites, Phrygians, Lydians, Byzantines, Seljuks</div>
+                        </div>
+                    </div>
+                    
+                    <div class="resources-section">
+                        <div class="resource-links">
+                            <a href="https://www.iranicaonline.org/" target="_blank" class="resource-link">
+                                Encyclopædia Iranica
+                            </a>
+                            <a href="https://www.muze.gov.tr/" target="_blank" class="resource-link">
+                                Turkish Museums
+                            </a>
+                            <a href="https://www.dgam.gov.sy/" target="_blank" class="resource-link">
+                                Syrian Antiquities
+                            </a>
+                            <a href="https://www.britishmuseum.org/collection/galleries/assyrian-sculpture" target="_blank" class="resource-link">
+                                Assyrian Collections
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="philosophy-section">
+            <div class="philosophy-title">Asian Philosophical Traditions</div>
+            <div class="philosophy-grid">
+                <div class="philosophy-card">
+                    <div class="philosophy-name">Confucianism 儒家</div>
+                    <p>Harmony, filial piety, social order - foundational to East Asian societies</p>
+                </div>
+                <div class="philosophy-card">
+                    <div class="philosophy-name">Hinduism सनातन धर्म</div>
+                    <p>Dharma, karma, moksha - world's oldest living religion</p>
+                </div>
+                <div class="philosophy-card">
+                    <div class="philosophy-name">Buddhism 佛教</div>
+                    <p>Four Noble Truths, Eightfold Path - originated in India, spread across Asia</p>
+                </div>
+                <div class="philosophy-card">
+                    <div class="philosophy-name">Taoism 道教</div>
+                    <p>Wu wei, yin-yang, harmony with nature - indigenous Chinese philosophy</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="archive-section">
+            <div class="archive-title">Asian Digital Archives & Research Centers</div>
+            <div class="archive-grid">
+                <div class="archive-card">
+                    <div class="archive-card-title">
+                        <span>📜</span> Manuscript Archives
+                    </div>
+                    <ul class="archive-list">
+                        <li><a href="https://www.tbrc.org/" target="_blank">Tibetan Buddhist Resource Center</a></li>
+                        <li><a href="https://www.bl.uk/manuscripts/" target="_blank">British Library - Asian Collections</a></li>
+                        <li><a href="https://www.loc.gov/collections/chinese-rare-books/" target="_blank">Library of Congress - Chinese Rare Books</a></li>
+                        <li><a href="https://cudl.colorado.edu/" target="_blank">Cambridge Digital Library - Asian Collections</a></li>
+                        <li><a href="https://www.smb.museum/en/museums-institutions/asian-art-museum/collection-research/library.html" target="_blank">Berlin Asian Art Museum Library</a></li>
+                    </ul>
+                </div>
+                
+                <div class="archive-card">
+                    <div class="archive-card-title">
+                        <span>🏛️</span> Archaeological Institutes
+                    </div>
+                    <ul class="archive-list">
+                        <li><a href="https://www.archaeology.gov.lk/" target="_blank">Sri Lanka Archaeology Department</a></li>
+                        <li><a href="https://www.kaogu.cn/" target="_blank">Chinese Academy of Archaeology</a></li>
+                        <li><a href="https://asi.nic.in/" target="_blank">Archaeological Survey of India</a></li>
+                        <li><a href="https://www.iias.asia/" target="_blank">International Institute for Asian Studies</a></li>
+                        <li><a href="https://www.soas.ac.uk/" target="_blank">SOAS University of London - Asian Studies</a></li>
+                    </ul>
+                </div>
+                
+                <div class="archive-card">
+                    <div class="archive-card-title">
+                        <span>🌐</span> Digital Humanities
+                    </div>
+                    <ul class="archive-list">
+                        <li><a href="https://www.eastview.com/resources/databases/chinese-studies/" target="_blank">Chinese Studies Database</a></li>
+                        <li><a href="https://www.jstor.org/subject/asianstudies" target="_blank">JSTOR Asian Studies Collection</a></li>
+                        <li><a href="https://www.oxfordbibliographies.com/obo/page/asian-studies" target="_blank">Oxford Bibliographies - Asian Studies</a></li>
+                        <li><a href="https://www.asianstudies.org/" target="_blank">Association for Asian Studies</a></li>
+                        <li><a href="https://www.aasianst.org/" target="_blank">American Association for Asian Studies</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <a href="/history/middle-east" class="nav-button">
+                ⬅️ Previous: Middle Eastern History
+            </a>
+            <a href="/history/africa" class="nav-button">
+                Next: African History ➡️
+            </a>
+        </div>
+        
+        <div class="disclaimer">
+            <p>🐉 This resource centers Asian voices, uses indigenous terminology, and prioritizes sources from Asian institutions and scholars.</p>
+            <p style="margin-top: 15px; font-size: 0.9rem; color: #888;">
+                Note: This page avoids Eurocentric periodization and uses local historical frameworks. Dates follow Gregorian calendar for consistency.
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Add animation to region cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.region-card');
+            
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease ' + (index * 0.1) + 's';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 500 + (index * 100));
+            });
+            
+            // Add hover effect to resource links
+            const resourceLinks = document.querySelectorAll('.resource-link');
+            resourceLinks.forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.05)';
+                });
+                link.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(-3px) scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>`;
+    
+    res.send(asiaContent);
+});
+
 // ===== 404 ERROR HANDLER =====
 app.use((req, res) => {
   res.status(404).send(`
