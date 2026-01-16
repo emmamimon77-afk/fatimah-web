@@ -5913,6 +5913,787 @@ app.get('/history/money', (req, res) => {
     res.send(moneyContent);
 });
 
+// ============================================
+// /history/usa - United States History
+// ============================================
+
+app.get('/history/usa', (req, res) => {
+    const usaContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>United States History - From Revolution to Superpower</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        
+        :root {
+            --usa-red: #B22234;
+            --usa-blue: #3C3B6E;
+            --usa-white: #FFFFFF;
+            --patriotic-gold: #FFD700;
+            --document-blue: #1E3A8A;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f0f0f0 0%, #ffffff 100%);
+            color: #333;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .stars-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--usa-blue);
+            opacity: 0.03;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            background: var(--usa-blue);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            opacity: 0.1;
+        }
+        
+        .stripes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 30px,
+                rgba(178, 34, 52, 0.03) 30px,
+                rgba(178, 34, 52, 0.03) 60px
+            );
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(90deg, var(--usa-blue), var(--usa-red));
+            color: var(--usa-white);
+            border-radius: 20px;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border: 5px solid var(--patriotic-gold);
+        }
+        
+        .flag-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: 
+                linear-gradient(90deg, transparent 50%, rgba(255,255,255,0.1) 50%),
+                linear-gradient(transparent 50%, rgba(255,255,255,0.1) 50%);
+            background-size: 60px 60px;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .title-flag {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--usa-red), var(--usa-white), var(--usa-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .era-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .era-card {
+            background: var(--usa-white);
+            border-radius: 15px;
+            overflow: hidden;
+            border-left: 8px solid;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .era-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .era-revolution { border-color: #8B0000; }
+        .era-civilwar { border-color: #556B2F; }
+        .era-industrial { border-color: #4682B4; }
+        .era-worldwars { border-color: #2F4F4F; }
+        .era-coldwar { border-color: #4B0082; }
+        .era-modern { border-color: #228B22; }
+        
+        .era-header {
+            padding: 25px;
+            background: linear-gradient(90deg, rgba(60,59,110,0.1), rgba(178,34,52,0.1));
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .era-title {
+            font-size: 1.6rem;
+            color: var(--usa-blue);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .era-icon {
+            font-size: 2rem;
+        }
+        
+        .era-date {
+            background: var(--usa-red);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        
+        .era-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        .era-content.expanded {
+            padding: 30px;
+            max-height: 2000px;
+        }
+        
+        .key-events {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .event-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .event-card:hover {
+            border-color: var(--usa-blue);
+            transform: translateY(-3px);
+        }
+        
+        .event-title {
+            color: var(--usa-blue);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .document-links {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .doc-link {
+            display: inline-block;
+            padding: 8px 15px;
+            background: var(--document-blue);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .doc-link:hover {
+            background: #1e40af;
+            transform: scale(1.05);
+        }
+        
+        .hidden-archive {
+            background: #f1f5f9;
+            border: 2px dashed #94a3b8;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+        
+        .archive-toggle {
+            background: linear-gradient(90deg, var(--usa-red), var(--usa-blue));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 auto;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .archive-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(60,59,110,0.3);
+        }
+        
+        .archive-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            margin-top: 0;
+        }
+        
+        .archive-content.expanded {
+            max-height: 2000px;
+            margin-top: 20px;
+        }
+        
+        .archive-link {
+            color: #475569;
+            text-decoration: none;
+            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        
+        .archive-link:hover {
+            color: var(--usa-red);
+            background: #f8fafc;
+            padding-left: 15px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(60,59,110,0.05), rgba(178,34,52,0.05));
+            border-radius: 15px;
+            border: 2px solid rgba(178,34,52,0.1);
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--usa-red);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: var(--usa-blue);
+            font-size: 0.9rem;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 40px 0;
+            border-top: 2px solid #e5e7eb;
+            margin-top: 40px;
+        }
+        
+        .nav-button {
+            padding: 15px 30px;
+            background: linear-gradient(90deg, var(--usa-blue), var(--usa-red));
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .disclaimer {
+            text-align: center;
+            padding: 20px;
+            color: #6b7280;
+            font-size: 0.9rem;
+            background: #f9fafb;
+            border-radius: 10px;
+            margin-top: 40px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .era-title {
+                font-size: 1.3rem;
+            }
+            
+            .key-events {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars-background" id="starsBackground"></div>
+    <div class="stripes"></div>
+    
+    <div class="container">
+        <header>
+            <div class="flag-pattern"></div>
+            <h1><span class="title-flag">United States History</span></h1>
+            <div class="subtitle">From Revolution to Superpower - The American Journey</div>
+            <div style="margin-top: 20px; display: inline-block; padding: 10px 20px; background: rgba(255,255,255,0.2); border-radius: 20px;">
+                <span style="color: var(--patriotic-gold);">★</span> Verified Historical Documents <span style="color: var(--patriotic-gold);">★</span>
+            </div>
+        </header>
+        
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number" data-count="1776">1776</div>
+                <div class="stat-label">Declaration of Independence</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="27">27</div>
+                <div class="stat-label">Constitutional Amendments</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="46">46</div>
+                <div class="stat-label">Presidents</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="50">50</div>
+                <div class="stat-label">States</div>
+            </div>
+        </div>
+        
+        <div class="era-timeline">
+            <!-- Revolutionary Era -->
+            <div class="era-card era-revolution">
+                <div class="era-header" onclick="toggleEra('era1')">
+                    <div class="era-title">
+                        <span class="era-icon">⚔️</span>
+                        Revolutionary Era (1765-1783)
+                    </div>
+                    <div class="era-date">Founding Years</div>
+                </div>
+                <div class="era-content" id="era1">
+                    <p><strong>Key Events:</strong> Boston Tea Party, Declaration of Independence, Revolutionary War</p>
+                    
+                    <div class="key-events">
+                        <div class="event-card">
+                            <div class="event-title">Declaration of Independence (1776)</div>
+                            <p>Thomas Jefferson's revolutionary document</p>
+                            <div class="document-links">
+                                <a href="https://www.archives.gov/founding-docs/declaration" target="_blank" class="doc-link">
+                                    National Archives
+                                </a>
+                                <a href="https://www.loc.gov/item/90898038/" target="_blank" class="doc-link">
+                                    Library of Congress
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="event-card">
+                            <div class="event-title">U.S. Constitution (1787)</div>
+                            <p>Founding document of American government</p>
+                            <div class="document-links">
+                                <a href="https://www.archives.gov/founding-docs/constitution" target="_blank" class="doc-link">
+                                    Full Text & Analysis
+                                </a>
+                                <a href="https://constitutioncenter.org/interactive-constitution" target="_blank" class="doc-link">
+                                    Interactive Constitution
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden-archive">
+                        <button class="archive-toggle" onclick="toggleArchive('archive1')">
+                            <span>📜</span> Foundational Documents Archive
+                        </button>
+                        <div class="archive-content" id="archive1">
+                            <a href="https://avalon.law.yale.edu/18th_century/fed01.asp" target="_blank" class="archive-link">
+                                Federalist Papers - Full Collection
+                            </a>
+                            <a href="https://founders.archives.gov/" target="_blank" class="archive-link">
+                                Founders Online - Washington, Jefferson, Adams
+                            </a>
+                            <a href="https://www.mountvernon.org/library/" target="_blank" class="archive-link">
+                                George Washington's Papers
+                            </a>
+                            <a href="https://www.masshist.org/digitaladams/" target="_blank" class="archive-link">
+                                Adams Family Papers
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Civil War Era -->
+            <div class="era-card era-civilwar">
+                <div class="era-header" onclick="toggleEra('era2')">
+                    <div class="era-title">
+                        <span class="era-icon">⚖️</span>
+                        Civil War & Reconstruction (1861-1877)
+                    </div>
+                    <div class="era-date">Nation Divided</div>
+                </div>
+                <div class="era-content" id="era2">
+                    <p><strong>Key Events:</strong> Emancipation Proclamation, Gettysburg Address, 13th Amendment</p>
+                    
+                    <div class="key-events">
+                        <div class="event-card">
+                            <div class="event-title">Emancipation Proclamation (1863)</div>
+                            <p>Lincoln's executive order freeing slaves</p>
+                            <div class="document-links">
+                                <a href="https://www.archives.gov/exhibits/featured-documents/emancipation-proclamation" target="_blank" class="doc-link">
+                                    Original Document
+                                </a>
+                                <a href="https://www.loc.gov/item/2021667573/" target="_blank" class="doc-link">
+                                    Library of Congress Scan
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="event-card">
+                            <div class="event-title">Gettysburg Address (1863)</div>
+                            <p>Lincoln's iconic speech</p>
+                            <div class="document-links">
+                                <a href="https://www.loc.gov/exhibits/gettysburg-address/" target="_blank" class="doc-link">
+                                    All Five Manuscripts
+                                </a>
+                                <a href="https://www.nps.gov/gett/learn/historyculture/gettysburg-address.htm" target="_blank" class="doc-link">
+                                    National Park Service
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Industrial Revolution -->
+            <div class="era-card era-industrial">
+                <div class="era-header" onclick="toggleEra('era3')">
+                    <div class="era-title">
+                        <span class="era-icon">🏭</span>
+                        Industrial Revolution (1870-1914)
+                    </div>
+                    <div class="era-date">Economic Transformation</div>
+                </div>
+                <div class="era-content" id="era3">
+                    <p><strong>Key Developments:</strong> Railroad expansion, Robber Barons, Labor movements</p>
+                    
+                    <div class="key-events">
+                        <div class="event-card">
+                            <div class="event-title">Sherman Antitrust Act (1890)</div>
+                            <p>First federal act to limit monopolies</p>
+                            <div class="document-links">
+                                <a href="https://www.law.cornell.edu/uscode/text/15/1" target="_blank" class="doc-link">
+                                    Current Law Text
+                                </a>
+                                <a href="https://www.archives.gov/milestone-documents/sherman-anti-trust-act" target="_blank" class="doc-link">
+                                    Historical Context
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="event-card">
+                            <div class="event-title">Federal Reserve Act (1913)</div>
+                            <p>Created central banking system</p>
+                            <div class="document-links">
+                                <a href="https://www.federalreserve.gov/aboutthefed/fract.htm" target="_blank" class="doc-link">
+                                    Full Text
+                                </a>
+                                <a href="https://fraser.stlouisfed.org/title/federal-reserve-act-961" target="_blank" class="doc-link">
+                                    Historical Documents
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- World Wars Era -->
+            <div class="era-card era-worldwars">
+                <div class="era-header" onclick="toggleEra('era4')">
+                    <div class="era-title">
+                        <span class="era-icon">🌍</span>
+                        World Wars Era (1914-1945)
+                    </div>
+                    <div class="era-date">Global Power Emerges</div>
+                </div>
+                <div class="era-content" id="era4">
+                    <p><strong>Key Events:</strong> Treaty of Versailles, New Deal, Pearl Harbor, Manhattan Project</p>
+                    
+                    <div class="key-events">
+                        <div class="event-card">
+                            <div class="event-title">New Deal Programs (1933-1939)</div>
+                            <p>FDR's response to Great Depression</p>
+                            <div class="document-links">
+                                <a href="https://www.archives.gov/research/alic/reference/new-deal.html" target="_blank" class="doc-link">
+                                    National Archives Guide
+                                </a>
+                                <a href="https://www.fdrlibrary.org/new-deal" target="_blank" class="doc-link">
+                                    FDR Library
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="event-card">
+                            <div class="event-title">United Nations Charter (1945)</div>
+                            <p>US role in founding UN</p>
+                            <div class="document-links">
+                                <a href="https://www.un.org/en/about-us/un-charter/full-text" target="_blank" class="doc-link">
+                                    UN Charter Text
+                                </a>
+                                <a href="https://www.archives.gov/milestone-documents/united-nations-charter" target="_blank" class="doc-link">
+                                    US Ratification
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cold War Era -->
+            <div class="era-card era-coldwar">
+                <div class="era-header" onclick="toggleEra('era5')">
+                    <div class="era-title">
+                        <span class="era-icon">☢️</span>
+                        Cold War Era (1947-1991)
+                    </div>
+                    <div class="era-date">Superpower Conflict</div>
+                </div>
+                <div class="era-content" id="era5">
+                    <p><strong>Key Events:</strong> Truman Doctrine, Space Race, Cuban Missile Crisis, Vietnam War</p>
+                    
+                    <div class="key-events">
+                        <div class="event-card">
+                            <div class="event-title">NATO Treaty (1949)</div>
+                            <p>North Atlantic Treaty Organization</p>
+                            <div class="document-links">
+                                <a href="https://www.nato.int/cps/en/natohq/official_texts_17120.htm" target="_blank" class="doc-link">
+                                    NATO Original Text
+                                </a>
+                                <a href="https://history.state.gov/historicaldocuments/frus1949v04/d24" target="_blank" class="doc-link">
+                                    State Department Records
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="event-card">
+                            <div class="event-title">Civil Rights Act (1964)</div>
+                            <p>Landmark civil rights legislation</p>
+                            <div class="document-links">
+                                <a href="https://www.archives.gov/milestone-documents/civil-rights-act" target="_blank" class="doc-link">
+                                    National Archives
+                                </a>
+                                <a href="https://www.congress.gov/bill/88th-congress/house-bill/7152" target="_blank" class="doc-link">
+                                    Congressional Record
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modern Era -->
+            <div class="era-card era-modern">
+                <div class="era-header" onclick="toggleEra('era6')">
+                    <div class="era-title">
+                        <span class="era-icon">💻</span>
+                        Modern Era (1991-Present)
+                    </div>
+                    <div class="era-date">Digital Age & Globalization</div>
+                </div>
+                <div class="era-content" id="era6">
+                    <p><strong>Key Developments:</strong> Internet revolution, War on Terror, 2008 Financial Crisis</p>
+                    
+                    <div class="key-events">
+                        <div class="event-card">
+                            <div class="event-title">9/11 Commission Report (2004)</div>
+                            <p>Official investigation of September 11 attacks</p>
+                            <div class="document-links">
+                                <a href="https://9-11commission.gov/report/" target="_blank" class="doc-link">
+                                    Full Report
+                                </a>
+                                <a href="https://www.archives.gov/research/9-11" target="_blank" class="doc-link">
+                                    National Archives Collection
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="event-card">
+                            <div class="event-title">Affordable Care Act (2010)</div>
+                            <p>Major healthcare reform</p>
+                            <div class="document-links">
+                                <a href="https://www.congress.gov/bill/111th-congress/house-bill/3590/text" target="_blank" class="doc-link">
+                                    Full Legislation Text
+                                </a>
+                                <a href="https://www.healthcare.gov/" target="_blank" class="doc-link">
+                                    Official Government Site
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <a href="/history/money" class="nav-button">
+                ⬅️ Previous: Monetary Systems
+            </a>
+            <a href="/history/europe" class="nav-button">
+                Next: European History ➡️
+            </a>
+        </div>
+        
+        <div class="disclaimer">
+            <p>🇺🇸 This page contains verified historical documents from U.S. National Archives, Library of Congress, and other official sources.</p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">
+                Educational Resource | Primary Source Materials | Updated Regularly
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Create stars background
+        function createStars() {
+            const starsBg = document.getElementById('starsBackground');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = (5 + Math.random() * 15) + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                starsBg.appendChild(star);
+            }
+        }
+        
+        // Toggle era content
+        function toggleEra(eraId) {
+            const content = document.getElementById(eraId);
+            content.classList.toggle('expanded');
+        }
+        
+        // Toggle archive content
+        function toggleArchive(archiveId) {
+            const content = document.getElementById(archiveId);
+            content.classList.toggle('expanded');
+        }
+        
+        // Animate statistics
+        function animateStats() {
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach(stat => {
+                const target = parseInt(stat.getAttribute('data-count'));
+                let current = 0;
+                const increment = target / 50;
+                
+                const update = () => {
+                    if (current < target) {
+                        current += increment;
+                        stat.textContent = Math.floor(current);
+                        setTimeout(update, 20);
+                    } else {
+                        stat.textContent = target;
+                    }
+                };
+                update();
+            });
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            animateStats();
+            
+            // Auto-expand first era
+            setTimeout(function() {
+                toggleEra('era1');
+            }, 500);
+        });
+    </script>
+</body>
+</html>`;
+    
+    res.send(usaContent);
+});
 
 // ===== 404 ERROR HANDLER =====
 app.use((req, res) => {
