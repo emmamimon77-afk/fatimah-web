@@ -9089,6 +9089,950 @@ app.get('/history/asia', (req, res) => {
     res.send(asiaContent);
 });
 
+// ============================================
+// /history/africa - African History & Civilizations
+// ============================================
+
+app.get('/history/africa', (req, res) => {
+    const africaContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>African History - Cradle of Humanity to Rising Continent</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --pan-african-red: #E31B23;
+            --pan-african-green: #00853F;
+            --pan-african-yellow: #FFCE00;
+            --pan-african-black: #000000;
+            --earth-brown: #8B4513;
+            --sunset-orange: #FF6B35;
+            --baobab-green: #2E8B57;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f1e6 0%, #e8e1d1 100%);
+            color: #222;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .african-pattern-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(227, 27, 35, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0, 133, 63, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(255, 206, 0, 0.02) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        .kente-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(90deg, 
+                    transparent, 
+                    transparent 40px, 
+                    rgba(227, 27, 35, 0.05) 40px, 
+                    rgba(227, 27, 35, 0.05) 80px),
+                repeating-linear-gradient(0deg, 
+                    transparent, 
+                    transparent 40px, 
+                    rgba(0, 133, 63, 0.05) 40px, 
+                    rgba(0, 133, 63, 0.05) 80px);
+            z-index: -1;
+            opacity: 0.4;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            text-align: center;
+            padding: 80px 40px;
+            background: linear-gradient(135deg, var(--pan-african-red), #ff3333);
+            color: white;
+            border-radius: 30px;
+            margin-bottom: 70px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(227, 27, 35, 0.3);
+            border: 8px solid var(--pan-african-yellow);
+        }
+        
+        .adinkra-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><path d="M100,20 C140,20 180,60 180,100 C180,140 140,180 100,180 C60,180 20,140 20,100 C20,60 60,20 100,20 Z" fill="none" stroke="%23FFCE00" stroke-width="3" opacity="0.2"/><path d="M100,50 C120,50 150,80 150,100 C150,120 120,150 100,150 C80,150 50,120 50,100 C50,80 80,50 100,50 Z" fill="none" stroke="%2300853F" stroke-width="2" opacity="0.2"/></svg>');
+            background-size: 300px;
+            opacity: 0.3;
+        }
+        
+        h1 {
+            font-size: 4.5rem;
+            margin-bottom: 25px;
+            position: relative;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+            font-weight: 900;
+        }
+        
+        .title-gradient {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--pan-african-yellow), white, var(--pan-african-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            opacity: 0.95;
+            margin-bottom: 35px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+        
+        .africa-facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 60px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(46, 139, 87, 0.8));
+            border-radius: 25px;
+            color: white;
+        }
+        
+        .fact-item {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 206, 0, 0.3);
+        }
+        
+        .fact-number {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: var(--pan-african-yellow);
+            margin-bottom: 15px;
+        }
+        
+        .fact-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .region-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin: 70px 0;
+        }
+        
+        .region-card {
+            background: white;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transition: all 0.6s ease;
+            border: 4px solid transparent;
+            position: relative;
+        }
+        
+        .region-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+            border-color: var(--pan-african-red);
+        }
+        
+        .card-header {
+            padding: 35px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .north-africa { background: linear-gradient(135deg, #8B4513, #D2691E); }
+        .west-africa { background: linear-gradient(135deg, #228B22, #32CD32); }
+        .east-africa { background: linear-gradient(135deg, #FF4500, #FF8C00); }
+        .central-africa { background: linear-gradient(135deg, #006400, #228B22); }
+        .southern-africa { background: linear-gradient(135deg, #1C39BB, #4169E1); }
+        
+        .region-icon {
+            font-size: 4.5rem;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.4));
+        }
+        
+        .region-title {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .countries {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-top: 15px;
+        }
+        
+        .card-body {
+            padding: 35px;
+        }
+        
+        .civilization-section {
+            margin-bottom: 30px;
+        }
+        
+        .civilization-title {
+            color: var(--pan-african-red);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--pan-african-yellow);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .civilization-list {
+            list-style: none;
+            margin-left: 20px;
+        }
+        
+        .civilization-list li {
+            padding: 12px 0;
+            border-bottom: 1px dashed #eee;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .civilization-list li:before {
+            content: "✦";
+            color: var(--pan-african-green);
+            font-size: 1.2rem;
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+        
+        .resource-link {
+            display: block;
+            padding: 15px 20px;
+            background: var(--pan-african-green);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            text-align: center;
+        }
+        
+        .resource-link:hover {
+            background: white;
+            color: var(--pan-african-green);
+            border-color: var(--pan-african-green);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 133, 63, 0.3);
+        }
+        
+        .colonial-section {
+            background: linear-gradient(135deg, rgba(227, 27, 35, 0.1), rgba(0, 0, 0, 0.1));
+            border-radius: 30px;
+            padding: 50px;
+            margin: 80px 0;
+            border: 5px solid var(--pan-african-red);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .colonial-section::before {
+            content: '✊🏿';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            font-size: 300px;
+            opacity: 0.05;
+            transform: rotate(15deg);
+        }
+        
+        .colonial-title {
+            text-align: center;
+            font-size: 2.8rem;
+            color: var(--pan-african-red);
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .colonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 35px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .colonial-card {
+            background: white;
+            padding: 35px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            transition: all 0.4s ease;
+        }
+        
+        .colonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+        
+        .colonial-card-title {
+            color: var(--pan-african-red);
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid var(--pan-african-yellow);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .colonial-list {
+            list-style: none;
+        }
+        
+        .colonial-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 1.1rem;
+        }
+        
+        .colonial-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .colonial-list strong {
+            color: var(--pan-african-green);
+        }
+        
+        .cultural-section {
+            background: linear-gradient(135deg, var(--pan-african-yellow), #ffdb4d);
+            border-radius: 30px;
+            padding: 60px;
+            margin: 70px 0;
+            color: #333;
+            text-align: center;
+        }
+        
+        .cultural-title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: var(--pan-african-red);
+        }
+        
+        .cultural-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .cultural-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .cultural-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cultural-name {
+            font-size: 1.6rem;
+            color: var(--pan-african-green);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .archive-section {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(46, 139, 87, 0.9));
+            color: white;
+            border-radius: 30px;
+            padding: 60px;
+            margin: 80px 0;
+        }
+        
+        .archive-title {
+            text-align: center;
+            font-size: 2.8rem;
+            color: var(--pan-african-yellow);
+            margin-bottom: 50px;
+        }
+        
+        .archive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 35px;
+        }
+        
+        .archive-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 35px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 206, 0, 0.3);
+        }
+        
+        .archive-card-title {
+            font-size: 1.8rem;
+            color: var(--pan-african-yellow);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid rgba(255, 206, 0, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .archive-list {
+            list-style: none;
+        }
+        
+        .archive-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .archive-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .archive-list a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 10px 0;
+        }
+        
+        .archive-list a:hover {
+            color: var(--pan-african-yellow);
+            padding-left: 15px;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 60px 0;
+            border-top: 4px solid #d4c7a3;
+            margin-top: 80px;
+        }
+        
+        .nav-button {
+            padding: 20px 40px;
+            background: linear-gradient(135deg, var(--pan-african-red), var(--pan-african-green));
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 15px 35px rgba(227, 27, 35, 0.4);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(227, 27, 35, 0.6);
+        }
+        
+        .disclaimer {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 1rem;
+            background: #f5f1e6;
+            border-radius: 25px;
+            margin-top: 60px;
+            border: 3px solid #d4c7a3;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .region-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .colonial-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .archive-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .cultural-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .africa-facts {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="african-pattern-bg"></div>
+    <div class="kente-pattern"></div>
+    
+    <div class="container">
+        <header>
+            <div class="adinkra-pattern"></div>
+            <h1><span class="title-gradient">AFRICAN HISTORY</span></h1>
+            <div class="subtitle">Cradle of Humanity • Land of Ancient Kingdoms • Continent of Resilience • Future of Global Innovation</div>
+            <div style="margin-top: 30px; display: inline-block; padding: 15px 35px; background: rgba(255, 206, 0, 0.2); border-radius: 40px; border: 4px solid var(--pan-african-yellow); font-size: 1.2rem;">
+                <span style="color: var(--pan-african-yellow);">🦁</span> Centering African Voices • Decolonizing History <span style="color: var(--pan-african-yellow);">🦁</span>
+            </div>
+        </header>
+        
+        <div class="africa-facts">
+            <div class="fact-item">
+                <div class="fact-number">54</div>
+                <div class="fact-label">Countries</div>
+            </div>
+            <div class="fact-item">
+                <div class="fact-number">2000+</div>
+                <div class="fact-label">Languages & Dialects</div>
+            </div>
+            <div class="fact-item">
+                <div class="fact-number">1.4B</div>
+                <div class="fact-label">People (World's Youngest Population)</div>
+            </div>
+            <div class="fact-item">
+                <div class="fact-number">30%</div>
+                <div class="fact-label">Earth's Mineral Resources</div>
+            </div>
+        </div>
+        
+        <div class="region-grid">
+            <!-- North Africa -->
+            <div class="region-card">
+                <div class="card-header north-africa">
+                    <div class="region-icon">🏜️</div>
+                    <div class="region-title">North Africa</div>
+                    <div class="countries">Egypt • Libya • Tunisia • Algeria • Morocco • Sudan • Mauritania</div>
+                </div>
+                <div class="card-body">
+                    <div class="civilization-section">
+                        <div class="civilization-title">
+                            <span>🏺</span> Ancient Civilizations
+                        </div>
+                        <ul class="civilization-list">
+                            <li><strong>Ancient Egypt</strong> (3100-332 BCE) - Pyramids, hieroglyphs, advanced mathematics</li>
+                            <li><strong>Carthaginian Empire</strong> (814-146 BCE) - Phoenician traders, Hannibal</li>
+                            <li><strong>Nubian Kingdoms</strong> (2500 BCE-1500 CE) - Kush, Meroë, advanced ironworking</li>
+                            <li><strong>Berber Kingdoms</strong> - Numidia, Mauretania, resistance to Roman rule</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="resources-grid">
+                        <a href="https://www.egyptianmuseum.org/" target="_blank" class="resource-link">
+                            Egyptian Museum, Cairo
+                        </a>
+                        <a href="https://www.metmuseum.org/toah/hd/phoe/hd_phoe.htm" target="_blank" class="resource-link">
+                            Phoenician Art & History
+                        </a>
+                        <a href="https://www.britishmuseum.org/collection/galleries/sudan-egypt-nubia" target="_blank" class="resource-link">
+                            Nubian Galleries
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- West Africa -->
+            <div class="region-card">
+                <div class="card-header west-africa">
+                    <div class="region-icon">👑</div>
+                    <div class="region-title">West Africa</div>
+                    <div class="countries">Nigeria • Ghana • Mali • Senegal • Ivory Coast • Niger • Burkina Faso</div>
+                </div>
+                <div class="card-body">
+                    <div class="civilization-section">
+                        <div class="civilization-title">
+                            <span>🏰</span> Great Empires
+                        </div>
+                        <ul class="civilization-list">
+                            <li><strong>Ghana Empire</strong> (300-1200 CE) - Gold trade, "Land of Gold"</li>
+                            <li><strong>Mali Empire</strong> (1235-1670 CE) - Mansa Musa (world's richest person), Timbuktu</li>
+                            <li><strong>Songhai Empire</strong> (1464-1591 CE) - Largest African empire in history</li>
+                            <li><strong>Benin Kingdom</strong> (1180-1897 CE) - Bronze casting, complex urban planning</li>
+                            <li><strong>Ashanti Empire</strong> (1670-1902 CE) - Golden Stool, matrilineal inheritance</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="resources-grid">
+                        <a href="https://www.britishmuseum.org/collection/galleries/africa" target="_blank" class="resource-link">
+                            British Museum - Africa Galleries
+                        </a>
+                        <a href="https://www.metmuseum.org/toah/hd/sghi/hd_sghi.htm" target="_blank" class="resource-link">
+                            Songhai Empire History
+                        </a>
+                        <a href="https://www.worldhistory.org/Benin_Bronzes/" target="_blank" class="resource-link">
+                            Benin Bronzes History
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- East Africa -->
+            <div class="region-card">
+                <div class="card-header east-africa">
+                    <div class="region-icon">🏔️</div>
+                    <div class="region-title">East Africa</div>
+                    <div class="countries">Ethiopia • Kenya • Tanzania • Uganda • Rwanda • Somalia • Eritrea</div>
+                </div>
+                <div class="card-body">
+                    <div class="civilization-section">
+                        <div class="civilization-title">
+                            <span>⛪</span> Ancient Kingdoms & Trade
+                        </div>
+                        <ul class="civilization-list">
+                            <li><strong>Aksumite Empire</strong> (100-940 CE) - Obelisks, one of first Christian nations</li>
+                            <li><strong>Swahili Coast</strong> (1st-19th century) - Indian Ocean trade, Stone Town</li>
+                            <li><strong>Ethiopian Empire</strong> (1137-1974) - Solomonic dynasty, Lalibela churches</li>
+                            <li><strong>Kingdom of Buganda</strong> (1300-1967) - Complex political system</li>
+                            <li><strong>Kingdom of Rwanda</strong> (15th century-1962) - Intore dancers, milk culture</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="resources-grid">
+                        <a href="https://whc.unesco.org/en/list/15/" target="_blank" class="resource-link">
+                            Rock-Hewn Churches of Lalibela
+                        </a>
+                        <a href="https://www.metmuseum.org/toah/hd/sswa/hd_sswa.htm" target="_blank" class="resource-link">
+                            Swahili Coast History
+                        </a>
+                        <a href="https://www.britishmuseum.org/collection/galleries/ethiopia-and-coptic-egypt" target="_blank" class="resource-link">
+                            Ethiopian Collections
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Central Africa -->
+            <div class="region-card">
+                <div class="card-header central-africa">
+                    <div class="region-icon">🌳</div>
+                    <div class="region-title">Central Africa</div>
+                    <div class="countries">DR Congo • Cameroon • Gabon • Congo • CAR • Chad • Angola</div>
+                </div>
+                <div class="card-body">
+                    <div class="civilization-section">
+                        <div class="civilization-title">
+                            <span>🌿</span> Forest Kingdoms & Bantu Migrations
+                        </div>
+                        <ul class="civilization-list">
+                            <li><strong>Kingdom of Kongo</strong> (1390-1914) - Centralized state, early diplomacy with Europe</li>
+                            <li><strong>Luba Empire</strong> (1585-1889) - Memory boards, sacred kingship</li>
+                            <li><strong>Lunda Empire</strong> (1665-1887) - Confederation model, salt trade</li>
+                            <li><strong>Kuba Kingdom</strong> (1625-1900) - Raffia cloth, elaborate court art</li>
+                            <li><strong>Bantu Migrations</strong> (1000 BCE-500 CE) - Spread of languages, ironworking</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="resources-grid">
+                        <a href="https://www.metmuseum.org/toah/hd/ckng/hd_ckng.htm" target="_blank" class="resource-link">
+                            Kingdom of Kongo Art
+                        </a>
+                        <a href="https://africa.si.edu/exhibits/kuba/index.html" target="_blank" class="resource-link">
+                            Kuba Kingdom Art
+                        </a>
+                        <a href="https://www.britishmuseum.org/collection/galleries/africa-rooms-25" target="_blank" class="resource-link">
+                            Central African Collections
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Southern Africa -->
+            <div class="region-card">
+                <div class="card-header southern-africa">
+                    <div class="region-icon">💎</div>
+                    <div class="region-title">Southern Africa</div>
+                    <div class="countries">South Africa • Zimbabwe • Botswana • Namibia • Mozambique • Madagascar</div>
+                </div>
+                <div class="card-body">
+                    <div class="civilization-section">
+                        <div class="civilization-title">
+                            <span>🏰</span> Stone Cities & Mineral Wealth
+                        </div>
+                        <ul class="civilization-list">
+                            <li><strong>Great Zimbabwe</strong> (1100-1450) - Stone city, gold trade, largest ancient structure in Africa south of Sahara</li>
+                            <li><strong>Mapungubwe</strong> (1075-1220) - First class-based social system in southern Africa</li>
+                            <li><strong>Kingdom of Mutapa</strong> (1430-1760) - Gold mining empire</li>
+                            <li><strong>Zulu Kingdom</strong> (1816-1897) - Military innovation, Shaka Zulu</li>
+                            <li><strong>Merina Kingdom</strong> (1540-1897) - Madagascar's unification</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="resources-grid">
+                        <a href="https://whc.unesco.org/en/list/364/" target="_blank" class="resource-link">
+                            Great Zimbabwe UNESCO
+                        </a>
+                        <a href="https://www.sahistory.org.za/" target="_blank" class="resource-link">
+                            South African History Online
+                        </a>
+                        <a href="https://www.iziko.org.za/" target="_blank" class="resource-link">
+                            Iziko Museums of South Africa
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="colonial-section">
+            <div class="colonial-title">Colonial Exploitation & Resource Extraction</div>
+            <div class="colonial-grid">
+                <div class="colonial-card">
+                    <div class="colonial-card-title">
+                        <span>⛓️</span> Transatlantic Slave Trade
+                    </div>
+                    <ul class="colonial-list">
+                        <li><strong>12.5 million</strong> Africans forcibly transported (1501-1866)</li>
+                        <li><strong>2 million</strong> died during Middle Passage</li>
+                        <li><strong>European ports:</strong> Liverpool, Bristol, Nantes, Lisbon</li>
+                        <li><strong>African kingdoms involved:</strong> Dahomey, Asante, Kongo (under coercion)</li>
+                        <li><strong>Legacy:</strong> Diaspora of 200 million people worldwide</li>
+                    </ul>
+                </div>
+                
+                <div class="colonial-card">
+                    <div class="colonial-card-title">
+                        <span>🛢️</span> Resource Extraction
+                    </div>
+                    <ul class="colonial-list">
+                        <li><strong>Belgian Congo:</strong> Rubber terror (10 million deaths)</li>
+                        <li><strong>South Africa:</strong> Gold & diamonds (De Beers monopoly)</li>
+                        <li><strong>Nigeria:</strong> Oil (Shell BP operations since 1937)</li>
+                        <li><strong>DR Congo:</strong> Cobalt, copper, coltan (modern slavery)</li>
+                        <li><strong>West Africa:</strong> Cocoa, palm oil (child labor continues)</li>
+                    </ul>
+                </div>
+                
+                <div class="colonial-card">
+                    <div class="colonial-card-title">
+                        <span>🗺️</span> Artificial Borders
+                    </div>
+                    <ul class="colonial-list">
+                        <li><strong>1884 Berlin Conference:</strong> Europe divided Africa without African representation</li>
+                        <li><strong>56 new borders</strong> created, splitting ethnic groups</li>
+                        <li><strong>French West Africa:</strong> 8 countries forced together</li>
+                        <li><strong>British indirect rule:</strong> Divide and conquer tactics</li>
+                        <li><strong>Legacy:</strong> Ongoing ethnic conflicts, resource wars</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cultural-section">
+            <div class="cultural-title">African Cultural & Spiritual Traditions</div>
+            <div class="cultural-grid">
+                <div class="cultural-card">
+                    <div class="cultural-icon">🗣️</div>
+                    <div class="cultural-name">Oral Traditions</div>
+                    <p>Griots (West Africa), Imbongi (Southern Africa) - Living libraries preserving history through storytelling, poetry, and song</p>
+                </div>
+                <div class="cultural-card">
+                    <div class="cultural-icon">🎭</div>
+                    <div class="cultural-name">Mask Traditions</div>
+                    <p>Dan masks (Liberia), Gelede masks (Yoruba), Pwo masks (Chokwe) - Spiritual communication, social commentary, initiation rites</p>
+                </div>
+                <div class="cultural-card">
+                    <div class="cultural-icon">⚕️</div>
+                    <div class="cultural-name">Traditional Medicine</div>
+                    <p>Ubuntu philosophy, Sangomas (Southern Africa), Babalawo (Yoruba) - Holistic healing integrating body, mind, and community</p>
+                </div>
+                <div class="cultural-card">
+                    <div class="cultural-icon">✊🏿</div>
+                    <div class="cultural-name">Liberation Theologies</div>
+                    <p>Black Consciousness (Steve Biko), Ubuntu Theology, African Independent Churches - Resistance through spiritual empowerment</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="archive-section">
+            <div class="archive-title">African-Centered Research & Archives</div>
+            <div class="archive-grid">
+                <div class="archive-card">
+                    <div class="archive-card-title">
+                        <span>🏛️</span> Digital Archives
+                    </div>
+                    <ul class="archive-list">
+                        <li><a href="https://www.aluka.org/" target="_blank">Aluka Digital Library - African Cultural Heritage</a></li>
+                        <li><a href="https://www.disa.ukzn.ac.za/" target="_blank">Digital Innovation South Africa - Anti-Apartheid Archives</a></li>
+                        <li><a href="https://www.sahistory.org.za/" target="_blank">South African History Online</a></li>
+                        <li><a href="https://www.africanactivist.msu.edu/" target="_blank">African Activist Archive</a></li>
+                        <li><a href="https://www.africabib.org/" target="_blank">AfricaBib - Bibliographic Database</a></li>
+                    </ul>
+                </div>
+                
+                <div class="archive-card">
+                    <div class="archive-card-title">
+                        <span>📚</span> Academic Centers
+                    </div>
+                    <ul class="archive-list">
+                        <li><a href="https://www.ascleiden.nl/" target="_blank">African Studies Centre Leiden</a></li>
+                        <li><a href="https://www.soas.ac.uk/africa/" target="_blank">SOAS University of London - African Studies</a></li>
+                        <li><a href="https://africa.harvard.edu/" target="_blank">Harvard University - Center for African Studies</a></li>
+                        <li><a href="https://casi.sas.upenn.edu/" target="_blank">University of Pennsylvania - Center for Africana Studies</a></li>
+                        <li><a href="https://www.ias.edu/african-studies" target="_blank">Institute for Advanced Study - African Studies</a></li>
+                    </ul>
+                </div>
+                
+                <div class="archive-card">
+                    <div class="archive-card-title">
+                        <span>🎨</span> Museum Collections
+                    </div>
+                    <ul class="archive-list">
+                        <li><a href="https://africa.si.edu/" target="_blank">Smithsonian National Museum of African Art</a></li>
+                        <li><a href="https://www.iziko.org.za/" target="_blank">Iziko Museums of South Africa</a></li>
+                        <li><a href="https://www.museumaffiche.be/en" target="_blank">Royal Museum for Central Africa (Belgium)</a></li>
+                        <li><a href="https://www.britishmuseum.org/collection/galleries/africa" target="_blank">British Museum - Africa Galleries</a></li>
+                        <li><a href="https://www.quaibranly.fr/en/" target="_blank">Musée du Quai Branly - African Collections</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <a href="/history/asia" class="nav-button">
+                ⬅️ Previous: Asian History
+            </a>
+            <a href="/history/archives" class="nav-button">
+                Next: Document Archives ➡️
+            </a>
+        </div>
+        
+        <div class="disclaimer">
+            <p>🦁 This resource centers African scholarship, uses African terminology, and prioritizes African institutions and perspectives.</p>
+            <p style="margin-top: 20px; font-size: 1rem; color: #888;">
+                <strong>Decolonizing Note:</strong> This page rejects colonial narratives, centers pre-colonial achievements, and documents ongoing resistance and resilience.
+                All dates follow Gregorian calendar for accessibility while acknowledging indigenous timekeeping systems.
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Add staggered animation to region cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.region-card');
+            
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(40px) scale(0.95)';
+                card.style.transition = 'all 0.7s ease ' + (index * 0.15) + 's';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0) scale(1)';
+                }, 300 + (index * 150));
+            });
+            
+            // Animate fact numbers
+            const factNumbers = document.querySelectorAll('.fact-number');
+            factNumbers.forEach(number => {
+                const target = number.textContent;
+                if (target.includes('B')) {
+                    const num = parseFloat(target);
+                    animateNumber(number, num, 'B');
+                } else if (target.includes('%')) {
+                    const num = parseFloat(target);
+                    animateNumber(number, num, '%');
+                } else {
+                    const num = parseInt(target);
+                    animateNumber(number, num, '');
+                }
+            });
+            
+            function animateNumber(element, target, suffix) {
+                let current = 0;
+                const increment = target / 50;
+                const update = () => {
+                    if (current < target) {
+                        current += increment;
+                        if (suffix === 'B') {
+                            element.textContent = (current / 1).toFixed(1) + suffix;
+                        } else {
+                            element.textContent = Math.floor(current) + suffix;
+                        }
+                        setTimeout(update, 30);
+                    } else {
+                        element.textContent = target + suffix;
+                    }
+                };
+                update();
+            }
+        });
+    </script>
+</body>
+</html>`;
+    
+    res.send(africaContent);
+});
+
 // ===== 404 ERROR HANDLER =====
 app.use((req, res) => {
   res.status(404).send(`
