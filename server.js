@@ -7588,6 +7588,677 @@ app.get('/history/europe', (req, res) => {
     res.send(europeContent);
 });
 
+// ============================================
+// /history/middle-east - Middle Eastern History
+// ============================================
+
+app.get('/history/middle-east', (req, res) => {
+    const middleEastContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Middle Eastern History - Cradle of Civilization to Modern Geopolitics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        :root {
+            --islamic-green: #006400;
+            --arabic-gold: #D4AF37;
+            --persian-blue: #1C39BB;
+            --ottoman-red: #CE1126;
+            --desert-sand: #F5DEB3;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f1e6 0%, #e8dfca 100%);
+            color: #333;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .arabesque-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(0, 100, 0, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.03) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        .geometric-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0, 100, 0, 0.02) 10px, rgba(0, 100, 0, 0.02) 20px);
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, var(--islamic-green), #008000);
+            color: white;
+            border-radius: 20px;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 100, 0, 0.2);
+            border: 4px solid var(--arabic-gold);
+        }
+        
+        .islamic-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M50,0 C77.614,0 100,22.386 100,50 C100,77.614 77.614,100 50,100 C22.386,100 0,77.614 0,50 C0,22.386 22.386,0 50,0 Z" fill="none" stroke="%23D4AF37" stroke-width="1" opacity="0.1"/></svg>');
+            background-size: 100px;
+            opacity: 0.3;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .title-arabic {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(45deg, var(--arabic-gold), white, var(--arabic-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .civilization-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .civilization-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+        
+        .civilization-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border-color: var(--arabic-gold);
+        }
+        
+        .card-header {
+            padding: 25px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-1 .card-header { background: linear-gradient(135deg, #8B4513, #D2691E); }
+        .card-2 .card-header { background: linear-gradient(135deg, #228B22, #32CD32); }
+        .card-3 .card-header { background: linear-gradient(135deg, #B22222, #DC143C); }
+        .card-4 .card-header { background: linear-gradient(135deg, #1C39BB, #4169E1); }
+        .card-5 .card-header { background: linear-gradient(135deg, #8B0000, #B22222); }
+        .card-6 .card-header { background: linear-gradient(135deg, #006400, #228B22); }
+        
+        .civilization-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .civilization-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .civilization-period {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            text-align: center;
+        }
+        
+        .card-body {
+            padding: 25px;
+        }
+        
+        .key-achievements {
+            list-style: none;
+            margin-top: 15px;
+        }
+        
+        .key-achievements li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .key-achievements li:before {
+            content: "★";
+            color: var(--arabic-gold);
+        }
+        
+        .document-links {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .doc-link {
+            display: inline-block;
+            padding: 8px 15px;
+            background: var(--islamic-green);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .doc-link:hover {
+            background: var(--arabic-gold);
+            color: #333;
+            transform: scale(1.05);
+        }
+        
+        .modern-issues {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05), rgba(0, 100, 0, 0.05));
+            border-radius: 20px;
+            padding: 40px;
+            margin: 50px 0;
+            border: 2px solid var(--arabic-gold);
+        }
+        
+        .issues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .issue-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .issue-title {
+            color: var(--islamic-green);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .resource-archive {
+            background: #f8f5ee;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            border: 2px dashed var(--arabic-gold);
+        }
+        
+        .archive-toggle {
+            background: linear-gradient(135deg, var(--islamic-green), var(--persian-blue));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .archive-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 100, 0, 0.3);
+        }
+        
+        .archive-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            margin-top: 0;
+        }
+        
+        .archive-content.expanded {
+            max-height: 2000px;
+            margin-top: 30px;
+        }
+        
+        .archive-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .archive-column h4 {
+            color: var(--islamic-green);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--arabic-gold);
+        }
+        
+        .archive-column a {
+            color: #555;
+            text-decoration: none;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        
+        .archive-column a:hover {
+            color: var(--islamic-green);
+            padding-left: 15px;
+            background: #f0f0f0;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 40px 0;
+            border-top: 2px solid #e0dcc9;
+            margin-top: 50px;
+        }
+        
+        .nav-button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--islamic-green), var(--arabic-gold));
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 5px 15px rgba(0, 100, 0, 0.2);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 100, 0, 0.3);
+        }
+        
+        .disclaimer {
+            text-align: center;
+            padding: 25px;
+            color: #666;
+            font-size: 0.9rem;
+            background: #f8f5ee;
+            border-radius: 15px;
+            margin-top: 40px;
+            border: 1px solid #e0dcc9;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .civilization-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .issues-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .archive-links {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="arabesque-bg"></div>
+    <div class="geometric-pattern"></div>
+    
+    <div class="container">
+        <header>
+            <div class="islamic-pattern"></div>
+            <h1><span class="title-arabic">Middle Eastern History</span></h1>
+            <div class="subtitle">Cradle of Civilization • Birthplace of Three Abrahamic Faiths • Crossroads of Empires</div>
+            <div style="margin-top: 20px; display: inline-block; padding: 10px 25px; background: rgba(212, 175, 55, 0.2); border-radius: 25px; border: 2px solid var(--arabic-gold);">
+                <span style="color: var(--arabic-gold);">📜</span> Archaeological & Historical Archives <span style="color: var(--arabic-gold);">📜</span>
+            </div>
+        </header>
+        
+        <div class="civilization-grid">
+            <!-- Mesopotamia -->
+            <div class="civilization-card card-1">
+                <div class="card-header">
+                    <div class="civilization-icon">🏺</div>
+                    <div class="civilization-title">Mesopotamia</div>
+                    <div class="civilization-period">3500 BCE - 500 BCE</div>
+                </div>
+                <div class="card-body">
+                    <p><strong>Key Cities:</strong> Sumer, Babylon, Assyria</p>
+                    <ul class="key-achievements">
+                        <li>First writing system (Cuneiform)</li>
+                        <li>Code of Hammurabi</li>
+                        <li>Early mathematics & astronomy</li>
+                    </ul>
+                    <div class="document-links">
+                        <a href="https://www.britishmuseum.org/collection/galleries/mesopotamia" target="_blank" class="doc-link">
+                            British Museum
+                        </a>
+                        <a href="https://www.metmuseum.org/toah/hd/mesp/hd_mesp.htm" target="_blank" class="doc-link">
+                            Metropolitan Museum
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ancient Egypt -->
+            <div class="civilization-card card-2">
+                <div class="card-header">
+                    <div class="civilization-icon">🐫</div>
+                    <div class="civilization-title">Ancient Egypt</div>
+                    <div class="civilization-period">3100 BCE - 332 BCE</div>
+                </div>
+                <div class="card-body">
+                    <p><strong>Key Dynasties:</strong> Old, Middle, New Kingdoms</p>
+                    <ul class="key-achievements">
+                        <li>Hieroglyphic writing</li>
+                        <li>Pyramid architecture</li>
+                        <li>Advanced medicine</li>
+                    </ul>
+                    <div class="document-links">
+                        <a href="https://www.egyptianmuseum.org/" target="_blank" class="doc-link">
+                            Egyptian Museum
+                        </a>
+                        <a href="https://www.britishmuseum.org/collection/galleries/egyptian-sculpture" target="_blank" class="doc-link">
+                            Egyptian Galleries
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Persian Empire -->
+            <div class="civilization-card card-3">
+                <div class="card-header">
+                    <div class="civilization-icon">👑</div>
+                    <div class="civilization-title">Persian Empire</div>
+                    <div class="civilization-period">550 BCE - 651 CE</div>
+                </div>
+                <div class="card-body">
+                    <p><strong>Key Rulers:</strong> Cyrus the Great, Darius I</p>
+                    <ul class="key-achievements">
+                        <li>Royal Road infrastructure</li>
+                        <li>Cyrus Cylinder (human rights)</li>
+                        <li>Zoroastrianism</li>
+                    </ul>
+                    <div class="document-links">
+                        <a href="https://www.livius.org/sources/content/achaemenid-royal-inscriptions/" target="_blank" class="doc-link">
+                            Royal Inscriptions
+                        </a>
+                        <a href="https://www.getty.edu/art/exhibitions/persia/" target="_blank" class="doc-link">
+                            Getty Exhibitions
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Islamic Golden Age -->
+            <div class="civilization-card card-4">
+                <div class="card-header">
+                    <div class="civilization-icon">📚</div>
+                    <div class="civilization-title">Islamic Golden Age</div>
+                    <div class="civilization-period">750 CE - 1258 CE</div>
+                </div>
+                <div class="card-body">
+                    <p><strong>Key Centers:</strong> Baghdad, Cordoba, Cairo</p>
+                    <ul class="key-achievements">
+                        <li>House of Wisdom</li>
+                        <li>Advancements in algebra</li>
+                        <li>Medical encyclopedia</li>
+                    </ul>
+                    <div class="document-links">
+                        <a href="https://www.metmuseum.org/toah/hd/isla/hd_isla.htm" target="_blank" class="doc-link">
+                            Islamic Art History
+                        </a>
+                        <a href="https://www.loc.gov/exhibits/house-of-wisdom/" target="_blank" class="doc-link">
+                            House of Wisdom Exhibit
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ottoman Empire -->
+            <div class="civilization-card card-5">
+                <div class="card-header">
+                    <div class="civilization-icon">🏰</div>
+                    <div class="civilization-title">Ottoman Empire</div>
+                    <div class="civilization-period">1299 CE - 1922 CE</div>
+                </div>
+                <div class="card-body">
+                    <p><strong>Key Period:</strong> Conquest of Constantinople</p>
+                    <ul class="key-achievements">
+                        <li>Millet system</li>
+                        <li>Islamic architecture</li>
+                        <li>Transcontinental trade</li>
+                    </ul>
+                    <div class="document-links">
+                        <a href="https://www.topkapisarayi.gov.tr/en" target="_blank" class="doc-link">
+                            Topkapi Palace Archives
+                        </a>
+                        <a href="https://www.metmuseum.org/toah/hd/otto/hd_otto.htm" target="_blank" class="doc-link">
+                            Ottoman Art History
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modern Middle East -->
+            <div class="civilization-card card-6">
+                <div class="card-header">
+                    <div class="civilization-icon">🕊️</div>
+                    <div class="civilization-title">Modern Era</div>
+                    <div class="civilization-period">1918 CE - Present</div>
+                </div>
+                <div class="card-body">
+                    <p><strong>Key Events:</strong> Sykes-Picot, Oil Discovery</p>
+                    <ul class="key-achievements">
+                        <li>OPEC formation</li>
+                        <li>Arab-Israeli conflicts</li>
+                        <li>Modern state system</li>
+                    </ul>
+                    <div class="document-links">
+                        <a href="https://unispal.un.org/" target="_blank" class="doc-link">
+                            UN Palestine Archives
+                        </a>
+                        <a href="https://www.archives.gov/research/foreign-policy/middle-east" target="_blank" class="doc-link">
+                            US Foreign Policy
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modern-issues">
+            <h2 style="color: var(--islamic-green); text-align: center; margin-bottom: 20px;">Contemporary Issues & Resources</h2>
+            <div class="issues-grid">
+                <div class="issue-card">
+                    <div class="issue-title">🏛️ Regional Organizations</div>
+                    <ul style="list-style: none; margin-top: 10px;">
+                        <li><a href="https://www.arab.org/" target="_blank" style="color: var(--persian-blue);">Arab League</a></li>
+                        <li><a href="https://www.oic-oci.org/" target="_blank" style="color: var(--persian-blue);">Organization of Islamic Cooperation</a></li>
+                        <li><a href="https://www.opec.org/" target="_blank" style="color: var(--persian-blue);">OPEC</a></li>
+                    </ul>
+                </div>
+                
+                <div class="issue-card">
+                    <div class="issue-title">📊 Economic Data</div>
+                    <ul style="list-style: none; margin-top: 10px;">
+                        <li><a href="https://data.worldbank.org/region/middle-east-and-north-africa" target="_blank" style="color: var(--persian-blue);">World Bank MENA Data</a></li>
+                        <li><a href="https://www.imf.org/en/Countries/MENAP" target="_blank" style="color: var(--persian-blue);">IMF Middle East Reports</a></li>
+                        <li><a href="https://www.mei.edu/" target="_blank" style="color: var(--persian-blue);">Middle East Institute</a></li>
+                    </ul>
+                </div>
+                
+                <div class="issue-card">
+                    <div class="issue-title">📚 Academic Research</div>
+                    <ul style="list-style: none; margin-top: 10px;">
+                        <li><a href="https://www.h-net.org/~mideast/" target="_blank" style="color: var(--persian-blue);">H-Middle East</a></li>
+                        <li><a href="https://www.cambridge.org/core/journals/international-journal-of-middle-east-studies" target="_blank" style="color: var(--persian-blue);">IJMES Journal</a></li>
+                        <li><a href="https://www.mesana.org/" target="_blank" style="color: var(--persian-blue);">Middle East Studies Association</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="resource-archive">
+            <button class="archive-toggle" onclick="toggleArchive('middleEastArchive')">
+                <span>🏺</span> Middle Eastern Digital Archives & Museums
+            </button>
+            <div class="archive-content" id="middleEastArchive">
+                <div class="archive-links">
+                    <div class="archive-column">
+                        <h4>Museum Collections</h4>
+                        <a href="https://www.britishmuseum.org/collection/galleries/middle-east" target="_blank">British Museum - Middle East</a>
+                        <a href="https://www.louvre.fr/en/departments/oriental-antiquities" target="_blank">Louvre - Oriental Antiquities</a>
+                        <a href="https://www.metmuseum.org/about-the-met/collection-areas/ancient-near-eastern-art" target="_blank">Met Museum - Ancient Near East</a>
+                        <a href="https://www.pergamonmuseum.de/en/collection/vorderasiatisches-museum" target="_blank">Pergamon Museum</a>
+                    </div>
+                    
+                    <div class="archive-column">
+                        <h4>Digital Libraries</h4>
+                        <a href="https://www.loc.gov/collections/arabic-and-middle-eastern-literature/" target="_blank">Library of Congress - Arabic</a>
+                        <a href="https://www.qdl.qa/en" target="_blank">Qatar Digital Library</a>
+                        <a href="https://www.wdl.org/en/" target="_blank">World Digital Library</a>
+                        <a href="https://www.islamicmanuscripts.info/" target="_blank">Islamic Manuscripts</a>
+                    </div>
+                    
+                    <div class="archive-column">
+                        <h4>Archaeological Resources</h4>
+                        <a href="https://oi.uchicago.edu/" target="_blank">University of Chicago - Oriental Institute</a>
+                        <a href="https://www.harvardartmuseums.org/collections/department/ancient-mediterranean-and-near-eastern" target="_blank">Harvard Ancient Collections</a>
+                        <a href="https://www.asor.org/" target="_blank">American Society of Overseas Research</a>
+                        <a href="https://www.biblicalarchaeology.org/" target="_blank">Biblical Archaeology Society</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <a href="/history/europe" class="nav-button">
+                ⬅️ Previous: European History
+            </a>
+            <a href="/history/asia-africa" class="nav-button">
+                Next: Asia & Africa History ➡️
+            </a>
+        </div>
+        
+        <div class="disclaimer">
+            <p>🏺 This page contains resources from museums, universities, and archaeological institutions specializing in Middle Eastern studies.</p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">
+                Academic Resource | Multidisciplinary Approach | Regular Updates
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Toggle archive content
+        function toggleArchive(archiveId) {
+            const content = document.getElementById(archiveId);
+            content.classList.toggle('expanded');
+        }
+        
+        // Add animation to civilization cards on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.civilization-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+            
+            // Auto-expand archive after 2 seconds
+            setTimeout(function() {
+                toggleArchive('middleEastArchive');
+            }, 2000);
+        });
+    </script>
+</body>
+</html>`;
+    
+    res.send(middleEastContent);
+});
+
 // ===== 404 ERROR HANDLER =====
 app.use((req, res) => {
   res.status(404).send(`
