@@ -10254,6 +10254,1262 @@ app.get('/history/asia-africa', (req, res) => {
 });
 
 
+// ============================================
+// /history/archives - Document Archives
+// ============================================
+
+app.get('/history/archives', (req, res) => {
+    const archivesContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Archives - Primary Sources</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            border-radius: 15px;
+            margin-bottom: 40px;
+            color: white;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .archive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .archive-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-top: 5px solid #3498db;
+        }
+        
+        .archive-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .archive-card-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .archive-card-title span {
+            font-size: 2rem;
+        }
+        
+        .archive-list {
+            list-style: none;
+        }
+        
+        .archive-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .archive-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .archive-list a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .archive-list a:hover {
+            color: #e74c3c;
+        }
+        
+        .archive-list a:before {
+            content: "📄";
+            font-size: 1.2rem;
+        }
+        
+        .description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            margin-left: 28px;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .archive-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+            }
+            
+            .nav-button {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Document Archives</h1>
+            <div class="subtitle">Primary Sources • Declassified Documents • Historical Records</div>
+        </header>
+        
+        <div class="archive-grid">
+            <div class="archive-card">
+                <div class="archive-card-title">
+                    <span>🕵️</span> Declassified Documents
+                </div>
+                <ul class="archive-list">
+                    <li>
+                        <a href="https://www.archives.gov/research/foreign-policy/declassified" target="_blank">
+                            U.S. National Archives - Declassified Documents
+                        </a>
+                        <div class="description">Official U.S. government declassified materials</div>
+                    </li>
+                    <li>
+                        <a href="https://nsarchive.gwu.edu/" target="_blank">
+                            National Security Archive (George Washington University)
+                        </a>
+                        <div class="description">Independent non-governmental research institute</div>
+                    </li>
+                    <li>
+                        <a href="https://www.cia.gov/readingroom/" target="_blank">
+                            CIA Freedom of Information Act (FOIA) Electronic Reading Room
+                        </a>
+                        <div class="description">Declassified CIA documents available to the public</div>
+                    </li>
+                    <li>
+                        <a href="https://www.state.gov/foia/electronic-reading-room/" target="_blank">
+                            U.S. State Department FOIA Reading Room
+                        </a>
+                        <div class="description">Declassified diplomatic cables and documents</div>
+                    </li>
+                    <li>
+                        <a href="https://www.dni.gov/index.php/ic-on-the-record-database" target="_blank">
+                            IC on the Record (U.S. Intelligence Community)
+                        </a>
+                        <div class="description">Official releases from U.S. intelligence agencies</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="archive-card">
+                <div class="archive-card-title">
+                    <span>🌐</span> International Archives
+                </div>
+                <ul class="archive-list">
+                    <li>
+                        <a href="https://wikileaks.org/" target="_blank">
+                            WikiLeaks
+                        </a>
+                        <div class="description">International non-profit organization publishing news leaks</div>
+                    </li>
+                    <li>
+                        <a href="https://www.theguardian.com/us-news/series/us-embassy-cables-the-documents" target="_blank">
+                            The Guardian - Diplomatic Cables
+                        </a>
+                        <div class="description">Full database of U.S. diplomatic cables</div>
+                    </li>
+                    <li>
+                        <a href="https://www.europarl.europa.eu/thinktank/en/document.html" target="_blank">
+                            European Parliament Think Tank
+                        </a>
+                        <div class="description">Research and analysis from EU Parliament</div>
+                    </li>
+                    <li>
+                        <a href="https://www.un.org/depts/dhl/dag/" target="_blank">
+                            UN Dag Hammarskjöld Library
+                        </a>
+                        <div class="description">United Nations documents and publications</div>
+                    </li>
+                    <li>
+                        <a href="https://www.wilsoncenter.org/digital-archive" target="_blank">
+                            Wilson Center Digital Archive
+                        </a>
+                        <div class="description">Declassified international relations documents</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="archive-card">
+                <div class="archive-card-title">
+                    <span>📊</span> Data & Statistics Archives
+                </div>
+                <ul class="archive-list">
+                    <li>
+                        <a href="https://www.worldbank.org/en/research" target="_blank">
+                            World Bank Open Data
+                        </a>
+                        <div class="description">Free and open access to global development data</div>
+                    </li>
+                    <li>
+                        <a href="https://data.imf.org/" target="_blank">
+                            IMF Data
+                        </a>
+                        <div class="description">International Monetary Fund statistics</div>
+                    </li>
+                    <li>
+                        <a href="https://www.undp.org/data" target="_blank">
+                            UNDP Human Development Data
+                        </a>
+                        <div class="description">United Nations Development Programme data</div>
+                    </li>
+                    <li>
+                        <a href="https://ourworldindata.org/" target="_blank">
+                            Our World in Data
+                        </a>
+                        <div class="description">Research and data to make progress against world's largest problems</div>
+                    </li>
+                    <li>
+                        <a href="https://www.gapminder.org/data/" target="_blank">
+                            Gapminder Data
+                        </a>
+                        <div class="description">Fact-based worldview everyone can understand</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <a href="/history/asia-africa" class="nav-button">
+                ⬅️ Previous: Asia & Africa
+            </a>
+            <a href="/history/researchers" class="nav-button">
+                Next: Researchers & Whistleblowers ➡️
+            </a>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+            <h3>🔍 Research Tips</h3>
+            <p>• Cross-reference information from multiple sources</p>
+            <p>• Check document authenticity and provenance</p>
+            <p>• Consider historical context and potential biases</p>
+            <p>• Look for primary sources when possible</p>
+        </div>
+    </div>
+    
+    <script>
+        // Add animation to archive cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.archive-card');
+            
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease ' + (index * 0.2) + 's';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>`;
+    
+    res.send(archivesContent);
+});
+
+// ============================================
+// /history/researchers - Researchers & Whistleblowers
+// ============================================
+
+app.get('/history/researchers', (req, res) => {
+    const researchersContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Researchers & Whistleblowers - Critical Perspectives</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            border-radius: 15px;
+            margin-bottom: 40px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header:before {
+            content: "🔍";
+            position: absolute;
+            font-size: 10rem;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .category-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-top: 5px solid;
+        }
+        
+        .journalists {
+            border-top-color: #e74c3c;
+        }
+        
+        .academics {
+            border-top-color: #3498db;
+        }
+        
+        .whistleblowers {
+            border-top-color: #2ecc71;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .category-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .category-title span {
+            font-size: 2rem;
+        }
+        
+        .researcher-list {
+            list-style: none;
+        }
+        
+        .researcher-list li {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .researcher-list li:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .researcher-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .researcher-title {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        
+        .researcher-work {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .researcher-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .researcher-link:hover {
+            color: #e74c3c;
+        }
+        
+        .researcher-link:after {
+            content: " →";
+        }
+        
+        .quote-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+            text-align: center;
+            font-style: italic;
+            font-size: 1.2rem;
+            position: relative;
+        }
+        
+        .quote-box:before {
+            content: "❝";
+            font-size: 4rem;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            opacity: 0.3;
+        }
+        
+        .quote-box:after {
+            content: "❞";
+            font-size: 4rem;
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            opacity: 0.3;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .categories {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+            }
+            
+            .nav-button {
+                text-align: center;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Researchers & Whistleblowers</h1>
+            <div class="subtitle">Independent Investigators • Academic Dissenters • Truth Tellers</div>
+        </header>
+        
+        <div class="quote-box">
+            "The greatest crimes in the world are not committed by people breaking the rules, 
+            but by people following the rules. It's people who follow orders that drop bombs 
+            and massacre villages."
+            <div style="margin-top: 15px; font-weight: bold;">— Julian Assange</div>
+        </div>
+        
+        <div class="categories">
+            <div class="category-card journalists">
+                <h2 class="category-title">
+                    <span>📰</span> Investigative Journalists
+                </h2>
+                <ul class="researcher-list">
+                    <li>
+                        <div class="researcher-name">Seymour Hersh</div>
+                        <div class="researcher-title">Pulitzer Prize-winning investigative journalist</div>
+                        <div class="researcher-work">
+                            Known for exposing the My Lai Massacre and Abu Ghraib torture.
+                            <a href="https://seymourhersh.substack.com/" target="_blank" class="researcher-link">Current Work</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="researcher-name">Glenn Greenwald</div>
+                        <div class="researcher-title">Journalist, lawyer, and author</div>
+                        <div class="researcher-work">
+                            Co-founding editor of The Intercept, broke Snowden NSA stories.
+                            <a href="https://greenwald.substack.com/" target="_blank" class="researcher-link">Substack</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="researcher-name">Robert Fisk</div>
+                        <div class="researcher-title">Middle East correspondent (1946-2020)</div>
+                        <div class="researcher-work">
+                            Known for critical reporting on Western foreign policy in the Middle East.
+                            <a href="https://www.independent.co.uk/author/robert-fisk" target="_blank" class="researcher-link">Archive</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="category-card academics">
+                <h2 class="category-title">
+                    <span>🎓</span> Academic Researchers
+                </h2>
+                <ul class="researcher-list">
+                    <li>
+                        <div class="researcher-name">Noam Chomsky</div>
+                        <div class="researcher-title">Professor Emeritus, MIT - Linguist & Political Analyst</div>
+                        <div class="researcher-work">
+                            Critical analysis of media, US foreign policy, and corporate power.
+                            <a href="https://chomsky.info/" target="_blank" class="researcher-link">Website</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="researcher-name">Edward Said</div>
+                        <div class="researcher-title">Professor, Columbia University (1935-2003)</div>
+                        <div class="researcher-work">
+                            Author of "Orientalism," foundational post-colonial studies work.
+                            <a href="https://www.edwardsaid.org/" target="_blank" class="researcher-link">Legacy</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="researcher-name">Angela Davis</div>
+                        <div class="researcher-title">Professor, UC Santa Cruz - Political Activist</div>
+                        <div class="researcher-work">
+                            Scholar of prison abolition, feminism, and anti-racism.
+                            <a href="https://angeladavis.org/" target="_blank" class="researcher-link">Website</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="category-card whistleblowers">
+                <h2 class="category-title">
+                    <span>⚖️</span> Whistleblowers & Insiders
+                </h2>
+                <ul class="researcher-list">
+                    <li>
+                        <div class="researcher-name">Daniel Ellsberg</div>
+                        <div class="researcher-title">Former military analyst - Pentagon Papers</div>
+                        <div class="researcher-work">
+                            Released the Pentagon Papers exposing US government deception about Vietnam War.
+                            <a href="https://www.ellsberg.net/" target="_blank" class="researcher-link">Website</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="researcher-name">Chelsea Manning</div>
+                        <div class="researcher-title">Former US Army intelligence analyst</div>
+                        <div class="researcher-work">
+                            Provided WikiLeaks with the largest set of classified documents ever leaked.
+                            <a href="https://www.chelseamanning.org/" target="_blank" class="researcher-link">Website</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="researcher-name">John Kiriakou</div>
+                        <div class="researcher-title">Former CIA officer</div>
+                        <div class="researcher-work">
+                            Exposed CIA torture program, served prison time for whistleblowing.
+                            <a href="https://johnkiriakou.com/" target="_blank" class="researcher-link">Blog</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="warning-box">
+            <h3>⚠️ Note on Whistleblower Protection</h3>
+            <p>Many whistleblowers face legal consequences, persecution, or exile for revealing information. 
+            Support organizations like <a href="https://exposefacts.org/" target="_blank">ExposeFacts</a> and 
+            <a href="https://www.whistleblower.org/" target="_blank">National Whistleblower Center</a> that work to protect truth-tellers.</p>
+        </div>
+        
+        <div class="navigation">
+            <a href="/history/archives" class="nav-button">
+                ⬅️ Previous: Document Archives
+            </a>
+            <a href="/history/media" class="nav-button">
+                Next: Alternative Media ➡️
+            </a>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+            <h3>📚 Further Reading</h3>
+            <p>• <a href="https://www.thewhistleblowers.org/" target="_blank">The Whistleblowers</a> - Stories of courage</p>
+            <p>• <a href="https://gijn.org/" target="_blank">Global Investigative Journalism Network</a> - Resources for journalists</p>
+            <p>• <a href="https://www.projectcensored.org/" target="_blank">Project Censored</a> - Important news stories missed by mainstream media</p>
+        </div>
+    </div>
+    
+    <script>
+        // Add staggered animation to researcher items
+        document.addEventListener('DOMContentLoaded', function() {
+            const items = document.querySelectorAll('.researcher-list li');
+            
+            items.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(-20px)';
+                item.style.transition = 'all 0.5s ease ' + (index * 0.1) + 's';
+                
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                }, 300);
+            });
+            
+            // Animate category cards
+            const cards = document.querySelectorAll('.category-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(40px)';
+                card.style.transition = 'all 0.7s ease ' + (index * 0.2) + 's';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>`;
+    
+    res.send(researchersContent);
+});
+
+// ============================================
+// /history/media - Alternative Media
+// ============================================
+
+app.get('/history/media', (req, res) => {
+    const mediaContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alternative Media - Independent News & Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            border-radius: 15px;
+            margin-bottom: 40px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header:before {
+            content: "📡";
+            position: absolute;
+            font-size: 10rem;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .media-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .news-card {
+            border-left-color: #e74c3c;
+        }
+        
+        .analysis-card {
+            border-left-color: #3498db;
+        }
+        
+        .community-card {
+            border-left-color: #2ecc71;
+        }
+        
+        .media-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .media-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .media-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .media-description {
+            color: #666;
+            margin-bottom: 20px;
+            flex-grow: 1;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .media-links {
+            list-style: none;
+            margin-top: auto;
+        }
+        
+        .media-links li {
+            margin: 10px 0;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .media-links li:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .media-link {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: 500;
+            display: block;
+            transition: color 0.3s ease;
+        }
+        
+        .media-link:hover {
+            color: #e74c3c;
+        }
+        
+        .media-link:after {
+            content: " ↗";
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .link-description {
+            color: #777;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+        
+        .stats-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+        
+        .stat-item h3 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .stat-item p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .critical-thinking {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 25px;
+            margin-top: 40px;
+            border-radius: 10px;
+        }
+        
+        .critical-thinking h3 {
+            color: #155724;
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .media-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+            }
+            
+            .nav-button {
+                text-align: center;
+            }
+            
+            .stats-box {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        .language-badge {
+            display: inline-block;
+            background: #6c757d;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        
+        .english { background: #3498db; }
+        .multilingual { background: #2ecc71; }
+        .arabic { background: #e74c3c; }
+        .spanish { background: #f39c12; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📡 Alternative Media</h1>
+            <div class="subtitle">Uncensored Platforms • Independent Analysis • Community Investigations</div>
+        </header>
+        
+        <div class="stats-box">
+            <div class="stat-item">
+                <h3>73%</h3>
+                <p>of Americans believe traditional media outlets report news they know to be fake</p>
+            </div>
+            <div class="stat-item">
+                <h3>42%</h3>
+                <p>regularly seek out alternative news sources for different perspectives</p>
+            </div>
+            <div class="stat-item">
+                <h3>58%</h3>
+                <p>trust independent journalists more than mainstream media reporters</p>
+            </div>
+        </div>
+        
+        <div class="media-grid">
+            <div class="media-card news-card">
+                <div class="media-icon">📰</div>
+                <h2 class="media-title">Independent News Outlets</h2>
+                <p class="media-description">Platforms providing news without corporate or state editorial control, often focusing on underreported stories.</p>
+                <ul class="media-links">
+                    <li>
+                        <a href="https://theintercept.com/" target="_blank" class="media-link">
+                            The Intercept
+                            <span class="language-badge english">EN</span>
+                        </a>
+                        <div class="link-description">Investigative journalism on national security, politics, and civil liberties</div>
+                    </li>
+                    <li>
+                        <a href="https://www.democracynow.org/" target="_blank" class="media-link">
+                            Democracy Now!
+                            <span class="language-badge multilingual">EN/ES</span>
+                        </a>
+                        <div class="link-description">Daily independent global news hour with Amy Goodman</div>
+                    </li>
+                    <li>
+                        <a href="https://www.middleeasteye.net/" target="_blank" class="media-link">
+                            Middle East Eye
+                            <span class="language-badge multilingual">EN/FR/AR</span>
+                        </a>
+                        <div class="link-description">Independent news covering Middle East and North Africa</div>
+                    </li>
+                    <li>
+                        <a href="https://www.aljazeera.com/" target="_blank" class="media-link">
+                            Al Jazeera English
+                            <span class="language-badge english">EN</span>
+                        </a>
+                        <div class="link-description">Qatar-based international news network with global perspective</div>
+                    </li>
+                    <li>
+                        <a href="https://www.theguardian.com/international" target="_blank" class="media-link">
+                            The Guardian International
+                            <span class="language-badge english">EN</span>
+                        </a>
+                        <div class="link-description">British newspaper known for investigative journalism</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="media-card analysis-card">
+                <div class="media-icon">🔍</div>
+                <h2 class="media-title">Analytical Platforms</h2>
+                <p class="media-description">In-depth analysis, research, and commentary beyond daily news cycles.</p>
+                <ul class="media-links">
+                    <li>
+                        <a href="https://www.counterpunch.org/" target="_blank" class="media-link">
+                            CounterPunch
+                            <span class="language-badge english">EN</span>
+                        </a>
+                        <div class="link-description">Critical perspectives on politics, culture, and international affairs</div>
+                    </li>
+                    <li>
+                        <a href="https://www.mintpressnews.com/" target="_blank" class="media-link">
+                            MintPress News
+                            <span class="language-badge english">EN</span>
+                        </a>
+                        <div class="link-description">Independent journalism focusing on human rights and geopolitics</div>
+                    </li>
+                    <li>
+                        <a href="https://thegrayzone.com/" target="_blank" class="media-link">
+                            The Grayzone
+                            <span class="language-badge english">EN</span>
+                        </a>
+                        <div class="link-description">Investigative journalism on foreign policy and media narratives</div>
+                    </li>
+                    <li>
+                        <a href="https://www.asiatimes.com/" target="_blank" class="media-link">
+                            Asia Times
+                            <span class="language-badge english">EN</span>
+                        </a>
+                        <div class="link-description">Pan-Asian news and analysis with regional perspectives</div>
+                    </li>
+                    <li>
+                        <a href="https://www.opendemocracy.net/en/" target="_blank" class="media-link">
+                            openDemocracy
+                            <span class="language-badge multilingual">EN/ES/PT</span>
+                        </a>
+                        <div class="link-description">Global media platform covering challenges to democracy worldwide</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="media-card community-card">
+                <div class="media-icon">🌐</div>
+                <h2 class="media-title">Community & Regional Media</h2>
+                <p class="media-description">Grassroots reporting and platforms amplifying local and marginalized voices.</p>
+                <ul class="media-links">
+                    <li>
+                        <a href="https://indiancountrytoday.com/" target="_blank" class="media-link">
+                            Indian Country Today
+                            <span class="language-badge english">EN</span>
+                        </a>
+                        <div class="link-description">Digital news platform covering Indigenous communities</div>
+                    </li>
+                    <li>
+                        <a href="https://africasacountry.com/" target="_blank" class="media-link">
+                            Africa Is a Country
+                            <span class="language-badge english">EN</span>
+                        </a>
+                        <div class="link-description">Critique and analysis of African politics and culture</div>
+                    </li>
+                    <li>
+                        <a href="https://www.newarab.com/" target="_blank" class="media-link">
+                            The New Arab
+                            <span class="language-badge english">EN</span>
+                        </a>
+                        <div class="link-description">Independent pan-Arab news and analysis</div>
+                    </li>
+                    <li>
+                        <a href="https://www.telesurenglish.net/" target="_blank" class="media-link">
+                            TeleSUR English
+                            <span class="language-badge english">EN</span>
+                        </a>
+                        <div class="link-description">Latin American multimedia platform with anti-imperialist focus</div>
+                    </li>
+                    <li>
+                        <a href="https://balkaninsight.com/" target="_blank" class="media-link">
+                            Balkan Insight
+                            <span class="language-badge english">EN</span>
+                        </a>
+                        <div class="link-description">Investigative journalism focusing on Southeast Europe</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="critical-thinking">
+            <h3>💭 Critical Thinking Required</h3>
+            <p><strong>This caution message constitutes non-critical information.</strong> We encourage you to explore the material further while maintaining critical thinking:</p>
+            <ul style="margin-top: 10px; padding-left: 20px;">
+                <li>Verify claims with multiple sources</li>
+                <li>Consider potential biases in all media, including alternative sources</li>
+                <li>Check sources' funding and ownership structures</li>
+                <li>Look for primary documentation when available</li>
+                <li>Engage with perspectives that challenge your own views</li>
+            </ul>
+        </div>
+        
+        <div class="navigation">
+            <a href="/history/researchers" class="nav-button">
+                ⬅️ Previous: Researchers & Whistleblowers
+            </a>
+            <a href="/history/politics" class="nav-button">
+                Next: Political History ➡️
+            </a>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+            <h3>📱 Stay Informed</h3>
+            <p>• Use RSS feeds to follow multiple sources: <a href="https://feedly.com/" target="_blank">Feedly</a>, <a href="https://innoreader.com/" target="_blank">Inoreader</a></p>
+            <p>• Fact-checking resources: <a href="https://www.snopes.com/" target="_blank">Snopes</a>, <a href="https://www.factcheck.org/" target="_blank">FactCheck.org</a></p>
+            <p>• Media bias analysis: <a href="https://www.allsides.com/" target="_blank">AllSides</a>, <a href="https://www.mediabiasfactcheck.com/" target="_blank">Media Bias Fact Check</a></p>
+        </div>
+    </div>
+    
+    <script>
+        // Add animations to media cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.media-card');
+            
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.9) translateY(40px)';
+                card.style.transition = 'all 0.7s ease ' + (index * 0.2) + 's';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'scale(1) translateY(0)';
+                }, 500);
+            });
+            
+            // Animate stats numbers
+            const statNumbers = document.querySelectorAll('.stat-item h3');
+            statNumbers.forEach(number => {
+                const target = number.textContent;
+                if (target.includes('%')) {
+                    const num = parseInt(target);
+                    animatePercentage(number, num);
+                }
+            });
+            
+            function animatePercentage(element, target) {
+                let current = 0;
+                const increment = target / 40;
+                const update = () => {
+                    if (current < target) {
+                        current += increment;
+                        element.textContent = Math.floor(current) + '%';
+                        setTimeout(update, 30);
+                    } else {
+                        element.textContent = target + '%';
+                    }
+                };
+                update();
+            }
+        });
+    </script>
+</head>
+</html>`;
+    
+    res.send(mediaContent);
+});
+
+
 // ===== 404 ERROR HANDLER =====
 app.use((req, res) => {
   res.status(404).send(`
