@@ -10034,49 +10034,225 @@ app.get('/history/africa', (req, res) => {
     res.send(africaContent);
 });
 
-// Combined Asia-Africa page (or redirect)
+
+// ============================================
+// /history/asia-africa - Combined page
+// ============================================
+
 app.get('/history/asia-africa', (req, res) => {
-  res.send(`
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <title>Asia & Africa - Historical Analysis</title>
-      ${styles}
-    </head>
-    <body>
-      <div class="container">
-        ${navigation}
-        <h1>🌏 Asia & Africa - Historical Analysis</h1>
-        <p>This page has been separated into two specialized sections:</p>
+    const asiaAfricaContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asia & Africa - Historical Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
         
-        <div class="link-grid" style="margin: 30px 0;">
-          <div class="link-card">
-            <h3>🌏 Asian History</h3>
-            <p>Ancient civilizations, trade routes, and modern developments in Asia</p>
-            <p><a href="/history/asia"><button>Explore Asian History →</button></a></p>
-          </div>
-          
-          <div class="link-card">
-            <h3>🌍 African History</h3>
-            <p>Ancient kingdoms, colonial impact, and post-independence Africa</p>
-            <p><a href="/history/africa"><button>Explore African History →</button></a></p>
-          </div>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            border-radius: 15px;
+            margin-bottom: 40px;
+            color: white;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .split-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .split-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .continent-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .continent-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .asia-card {
+            border-left: 5px solid #4CAF50;
+        }
+        
+        .africa-card {
+            border-left: 5px solid #FF9800;
+        }
+        
+        .continent-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .asia-title {
+            color: #4CAF50;
+        }
+        
+        .africa-title {
+            color: #FF9800;
+        }
+        
+        .continent-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .continent-list li {
+            padding: 10px 0;
+            border-bottom: 1px dashed #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .continent-list li:before {
+            content: "✓";
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .africa-list li:before {
+            content: "✓";
+            color: #FF9800;
+        }
+        
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .back-button {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+        }
+        
+        .info-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 40px;
+            border-left: 4px solid #2196F3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌏 Asia & Africa - Historical Analysis</h1>
+            <div class="subtitle">Two Continents • Rich Histories • Separate In-Depth Coverage</div>
+        </header>
+        
+        <div class="split-section">
+            <div class="continent-card asia-card">
+                <h2 class="continent-title asia-title">🌏 Asian History</h2>
+                <p>From ancient civilizations to modern economic powerhouses:</p>
+                <ul class="continent-list">
+                    <li>Ancient China, India, and Persia</li>
+                    <li>Silk Road trade networks</li>
+                    <li>Colonial experiences and independence</li>
+                    <li>Modern economic transformations</li>
+                    <li>Cultural and philosophical traditions</li>
+                </ul>
+                <div class="button-container">
+                    <a href="/history/asia" class="nav-button">Explore Asian History →</a>
+                </div>
+            </div>
+            
+            <div class="continent-card africa-card">
+                <h2 class="continent-title africa-title">🌍 African History</h2>
+                <p>From cradle of humanity to continent of the future:</p>
+                <ul class="continent-list africa-list">
+                    <li>Ancient Egyptian, Nubian, and Axumite civilizations</li>
+                    <li>Great kingdoms of Mali, Songhai, and Zimbabwe</li>
+                    <li>Transatlantic slave trade impact</li>
+                    <li>Colonial division and independence movements</li>
+                    <li>Post-colonial development challenges</li>
+                </ul>
+                <div class="button-container">
+                    <a href="/history/africa" class="nav-button">Explore African History →</a>
+                </div>
+            </div>
         </div>
         
-        <div class="https-info">
-          <h3>Why Separate Pages?</h3>
-          <p>Asian and African history each deserve detailed, focused coverage. Combining them into one page did not do justice to the complexity and depth of either continent's history.</p>
-          <p>• <strong>Asia:</strong> 4.7 billion people, dozens of civilizations, thousands of years of recorded history</p>
-          <p>• <strong>Africa:</strong> Cradle of humanity, 54 countries, vast cultural and historical diversity</p>
+        <div class="info-box">
+            <h3>📚 Why Separate Coverage?</h3>
+            <p>Asia and Africa each have such vast, complex histories that they deserve dedicated, in-depth coverage. Combining them into a single page would not do justice to either continent's rich heritage:</p>
+            <p>• <strong>Asia:</strong> 4.7 billion people, 48 countries, thousands of years of civilization</p>
+            <p>• <strong>Africa:</strong> 1.4 billion people, 54 countries, cradle of humanity</p>
+            <p>Each page provides detailed timelines, primary sources, and specialized analysis.</p>
         </div>
         
-        <br>
-        <a href="/history" style="display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">← Back to History Main</a>
-      </div>
-    </body>
-    </html>
-  `);
+        <div class="button-container" style="margin-top: 40px;">
+            <a href="/history" class="nav-button back-button">← Back to History Main</a>
+        </div>
+    </div>
+</body>
+</html>`;
+    
+    res.send(asiaAfricaContent);
 });
+
 
 // ===== 404 ERROR HANDLER =====
 app.use((req, res) => {
@@ -10096,9 +10272,11 @@ app.use((req, res) => {
   `);
 });
 
-// ===== START SERVERS =====
+
+// ===== START SERVER =====
 
 // Start server for Render (single port)
+app.listen(PORT, () => {
   console.log(`🚀 Fatimah's Server running on port ${PORT}`);
   console.log(`📝 Messages: ${messages.length} loaded`);
   console.log(`   Render URL: https://fatimah-web.onrender.com`);
