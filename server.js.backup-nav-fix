@@ -8208,8 +8208,8 @@ app.get('/history/middle-east', (req, res) => {
             <a href="/history/europe" class="nav-button">
                 ⬅️ Previous: European History
             </a>
-            <a href="/history/asia" class="nav-button">
-                Next: Asian Civilizations ➡️
+            <a href="/history/asia-africa" class="nav-button">
+                Next: Asia & Africa History ➡️
             </a>
         </div>
         
@@ -10034,50 +10034,6 @@ app.get('/history/africa', (req, res) => {
     res.send(africaContent);
 });
 
-// Combined Asia-Africa page (or redirect)
-app.get('/history/asia-africa', (req, res) => {
-  res.send(`
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <title>Asia & Africa - Historical Analysis</title>
-      ${styles}
-    </head>
-    <body>
-      <div class="container">
-        ${navigation}
-        <h1>🌏 Asia & Africa - Historical Analysis</h1>
-        <p>This page has been separated into two specialized sections:</p>
-        
-        <div class="link-grid" style="margin: 30px 0;">
-          <div class="link-card">
-            <h3>🌏 Asian History</h3>
-            <p>Ancient civilizations, trade routes, and modern developments in Asia</p>
-            <p><a href="/history/asia"><button>Explore Asian History →</button></a></p>
-          </div>
-          
-          <div class="link-card">
-            <h3>🌍 African History</h3>
-            <p>Ancient kingdoms, colonial impact, and post-independence Africa</p>
-            <p><a href="/history/africa"><button>Explore African History →</button></a></p>
-          </div>
-        </div>
-        
-        <div class="https-info">
-          <h3>Why Separate Pages?</h3>
-          <p>Asian and African history each deserve detailed, focused coverage. Combining them into one page did not do justice to the complexity and depth of either continent's history.</p>
-          <p>• <strong>Asia:</strong> 4.7 billion people, dozens of civilizations, thousands of years of recorded history</p>
-          <p>• <strong>Africa:</strong> Cradle of humanity, 54 countries, vast cultural and historical diversity</p>
-        </div>
-        
-        <br>
-        <a href="/history" style="display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">← Back to History Main</a>
-      </div>
-    </body>
-    </html>
-  `);
-});
-
 // ===== 404 ERROR HANDLER =====
 app.use((req, res) => {
   res.status(404).send(`
@@ -10099,6 +10055,7 @@ app.use((req, res) => {
 // ===== START SERVERS =====
 
 // Start server for Render (single port)
+const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Fatimah's Server running on port ${PORT}`);
   console.log(`📝 Messages: ${messages.length} loaded`);
   console.log(`   Render URL: https://fatimah-web.onrender.com`);
