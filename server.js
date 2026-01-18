@@ -123,6 +123,7 @@ const navigation = `
     <a href="/entertainment" style="color: white; margin: 0 10px; text-decoration: none; font-weight: bold;">🎬 Entertainment</a>
     <a href="/religions" style="color: white; margin: 0 10px; text-decoration: none; font-weight: bold;">🕌 World Religions</a>
     <a href="/history" style="color: white; margin: 0 10px; text-decoration: none; font-weight: bold;">📜 History & Economics</a>
+    <a href="/geopolitics" style="color: white; margin: 0 10px; text-decoration: none; font-weight: bold;">📜 🗺️ Geopolitics</a>
   </nav>
 `;
 
@@ -11448,8 +11449,8 @@ app.get('/history/media', (req, res) => {
             <a href="/history/researchers" class="nav-button">
                 ⬅️ Previous: Researchers & Whistleblowers
             </a>
-            <a href="/history/politics" class="nav-button">
-                Next: Political History ➡️
+            <a href="/geopolitics" class="nav-button">
+                Next: Geopolitics ➡️
             </a>
         </div>
         
@@ -11509,6 +11510,1415 @@ app.get('/history/media', (req, res) => {
     res.send(mediaContent);
 });
 
+// ============================================
+// /geopolitics - Main Geopolitics Overview
+// ============================================
+
+app.get('/geopolitics', (req, res) => {
+    const geopoliticsContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geopolitics - Global Power Structures & Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        
+        header {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            border-radius: 15px;
+            margin-bottom: 50px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header:before {
+            content: "🗺️";
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+            50% { transform: translate(-50%, -50%) translateY(-20px); }
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .intro-box {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+            border-left: 5px solid #3498db;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .region-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .region-card {
+            background: white;
+            padding: 35px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            text-align: center;
+            border-top: 8px solid;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .region-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .region-card:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .middle-east { border-top-color: #e74c3c; }
+        .usa { border-top-color: #3498db; }
+        .europe { border-top-color: #9b59b6; }
+        .asia-africa { border-top-color: #2ecc71; }
+        .economics { border-top-color: #f39c12; }
+        
+        .region-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .region-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .region-description {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .topics-list {
+            list-style: none;
+            text-align: left;
+            margin: 20px 0;
+        }
+        
+        .topics-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+            color: #555;
+            display: flex;
+            align-items: center;
+        }
+        
+        .topics-list li:before {
+            content: "•";
+            color: #3498db;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+        
+        .explore-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .explore-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 60px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .nav-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .definition-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+        }
+        
+        .definition-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .region-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .region-card {
+                padding: 25px 20px;
+            }
+        }
+        
+        .disclaimer {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🗺️ Geopolitics</h1>
+            <div class="subtitle">Global Power Structures • Regional Dynamics • Hidden Forces Shaping Our World</div>
+        </header>
+        
+        <div class="definition-box">
+            <h3>🌍 What is Geopolitics?</h3>
+            <p>Geopolitics examines how geography, power, and international relations intersect. It explores how nations compete for resources, influence, and control, and how historical patterns continue to shape current conflicts and alliances.</p>
+        </div>
+        
+        <div class="intro-box">
+            <p>This section explores the hidden structures and real motivations behind global events. Unlike conventional analysis, we examine <strong>long-term patterns, economic interests, and power dynamics</strong> that mainstream narratives often overlook.</p>
+            <p style="margin-top: 15px;">Each region below contains carefully curated resources from both official sources and independent analysts to provide balanced perspectives.</p>
+        </div>
+        
+        <div class="region-grid">
+            <!-- Middle East Card -->
+            <div class="region-card middle-east">
+                <span class="region-icon">🕌</span>
+                <h2 class="region-title">Middle East</h2>
+                <p class="region-description">The world's most contested region where oil, religion, and geopolitics intersect.</p>
+                <ul class="topics-list">
+                    <li>Israel-Palestine Historical Context</li>
+                    <li>Oil Wars & Energy Politics</li>
+                    <li>Arab Spring: Causes & Consequences</li>
+                    <li>Regional Power Dynamics</li>
+                </ul>
+                <a href="/geopolitics/middle-east" class="explore-btn">Explore Middle East →</a>
+            </div>
+            
+            <!-- United States Card -->
+            <div class="region-card usa">
+                <span class="region-icon">🇺🇸</span>
+                <h2 class="region-title">United States</h2>
+                <p class="region-description">Global superpower with complex domestic and international power structures.</p>
+                <ul class="topics-list">
+                    <li>Federal Reserve & Monetary Policy</li>
+                    <li>JFK Assassination Context</li>
+                    <li>Deep State & Bureaucratic Power</li>
+                    <li>US Foreign Policy Evolution</li>
+                </ul>
+                <a href="/geopolitics/united-states" class="explore-btn">Explore USA →</a>
+            </div>
+            
+            <!-- Europe Card -->
+            <div class="region-card europe">
+                <span class="region-icon">🇪🇺</span>
+                <h2 class="region-title">Europe</h2>
+                <p class="region-description">Ancient continent with modern power struggles and integration challenges.</p>
+                <ul class="topics-list">
+                    <li>EU Creation & Integration Motives</li>
+                    <li>Vatican Financial Influence</li>
+                    <li>Modern Monarchies & Power</li>
+                    <li>East-West European Divides</li>
+                </ul>
+                <a href="/geopolitics/europe" class="explore-btn">Explore Europe →</a>
+            </div>
+            
+            <!-- Asia & Africa Card -->
+            <div class="region-card asia-africa">
+                <span class="region-icon">🌏🌍</span>
+                <h2 class="region-title">Asia & Africa</h2>
+                <p class="region-description">Rising powers and nations grappling with colonial legacies and development.</p>
+                <ul class="topics-list">
+                    <li>Colonial Exploitation Patterns</li>
+                    <li>Resource Wars & Extraction</li>
+                    <li>Development Trap Analysis</li>
+                    <li>South-South Cooperation</li>
+                </ul>
+                <a href="/geopolitics/asia-africa" class="explore-btn">Explore Asia & Africa →</a>
+            </div>
+            
+            <!-- Economics Card -->
+            <div class="region-card economics">
+                <span class="region-icon">💸</span>
+                <h2 class="region-title">Global Economics</h2>
+                <p class="region-description">Financial systems, monetary policy, and economic warfare tactics.</p>
+                <ul class="topics-list">
+                    <li>Gold Standard Removal (1971)</li>
+                    <li>Cryptocurrency Battles</li>
+                    <li>Artificial Finance Systems</li>
+                    <li>Economic Sanctions as Weapons</li>
+                </ul>
+                <a href="/geopolitics/economics" class="explore-btn">Explore Economics →</a>
+            </div>
+        </div>
+        
+        <div class="disclaimer">
+            <h3>🔍 Analytical Approach</h3>
+            <p>This section presents multiple perspectives on complex geopolitical issues. We include both official sources and critical analyses. Readers are encouraged to cross-reference information and consider multiple viewpoints before forming conclusions.</p>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="/history" class="nav-btn">← Back to History</a>
+            <a href="/" class="nav-btn">🏠 Return to Home</a>
+            <a href="/geopolitics/middle-east" class="nav-btn">Start with Middle East →</a>
+        </div>
+    </div>
+    
+    <script>
+        // Add animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate region cards
+            const cards = document.querySelectorAll('.region-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px) scale(0.9)';
+                card.style.transition = 'all 0.7s ease ' + (index * 0.15) + 's';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0) scale(1)';
+                }, 300);
+            });
+            
+            // Add hover effect for topic items
+            const topicItems = document.querySelectorAll('.topics-list li');
+            topicItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateX(5px)';
+                    this.style.transition = 'transform 0.2s ease';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateX(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>`;
+    
+    res.send(geopoliticsContent);
+});
+
+// ============================================
+// /geopolitics/middle-east - Middle East Geopolitics
+// ============================================
+
+app.get('/geopolitics/middle-east', (req, res) => {
+    const middleEastContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Middle East Geopolitics - Oil, Conflict & Power Dynamics</title>
+    <style>
+        :root {
+            --primary: #e74c3c;
+            --secondary: #c0392b;
+            --accent: #f39c12;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #d31027 0%, #ea384d 100%);
+            color: #333;
+            line-height: 1.6;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        
+        header {
+            text-align: center;
+            padding: 50px 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            margin-bottom: 40px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header:before {
+            content: "🕌";
+            position: absolute;
+            font-size: 12rem;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        h1 {
+            font-size: 3.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .quick-facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .fact-box {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid var(--primary);
+            transition: transform 0.3s ease;
+        }
+        
+        .fact-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .fact-box h3 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .topic-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-top: 8px solid;
+            transition: all 0.4s ease;
+        }
+        
+        .topic-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .israel-palestine { border-top-color: #3498db; }
+        .oil-wars { border-top-color: #f1c40f; }
+        .arab-spring { border-top-color: #e74c3c; }
+        
+        .topic-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .topic-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .topic-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .resources-list {
+            list-style: none;
+            margin: 25px 0;
+        }
+        
+        .resources-list li {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .resources-list li:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .resource-link {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 5px;
+            transition: color 0.3s ease;
+        }
+        
+        .resource-link:hover {
+            color: var(--primary);
+        }
+        
+        .resource-type {
+            display: inline-block;
+            background: #6c757d;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-right: 8px;
+        }
+        
+        .official { background: #3498db; }
+        .academic { background: #2ecc71; }
+        .alternative { background: #e74c3c; }
+        .document { background: #9b59b6; }
+        
+        .timeline {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+        }
+        
+        .timeline h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .timeline-items {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .timeline-item {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+        
+        .year {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .perspective-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 25px;
+            margin: 40px 0;
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline-items {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        
+        .map-container {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🕌 Middle East Geopolitics</h1>
+            <div class="subtitle">Oil • Religion • Conflict • The World's Most Contested Region</div>
+        </header>
+        
+        <div class="quick-facts">
+            <div class="fact-box">
+                <h3>🛢️ Oil Reserves</h3>
+                <p>48% of world's proven oil reserves • 38% of global natural gas</p>
+            </div>
+            <div class="fact-box">
+                <h3>⚔️ Ongoing Conflicts</h3>
+                <p>7 active wars • 15+ armed conflicts since 1948</p>
+            </div>
+            <div class="fact-box">
+                <h3>💵 Military Spending</h3>
+                <p>$200+ billion annually • Highest per capita in world</p>
+            </div>
+            <div class="fact-box">
+                <h3>🌍 Strategic Importance</h3>
+                <p>Controls vital shipping lanes • 65% of Europe's oil imports</p>
+            </div>
+        </div>
+        
+        <div class="topics-grid">
+            <!-- Israel-Palestine -->
+            <div class="topic-card israel-palestine">
+                <span class="topic-icon">⚖️</span>
+                <h2 class="topic-title">Israel-Palestine Conflict</h2>
+                <p class="topic-description">One of the world's longest-running conflicts with deep historical roots and ongoing humanitarian crisis.</p>
+                
+                <ul class="resources-list">
+                    <li>
+                        <span class="resource-type official">UN</span>
+                        <a href="https://www.un.org/unispal/" target="_blank" class="resource-link">UN Information System on Palestine</a>
+                        <div>Official UN documents and resolutions</div>
+                    </li>
+                    <li>
+                        <span class="resource-type academic">Academic</span>
+                        <a href="https://www.palestineremembered.com/" target="_blank" class="resource-link">Palestine Remembered</a>
+                        <div>Oral history, maps, and documents from Palestinian perspective</div>
+                    </li>
+                    <li>
+                        <span class="resource-type document">Archive</span>
+                        <a href="https://www.archives.gov/research/foreign-policy/arab-israeli" target="_blank" class="resource-link">U.S. National Archives - Arab-Israeli Relations</a>
+                        <div>Declassified U.S. documents 1948-present</div>
+                    </li>
+                    <li>
+                        <span class="resource-type alternative">Analysis</span>
+                        <a href="https://www.btselem.org/" target="_blank" class="resource-link">B'Tselem - Israeli Human Rights Organization</a>
+                        <div>Documenting human rights violations in occupied territories</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Oil Wars -->
+            <div class="topic-card oil-wars">
+                <span class="topic-icon">🛢️</span>
+                <h2 class="topic-title">Oil Wars & Energy Politics</h2>
+                <p class="topic-description">How petroleum shapes foreign policy, military interventions, and regional power dynamics.</p>
+                
+                <ul class="resources-list">
+                    <li>
+                        <span class="resource-type official">Official</span>
+                        <a href="https://www.eia.gov/international/analysis/region" target="_blank" class="resource-link">U.S. Energy Information Administration - Middle East</a>
+                        <div>Official energy data and analysis</div>
+                    </li>
+                    <li>
+                        <span class="resource-type document">Leaks</span>
+                        <a href="https://www.theguardian.com/world/2011/apr/18/secret-papers-oil-firms-iraq-war" target="_blank" class="resource-link">The Guardian - Iraq Oil War Documents</a>
+                        <div>Secret papers reveal oil interests in Iraq war</div>
+                    </li>
+                    <li>
+                        <span class="resource-type academic">Research</span>
+                        <a href="https://www.cfr.org/backgrounder/how-oil-markets-work" target="_blank" class="resource-link">Council on Foreign Relations - Oil Markets</a>
+                        <div>Analysis of oil geopolitics and pricing</div>
+                    </li>
+                    <li>
+                        <span class="resource-type alternative">Investigation</span>
+                        <a href="https://www.middleeasteye.net/tags/oil" target="_blank" class="resource-link">Middle East Eye - Oil Investigations</a>
+                        <div>Independent reporting on Middle East energy politics</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Arab Spring -->
+            <div class="topic-card arab-spring">
+                <span class="topic-icon">🌅</span>
+                <h2 class="topic-title">Arab Spring & Geopolitical Manipulation</h2>
+                <p class="topic-description">2010-2012 uprisings: Grassroots movements, foreign interventions, and lasting consequences.</p>
+                
+                <ul class="resources-list">
+                    <li>
+                        <span class="resource-type document">Archive</span>
+                        <a href="https://wikileaks.org/" target="_blank" class="resource-link">WikiLeaks - Diplomatic Cables</a>
+                        <div>U.S. diplomatic communications before/during Arab Spring</div>
+                    </li>
+                    <li>
+                        <span class="resource-type academic">Study</span>
+                        <a href="https://carnegieendowment.org/sada/" target="_blank" class="resource-link">Carnegie Endowment - Sada Journal</a>
+                        <div>Academic analysis of Arab Spring aftermath</div>
+                    </li>
+                    <li>
+                        <span class="resource-type alternative">Investigation</span>
+                        <a href="https://theintercept.com/series/the-arab-spring/" target="_blank" class="resource-link">The Intercept - Arab Spring Series</a>
+                        <div>Investigative journalism on foreign interventions</div>
+                    </li>
+                    <li>
+                        <span class="resource-type official">Report</span>
+                        <a href="https://www.amnesty.org/en/latest/news/2021/01/middle-east-and-north-africa-ten-years-after-the-arab-uprisings/" target="_blank" class="resource-link">Amnesty International - 10 Years After Report</a>
+                        <div>Human rights assessment of Arab Spring outcomes</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="timeline">
+            <h2>📜 Key Historical Timeline</h2>
+            <div class="timeline-items">
+                <div class="timeline-item">
+                    <div class="year">1916</div>
+                    <div>Sykes-Picot Agreement divides Middle East</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">1948</div>
+                    <div>State of Israel established • Nakba</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">1973</div>
+                    <div>Oil embargo • Petrodollar system established</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">2010</div>
+                    <div>Arab Spring begins in Tunisia</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">Present</div>
+                    <div>Ongoing conflicts • Normalization deals</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="map-container">
+            <h3>🗺️ Regional Map & Current Conflicts</h3>
+            <p>Interactive resources for understanding current geopolitical divisions:</p>
+            <p>
+                <a href="https://www.crisisgroup.org/middle-east-north-africa" class="resource-link">International Crisis Group - Conflict Tracker</a> •
+                <a href="https://acleddata.com/middle-east/" class="resource-link">ACLED - Armed Conflict Location Data</a> •
+                <a href="https://www.reuters.com/graphics/MIDEAST-CRISIS/ISRAEL-PALESTINIANS/mopanwyabva/" class="resource-link">Reuters - Israel-Palestine Mapping</a>
+            </p>
+        </div>
+        
+        <div class="perspective-box">
+            <h3>🔍 Multiple Perspectives Required</h3>
+            <p>The Middle East is often viewed through polarized lenses. For balanced understanding, consult:</p>
+            <ul style="margin-top: 10px; padding-left: 20px;">
+                <li><strong>Regional media:</strong> Al Jazeera, Al Monitor, Middle East Eye</li>
+                <li><strong>Israeli sources:</strong> Haaretz, Times of Israel, +972 Magazine</li>
+                <li><strong>Palestinian sources:</strong> Ma'an News, WAFA, Al-Quds</li>
+                <li><strong>International analysis:</strong> International Crisis Group, Carnegie Middle East Center</li>
+            </ul>
+        </div>
+        
+        <div class="navigation">
+            <a href="/geopolitics" class="nav-button">
+                ⬅️ Back to Geopolitics Overview
+            </a>
+            <a href="/geopolitics/united-states" class="nav-button">
+                Next: United States Geopolitics ➡️
+            </a>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+            <h3>📚 Further Study</h3>
+            <p>• <a href="https://www.mei.edu/" target="_blank">Middle East Institute</a> - Research and analysis</p>
+            <p>• <a href="https://www.aljazeera.com/news/longform/2023/10/9/the-israel-palestine-crisis-causes-consequences-portents" target="_blank">Al Jazeera - Israel-Palestine History</a></p>
+            <p>• <a href="https://www.brookings.edu/region/middle-east/" target="_blank">Brookings Institution - Middle East Research</a></p>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate topic cards
+            const cards = document.querySelectorAll('.topic-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(40px)';
+                card.style.transition = 'all 0.7s ease ' + (index * 0.2) + 's';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 300);
+            });
+            
+            // Animate fact boxes
+            const facts = document.querySelectorAll('.fact-box');
+            facts.forEach((fact, index) => {
+                fact.style.opacity = '0';
+                fact.style.transform = 'scale(0.9)';
+                fact.style.transition = 'all 0.5s ease ' + (index * 0.1) + 's';
+                
+                setTimeout(() => {
+                    fact.style.opacity = '1';
+                    fact.style.transform = 'scale(1)';
+                }, 400);
+            });
+        });
+    </script>
+</body>
+</html>`;
+    
+    res.send(middleEastContent);
+});
+
+
+// ============================================
+// /geopolitics/united-states - United States Geopolitics
+// ============================================
+
+app.get('/geopolitics/united-states', (req, res) => {
+    const usaContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>United States Geopolitics - Power, Finance & Foreign Policy</title>
+    <style>
+            --accent: #e74c3c;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        
+        header {
+            text-align: center;
+            padding: 50px 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            margin-bottom: 40px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header:before {
+            content: "🇺🇸";
+            position: absolute;
+            font-size: 12rem;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        h1 {
+            font-size: 3.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .quick-facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .fact-box {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid var(--primary);
+            transition: transform 0.3s ease;
+        }
+        
+        .fact-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .topic-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-top: 8px solid;
+            transition: all 0.4s ease;
+        }
+        
+        .topic-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .fed { border-top-color: #3498db; }
+        .jfk { border-top-color: #e74c3c; }
+        .deep-state { border-top-color: #2c3e50; }
+        
+        .topic-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .topic-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .topic-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .resources-list {
+            list-style: none;
+            margin: 25px 0;
+        }
+        
+        .resources-list li {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .resources-list li:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .resource-link {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 5px;
+            transition: color 0.3s ease;
+        }
+        
+        .resource-link:hover {
+            color: var(--accent);
+        }
+        
+        .resource-type {
+            display: inline-block;
+            background: #6c757d;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-right: 8px;
+        }
+        
+        .official { background: #3498db; }
+        .academic { background: #2ecc71; }
+        .alternative { background: #e74c3c; }
+        .archive { background: #9b59b6; }
+        .documentary { background: #f39c12; }
+        
+        .timeline {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+        }
+        
+        .timeline h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .timeline-items {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .timeline-item {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+        
+        .year {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .analysis-box {
+            background: #e8f4fc;
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            margin: 40px 0;
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline-items {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🇺🇸 United States Geopolitics</h1>
+            <div class="subtitle">Federal Reserve • Political Assassinations • Bureaucratic Power • Global Influence</div>
+        </header>
+        
+        <div class="quick-facts">
+            <div class="fact-box">
+                <h3>💰 Federal Reserve</h3>
+                <p>Private central bank established 1913 • Controls US monetary policy</p>
+            </div>
+            <div class="fact-box">
+                <h3>🎯 Political Assassinations</h3>
+                <p>4 US Presidents assassinated • 11+ attempts on sitting Presidents</p>
+            </div>
+            <div class="fact-box">
+                <h3>🕵️ Intelligence Budget</h3>
+                <p>$90+ billion annually • 17 intelligence agencies</p>
+            </div>
+            <div class="fact-box">
+                <h3>🌎 Military Presence</h3>
+                <p>750+ overseas military bases • Active in 80+ countries</p>
+            </div>
+        </div>
+        
+        <div class="topics-grid">
+            <!-- Federal Reserve -->
+            <div class="topic-card fed">
+                <span class="topic-icon">💰</span>
+                <h2 class="topic-title">Federal Reserve Creation</h2>
+                <p class="topic-description">The 1913 establishment of America's central banking system and its ongoing influence on global finance.</p>
+                
+                <ul class="resources-list">
+                    <li>
+                        <span class="resource-type official">Official</span>
+                        <a href="https://www.federalreserve.gov/aboutthefed.htm" target="_blank" class="resource-link">Federal Reserve - Official History</a>
+                        <div>Official account of Fed's creation and mandate</div>
+                    </li>
+                    <li>
+                        <span class="resource-type documentary">Documentary</span>
+                        <a href="https://www.pbs.org/wgbh/pages/frontline/shows/secret/" target="_blank" class="resource-link">PBS Frontline - The Secret History of the Credit Card</a>
+                        <div>Investigates the banking system evolution</div>
+                    </li>
+                    <li>
+                        <span class="resource-type archive">Archive</span>
+                        <a href="https://fraser.stlouisfed.org/" target="_blank" class="resource-link">FRASER - Federal Reserve Archival System</a>
+                        <div>Historical documents and publications</div>
+                    </li>
+                    <li>
+                        <span class="resource-type alternative">Analysis</span>
+                        <a href="https://www.levyinstitute.org/" target="_blank" class="resource-link">Levy Economics Institute</a>
+                        <div>Critical analysis of monetary policy</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- JFK Assassination -->
+            <div class="topic-card jfk">
+                <span class="topic-icon">🎯</span>
+                <h2 class="topic-title">JFK Assassination Context</h2>
+                <p class="topic-description">November 22, 1963 - Official narrative vs. alternative theories and declassified documents.</p>
+                
+                <ul class="resources-list">
+                    <li>
+                        <span class="resource-type official">Official</span>
+                        <a href="https://www.archives.gov/research/jfk" target="_blank" class="resource-link">National Archives - JFK Assassination Records</a>
+                        <div>Declassified documents from official investigation</div>
+                    </li>
+                    <li>
+                        <span class="resource-type documentary">Documentary</span>
+                        <a href="https://www.pbs.org/wgbh/frontline/documentary/oswald-ghost/" target="_blank" class="resource-link">PBS Frontline - Oswald's Ghost</a>
+                        <div>Examination of conspiracy theories</div>
+                    </li>
+                    <li>
+                        <span class="resource-type archive">Archive</span>
+                        <a href="https://www.maryferrell.org/" target="_blank" class="resource-link">Mary Ferrell Foundation</a>
+                        <div>Largest JFK assassination document archive</div>
+                    </li>
+                    <li>
+                        <span class="resource-type academic">Research</span>
+                        <a href="https://www.history-matters.com/" target="_blank" class="resource-link">History Matters - JFK Research</a>
+                        <div>Academic analysis of assassination evidence</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Deep State -->
+            <div class="topic-card deep-state">
+                <span class="topic-icon">🕵️</span>
+                <h2 class="topic-title">Deep State Origins & Analysis</h2>
+                <p class="topic-description">The permanent government bureaucracy, intelligence community, and their influence on policy.</p>
+                
+                <ul class="resources-list">
+                    <li>
+                        <span class="resource-type official">Report</span>
+                        <a href="https://www.intelligence.gov/" target="_blank" class="resource-link">U.S. Intelligence Community</a>
+                        <div>Official structure and agencies</div>
+                    </li>
+                    <li>
+                        <span class="resource-type academic">Study</span>
+                        <a href="https://www.brookings.edu/research/the-administrative-state-in-the-era-of-donald-trump/" target="_blank" class="resource-link">Brookings - The Administrative State</a>
+                        <div>Analysis of bureaucratic power</div>
+                    </li>
+                    <li>
+                        <span class="resource-type alternative">Investigation</span>
+                        <a href="https://theintercept.com/series/the-deep-state/" target="_blank" class="resource-link">The Intercept - Deep State Series</a>
+                        <div>Investigative journalism on intelligence agencies</div>
+                    </li>
+                    <li>
+                        <span class="resource-type archive">Documents</span>
+                        <a href="https://nsarchive.gwu.edu/" target="_blank" class="resource-link">National Security Archive</a>
+                        <div>Declassified documents on intelligence operations</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="timeline">
+            <h2>📜 Key Historical Timeline</h2>
+            <div class="timeline-items">
+                <div class="timeline-item">
+                    <div class="year">1913</div>
+                    <div>Federal Reserve Act • Income Tax established</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">1947</div>
+                    <div>National Security Act • CIA created</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">1963</div>
+                    <div>JFK Assassination • Warren Commission</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">1975</div>
+                    <div>Church Committee • Intelligence abuses exposed</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">2001</div>
+                    <div>Patriot Act • Expanded surveillance powers</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="analysis-box">
+            <h3>🔍 Analytical Framework</h3>
+            <p>Understanding US power structures requires examining:</p>
+            <ul style="margin-top: 10px; padding-left: 20px;">
+                <li><strong>Public vs. Private Power:</strong> Federal Reserve as private institution with public functions</li>
+                <li><strong>Electoral vs. Permanent Government:</strong> Elected officials vs. career bureaucrats</li>
+                <li><strong>Transparency vs. Secrecy:</strong> Democratic ideals vs. national security state</li>
+                <li><strong>Domestic vs. Foreign Policy:</strong> Interconnection between internal and external power</li>
+            </ul>
+        </div>
+        
+        <div class="navigation">
+            <a href="/geopolitics/middle-east" class="nav-button">
+                ⬅️ Previous: Middle East
+            </a>
+            <a href="/geopolitics/europe" class="nav-button">
+                Next: Europe Geopolitics ➡️
+            </a>
+        </div>
+        
+        <style>
+            .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+         }
+    
+            .nav-button {             
+                 display: inline-block;
+                 padding: 15px 30px;
+                 background: linear-gradient(135deg, var(--primary), var(--secondary));
+                 color: #ffffff;
+                 text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+                 text-decoration: none;
+                 border-radius: 10px;
+                 font-weight: bold;
+                 margin: 10px;
+                 transition: all 0.3s ease;
+                 border: 2px solid rgba(255,255,255,0.3);
+             }  
+
+  
+          .nav-button:hover {
+              background-color: #e0e0e0;
+          }
+        </style>
+
+        <div style="text-align: center; margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+            <h3>📚 Further Research</h3>
+            <p>• <a href="https://www.cia.gov/readingroom/" target="_blank">CIA FOIA Reading Room</a> - Declassified documents</p>
+            <p>• <a href="https://www.archives.gov/research" target="_blank">National Archives Research</a> - Primary source documents</p>
+            <p>• <a href="https://www.fas.org/" target="_blank">Federation of American Scientists</a> - Security policy analysis</p>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate topic cards
+            const cards = document.querySelectorAll('.topic-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(40px)';
+                card.style.transition = 'all 0.7s ease ' + (index * 0.2) + 's';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 300);
+            });
+            
+            // Animate fact boxes
+            const facts = document.querySelectorAll('.fact-box');
+            facts.forEach((fact, index) => {
+                fact.style.opacity = '0';
+                fact.style.transform = 'scale(0.9)';
+                fact.style.transition = 'all 0.5s ease ' + (index * 0.1) + 's';
+                
+                setTimeout(() => {
+                    fact.style.opacity = '1';
+                    fact.style.transform = 'scale(1)';
+                }, 400);
+            });
+        });
+    </script>
+</body>
+</html>`;
+    
+    res.send(usaContent);
+});
 
 // ===== 404 ERROR HANDLER =====
 app.use((req, res) => {
