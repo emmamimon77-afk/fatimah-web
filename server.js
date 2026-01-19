@@ -3,12 +3,15 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const https = require('https');
+const mongoose = require('mongoose');
+
+// ===== ADD WEBSOCKET =====
+const WebSocket = require('ws');  // npm install ws
+const http = require('http');      // Add this import
+// =========================
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-
-const mongoose = require('mongoose');
-
 
 
 // ===== MONGODB CONNECTION =====
@@ -17,6 +20,7 @@ const MONGO_URI = process.env.MONGODB_URI || 'mongodb+srv://emmamimon77_db_user:
 mongoose.connect(MONGO_URI)
   .then(() => console.log('✅ Connected to MongoDB Atlas successfully'))
   .catch(err => console.log('⚠️ MongoDB connection failed, using in-memory messages. Error:', err.message));
+
 
 
 // ===== MESSAGE SCHEMA =====
@@ -124,6 +128,7 @@ const navigation = `
     <a href="/religions" style="color: white; margin: 0 10px; text-decoration: none; font-weight: bold;">🕌 World Religions</a>
     <a href="/history" style="color: white; margin: 0 10px; text-decoration: none; font-weight: bold;">📜 History & Economics</a>
     <a href="/geopolitics" style="color: white; margin: 0 10px; text-decoration: none; font-weight: bold;">📜 🗺️ Geopolitics</a>
+    <a href="/telephony" style="color: white; margin: 0 10px; text-decoration: none; font-weight: bold;">📞 Telephony</a>
   </nav>
 `;
 
@@ -237,7 +242,587 @@ const styles = `
   </style>
 `;
 
+
 // ===== ROUTES =====
+
+// ===== TELEPHONY ROUTE =====
+app.get('/telephony', (req, res) => {
+    const html = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>📞 Fatimah Telephony - Free Voice/Video Calls</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+            
+            body {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+                color: #333;
+                padding: 20px;
+            }
+            
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                background: rgba(255, 255, 255, 0.98);
+                border-radius: 20px;
+                padding: 40px;
+                box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            }
+            
+            header {
+                text-align: center;
+                margin-bottom: 40px;
+            }
+            
+            h1 {
+                font-size: 3rem;
+                color: #2c3e50;
+                margin-bottom: 10px;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+                color: #7f8c8d;
+                margin-bottom: 30px;
+            }
+            
+            .dashboard {
+                display: grid;
+                grid-template-columns: 300px 1fr;
+                gap: 30px;
+                margin-bottom: 40px;
+            }
+            
+            .users-panel {
+                background: #f8f9fa;
+                border-radius: 15px;
+                padding: 25px;
+                height: fit-content;
+            }
+            
+            .users-list {
+                margin-top: 20px;
+            }
+            
+            .user-item {
+                padding: 15px;
+                background: white;
+                border-radius: 10px;
+                margin-bottom: 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-left: 4px solid #3498db;
+            }
+            
+            .call-panel {
+                background: #ecf0f1;
+                border-radius: 15px;
+                padding: 25px;
+            }
+            
+            .video-container {
+                display: flex;
+                gap: 20px;
+                margin-bottom: 30px;
+                flex-wrap: wrap;
+            }
+            
+            video {
+                width: 100%;
+                max-width: 400px;
+                border-radius: 10px;
+                background: #000;
+                border: 3px solid #ddd;
+            }
+            
+            .controls {
+                display: flex;
+                gap: 15px;
+                margin-top: 20px;
+                flex-wrap: wrap;
+            }
+            
+            button {
+                padding: 15px 30px;
+                border: none;
+                border-radius: 10px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .btn-call {
+                background: #2ecc71;
+                color: white;
+            }
+            
+            .btn-end {
+                background: #e74c3c;
+                color: white;
+            }
+            
+            .btn-share {
+                background: #3498db;
+                color: white;
+            }
+            
+            .btn-audio {
+                background: #9b59b6;
+                color: white;
+            }
+            
+            button:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            }
+            
+            button:active {
+                transform: translateY(-1px);
+            }
+            
+            .status {
+                padding: 15px;
+                border-radius: 10px;
+                margin: 20px 0;
+                font-weight: bold;
+            }
+            
+            .online {
+                background: #d4edda;
+                color: #155724;
+            }
+            
+            .offline {
+                background: #f8d7da;
+                color: #721c24;
+            }
+            
+            .connecting {
+                background: #fff3cd;
+                color: #856404;
+            }
+            
+            @media (max-width: 768px) {
+                .dashboard {
+                    grid-template-columns: 1fr;
+                }
+                
+                h1 {
+                    font-size: 2.2rem;
+                }
+                
+                video {
+                    max-width: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            ${navigation}  <!-- Your existing navigation -->
+            
+            <header>
+                <h1>📞 Fatimah Telephony</h1>
+                <p class="subtitle">Free voice and video calls for friends, family, and everyone</p>
+            </header>
+            
+            <div class="dashboard">
+                <div class="users-panel">
+                    <h2>👥 Online Users</h2>
+                    <div id="usersList" class="users-list">
+                        <div class="user-item">You: <span id="myUserId">Connecting...</span></div>
+                    </div>
+                </div>
+                
+                <div class="call-panel">
+                    <h2>📹 Call Interface</h2>
+                    
+                    <div id="status" class="status connecting">
+                        🔄 Connecting to signaling server...
+                    </div>
+                    
+                    <div class="video-container">
+                        <div>
+                            <h3>You</h3>
+                            <video id="localVideo" autoplay muted playsinline></video>
+                        </div>
+                        <div>
+                            <h3>Remote</h3>
+                            <video id="remoteVideo" autoplay playsinline></video>
+                        </div>
+                    </div>
+                    
+                    <div class="controls">
+                        <button onclick="startCall()" class="btn-call" id="callBtn">
+                            📞 Start Call
+                        </button>
+                        <button onclick="toggleAudio()" class="btn-audio" id="audioBtn">
+                            🔊 Mute
+                        </button>
+                        <button onclick="shareScreen()" class="btn-share">
+                            🖥️ Share Screen
+                        </button>
+                        <button onclick="endCall()" class="btn-end">
+                            📴 End Call
+                        </button>
+                    </div>
+                    
+                    <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                        <h3>How to Use:</h3>
+                        <ol style="margin-left: 20px; margin-top: 10px;">
+                            <li>Wait for "Connected" status</li>
+                            <li>Your friends need to open this same page</li>
+                            <li>Click their name in "Online Users" to call</li>
+                            <li>Or click "Start Call" for a random connection</li>
+                            <li>Enjoy free calls! 🎉</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+        // WebRTC Implementation
+        let localStream;
+        let peerConnection;
+        let ws;
+        let myUserId = 'user_' + Math.random().toString(36).substr(2, 9);
+        let myUserName = 'Guest_' + Math.floor(Math.random() * 1000);
+        let remoteUserId = null;
+        let isAudioMuted = false;
+        
+        const statusEl = document.getElementById('status');
+        const usersListEl = document.getElementById('usersList');
+        const myUserIdEl = document.getElementById('myUserId');
+        const localVideo = document.getElementById('localVideo');
+        const remoteVideo = document.getElementById('remoteVideo');
+        const callBtn = document.getElementById('callBtn');
+        const audioBtn = document.getElementById('audioBtn');
+        
+        // Initialize
+        window.onload = async () => {
+            myUserIdEl.textContent = myUserName;
+            await initWebSocket();
+            await initMedia();
+        };
+        
+        // 1. Connect to WebSocket signaling server
+        async function initWebSocket() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = protocol + '//' + window.location.host;
+            
+            ws = new WebSocket(wsUrl);
+            
+            ws.onopen = () => {
+                statusEl.textContent = '✅ Connected to signaling server';
+                statusEl.className = 'status online';
+                
+                // Register with server
+                ws.send(JSON.stringify({
+                    type: 'register',
+                    userId: myUserId,
+                    userName: myUserName
+                }));
+            };
+            
+            ws.onmessage = async (event) => {
+                const data = JSON.parse(event.data);
+                
+                switch(data.type) {
+                    case 'registered':
+                        updateOnlineUsers(data.onlineUsers);
+                        break;
+                        
+                    case 'user-joined':
+                        addUserToList(data.userId, data.userName);
+                        break;
+                        
+                    case 'user-left':
+                        removeUserFromList(data.userId);
+                        break;
+                        
+                    case 'incoming-call':
+                        if (confirm(\`Incoming call from \${data.fromName}. Accept?\`)) {
+                            remoteUserId = data.from;
+                            await createPeerConnection(false);
+                            const answer = await peerConnection.createAnswer();
+                            await peerConnection.setLocalDescription(answer);
+                            
+                            ws.send(JSON.stringify({
+                                type: 'answer',
+                                target: data.from,
+                                answer: answer
+                            }));
+                            
+                            statusEl.textContent = \`📞 In call with \${data.fromName}\`;
+                        }
+                        break;
+                        
+                    case 'call-answer':
+                        if (peerConnection) {
+                            await peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer));
+                            statusEl.textContent = \`✅ Connected to \${data.from}\`;
+                        }
+                        break;
+                        
+                    case 'ice-candidate':
+                        if (peerConnection) {
+                            await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
+                        }
+                        break;
+                        
+                    case 'hangup':
+                        endCall();
+                        statusEl.textContent = '📞 Call ended by remote';
+                        break;
+                }
+            };
+            
+            ws.onerror = (error) => {
+                statusEl.textContent = '❌ WebSocket error';
+                statusEl.className = 'status offline';
+                console.error('WebSocket error:', error);
+            };
+            
+            ws.onclose = () => {
+                statusEl.textContent = '🔌 Disconnected from server';
+                statusEl.className = 'status offline';
+            };
+        }
+        
+        // 2. Get camera/microphone access               
+        // Replace or modify the initMedia() function:
+        async function initMedia() {
+            try {
+                 // First try with video and audio
+                 localStream = await navigator.mediaDevices.getUserMedia({
+                      video: true,
+                      audio: true
+               });
+               localVideo.srcObject = localStream;
+               statusEl.textContent = '✅ Camera & microphone ready';
+            } catch (err) {
+                console.log('Camera/mic failed:', err.message);
+        
+               // Try audio only
+            try {
+                 localStream = await navigator.mediaDevices.getUserMedia({
+                     audio: true,
+                     video: false
+               });
+               localVideo.style.display = 'none'; // Hide video element
+               statusEl.textContent = '✅ Audio ready (no camera)';
+            
+            // Show message instead of video
+            document.querySelector('.video-container').innerHTML = \`
+                <div style="text-align: center; padding: 40px;">
+                    <div style="font-size: 5rem;">🎤</div>
+                    <h3>Audio-Only Mode</h3>
+                    <p>Voice call only - no camera available</p>
+                </div>
+                <div>
+                    <h3>Remote</h3>
+                    <video id="remoteVideo" autoplay playsinline></video>
+                </div>
+            \`;
+        } catch (audioErr) {
+            // No media at all - text chat mode
+            statusEl.textContent = '⚠️ No microphone/camera - Text chat only';
+            document.querySelector('.video-container').innerHTML = \`
+                <div style="text-align: center; padding: 40px;">
+                    <div style="font-size: 5rem;">💬</div>
+                    <h3>Text Chat Mode</h3>
+                    <p>Audio/video not available. You can still chat!</p>
+                    <textarea id="chatBox" placeholder="Type message..." style="width: 100%; height: 100px; margin: 10px 0;"></textarea>
+                    <button onclick="sendChat()">Send Message</button>
+                </div>
+            \`;
+        }
+    }
+}        
+
+        // 3. Create WebRTC peer connection
+        async function createPeerConnection(isCaller = true) {
+            const configuration = {
+                iceServers: [
+                    { urls: 'stun:stun.l.google.com:19302' },
+                    { urls: 'stun:stun1.l.google.com:19302' },
+                    { urls: 'stun:stun2.l.google.com:19302' }
+                ]
+            };
+            
+            peerConnection = new RTCPeerConnection(configuration);
+            
+            // Add local stream
+            localStream.getTracks().forEach(track => {
+                peerConnection.addTrack(track, localStream);
+            });
+            
+            // Handle remote stream
+            peerConnection.ontrack = (event) => {
+                remoteVideo.srcObject = event.streams[0];
+            };
+            
+            // ICE candidate handling
+            peerConnection.onicecandidate = (event) => {
+                if (event.candidate && remoteUserId) {
+                    ws.send(JSON.stringify({
+                        type: 'ice-candidate',
+                        target: remoteUserId,
+                        candidate: event.candidate
+                    }));
+                }
+            };
+            
+            // Connection state changes
+            peerConnection.onconnectionstatechange = () => {
+                console.log('Connection state:', peerConnection.connectionState);
+            };
+            
+            // If caller, create offer
+            if (isCaller) {
+                const offer = await peerConnection.createOffer();
+                await peerConnection.setLocalDescription(offer);
+                
+                ws.send(JSON.stringify({
+                    type: 'call',
+                    target: remoteUserId,
+                    offer: offer
+                }));
+            }
+        }
+        
+        // 4. Start a call
+        async function startCall() {
+            // For demo: call first available user
+            const users = Array.from(document.querySelectorAll('.user-item:not(:first-child)'));
+            if (users.length > 0) {
+                const targetUser = users[0].dataset.userId;
+                remoteUserId = targetUser;
+                
+                await createPeerConnection(true);
+                statusEl.textContent = '📞 Calling...';
+            } else {
+                alert('No other users online. Ask a friend to open this page!');
+            }
+        }
+        
+        // 5. End call
+        function endCall() {
+            if (peerConnection) {
+                peerConnection.close();
+                peerConnection = null;
+            }
+            
+            if (remoteUserId) {
+                ws.send(JSON.stringify({
+                    type: 'hangup',
+                    target: remoteUserId
+                }));
+                remoteUserId = null;
+            }
+            
+            remoteVideo.srcObject = null;
+            statusEl.textContent = '✅ Ready to call';
+        }
+        
+        // 6. Toggle audio mute
+        function toggleAudio() {
+            if (localStream) {
+                const audioTracks = localStream.getAudioTracks();
+                audioTracks.forEach(track => {
+                    track.enabled = !track.enabled;
+                });
+                isAudioMuted = !isAudioMuted;
+                audioBtn.innerHTML = isAudioMuted ? '🔇 Unmute' : '🔊 Mute';
+            }
+        }
+        
+        // 7. Share screen
+        async function shareScreen() {
+            try {
+                const screenStream = await navigator.mediaDevices.getDisplayMedia({
+                    video: true,
+                    audio: true
+                });
+                
+                // Replace video track
+                const screenTrack = screenStream.getVideoTracks()[0];
+                const sender = peerConnection.getSenders().find(s => s.track.kind === 'video');
+                if (sender) {
+                    sender.replaceTrack(screenTrack);
+                }
+                
+                // Stop screen when done
+                screenTrack.onended = () => {
+                    const cameraTrack = localStream.getVideoTracks()[0];
+                    if (sender && cameraTrack) {
+                        sender.replaceTrack(cameraTrack);
+                    }
+                };
+            } catch (err) {
+                console.error('Screen sharing failed:', err);
+            }
+        }
+        
+        // 8. Update user list
+        function updateOnlineUsers(userIds) {
+            usersListEl.innerHTML = '<div class="user-item">You: <span id="myUserId">' + myUserName + '</span></div>';
+            
+            // In real app, you'd fetch user names from server
+            userIds.forEach(userId => {
+                if (userId !== myUserId) {
+                    addUserToList(userId, 'User_' + userId.substr(-4));
+                }
+            });
+        }
+        
+        function addUserToList(userId, userName) {
+            const userEl = document.createElement('div');
+            userEl.className = 'user-item';
+            userEl.dataset.userId = userId;
+            userEl.innerHTML = \`
+                <span>\${userName}</span>
+                <button onclick="callUser('\${userId}')" style="padding: 5px 10px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    Call
+                </button>
+            \`;
+            usersListEl.appendChild(userEl);
+        }
+        
+        function removeUserFromList(userId) {
+            const userEl = document.querySelector(\`[data-user-id="\${userId}"]\`);
+            if (userEl) userEl.remove();
+        }
+        
+        function callUser(targetUserId) {
+            remoteUserId = targetUserId;
+            createPeerConnection(true);
+            statusEl.textContent = '📞 Calling...';
+        }
+        </script>
+    </body>
+    </html>
+    `;
+    
+    res.send(html);
+});
+
+// Make sure the telephony route goes BEFORE your other routes to avoid conflicts
 
 // Home Page
 app.get('/', (req, res) => {
@@ -254,6 +839,26 @@ app.get('/', (req, res) => {
     <body>
       <div class="container">
         ${navigation}
+
+
+        <!-- ========== ADD TELEPHONY BANNER HERE ========== -->
+        <div style="margin: 30px 0; padding: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+             border-radius: 15px; color: white; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+          <h2 style="margin-top: 0;">📞 NEW: Fatimah Telephony</h2>
+          <p style="font-size: 1.2rem; margin-bottom: 20px;">Free voice & video calls for everyone!</p>
+          <a href="/telephony" style="display: inline-block; padding: 15px 40px; 
+             background: white; color: #667eea; text-decoration: none; 
+             border-radius: 50px; font-weight: bold; font-size: 1.1rem;
+             box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: all 0.3s;">
+            🚀 Start Free Call
+          </a>
+          <p style="margin-top: 15px; opacity: 0.9;">
+            No installation needed • Works in any browser • Completely free
+          </p>
+        </div>
+        <!-- ============================================= -->
+
+ 
         <h1>🌸 Welcome to Fatimah's Server! 🌸</h1>
         <p>You are connected via my private Tailscale network.</p>
         <p>Connected via: <strong>${protocol.toUpperCase()}</strong> on port <strong>${port}</strong></p>
@@ -281,6 +886,7 @@ app.get('/', (req, res) => {
             <p><a href="/message"><button>Send a Message</button></a></p>
             <p><a href="/files"><button>File Sharing</button></a></p>
             <p><a href="/friends"><button>Friends List</button></a></p>
+            <p><a href="/telephony"><button style="background: #28a745;">📞 Free Calls</button></a></p>
           </div>
           
           <div class="link-card">
@@ -1045,6 +1651,7 @@ app.get('/health', (req, res) => {
     </html>
   `);
 });
+
 
 // ===== WORLD RELIGIONS SECTION =====
 
@@ -12941,12 +13548,132 @@ app.use((req, res) => {
 
 // ===== START SERVER =====
 
-// Start server for Render (single port)
-app.listen(PORT, () => {
+// Create HTTP server from Express app
+const server = http.createServer(app);
+
+// Attach WebSocket server to the same HTTP server
+const wss = new WebSocket.Server({ server });
+
+// WebSocket connection handling (same as before, but in startup section)
+const connections = new Map();
+
+wss.on('connection', (ws, req) => {
+    console.log('🔌 New WebSocket connection from:', req.socket.remoteAddress);
+    
+    ws.on('message', async (message) => {
+        try {
+            const data = JSON.parse(message);
+            console.log('📨 WebSocket message:', data.type);
+            
+            switch(data.type) {
+                case 'register':
+                    ws.userId = data.userId;
+                    ws.userName = data.userName || 'Anonymous';
+                    connections.set(data.userId, ws);
+                    
+                    // Notify user of successful registration
+                    ws.send(JSON.stringify({
+                        type: 'registered',
+                        userId: data.userId,
+                        onlineUsers: Array.from(connections.keys())
+                    }));
+                    
+                    // Notify others of new user
+                    broadcastToOthers(ws, {
+                        type: 'user-joined',
+                        userId: data.userId,
+                        userName: ws.userName
+                    });
+                    break;
+                    
+                case 'call':
+                    const targetWs = connections.get(data.target);
+                    if (targetWs) {
+                        targetWs.send(JSON.stringify({
+                            type: 'incoming-call',
+                            from: ws.userId,
+                            fromName: ws.userName,
+                            offer: data.offer
+                        }));
+                    }
+                    break;
+                    
+                case 'answer':
+                    const callerWs = connections.get(data.target);
+                    if (callerWs) {
+                        callerWs.send(JSON.stringify({
+                            type: 'call-answer',
+                            from: ws.userId,
+                            answer: data.answer
+                        }));
+                    }
+                    break;
+                    
+                case 'ice-candidate':
+                    const peerWs = connections.get(data.target);
+                    if (peerWs) {
+                        peerWs.send(JSON.stringify({
+                            type: 'ice-candidate',
+                            from: ws.userId,
+                            candidate: data.candidate
+                        }));
+                    }
+                    break;
+                    
+                case 'hangup':
+                    const partnerWs = connections.get(data.target);
+                    if (partnerWs) {
+                        partnerWs.send(JSON.stringify({
+                            type: 'hangup',
+                            from: ws.userId
+                        }));
+                    }
+                    break;
+            }
+        } catch (err) {
+            console.error('❌ WebSocket error:', err);
+        }
+    });
+    
+    ws.on('close', () => {
+        if (ws.userId) {
+            connections.delete(ws.userId);
+            console.log(`👋 User disconnected: ${ws.userId}`);
+            
+            // Notify others
+            broadcastToOthers(ws, {
+                type: 'user-left',
+                userId: ws.userId
+            });
+        }
+    });
+    
+    ws.on('error', (err) => {
+        console.error('💥 WebSocket error:', err);
+    });
+});
+
+function broadcastToOthers(sender, message) {
+    wss.clients.forEach(client => {
+        if (client !== sender && client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(message));
+        }
+    });
+}
+
+console.log('✅ WebSocket signaling ready');
+
+// Start the combined HTTP + WebSocket server
+server.listen(PORT, () => {
   console.log(`🚀 Fatimah's Server running on port ${PORT}`);
   console.log(`📝 Messages: ${messages.length} loaded`);
+  console.log(`🌐 HTTP: http://localhost:${PORT}`);
+  console.log(`🔌 WebSocket: ws://localhost:${PORT}`);
+  console.log(`📞 Telephony: http://localhost:${PORT}/telephony`);
   console.log(`   Render URL: https://fatimah-web.onrender.com`);
 });
 
-// Keep-alive
-setInterval(() => {}, 60000);
+// Keep-alive for Render
+setInterval(() => {
+    console.log('💓 Keep-alive ping');
+}, 60000);
