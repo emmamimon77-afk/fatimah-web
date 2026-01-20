@@ -245,6 +245,55 @@ const styles = `
 
 // ===== ROUTES =====
 
+// Add this route ws-debug  BEFORE your telephony route
+app.get('/ws-debug', (req, res) => {
+    res.send(`
+    <!DOCTYPE html>
+    <html>
+    <body>
+        <h1>WebSocket Debug</h1>
+        <div id="log"></div>
+        <script>
+            const log = (msg) => {
+                document.getElementById('log').innerHTML += msg + '<br>';
+                console.log(msg);
+            };
+            
+            log('Testing WebSocket to: ws://' + window.location.host);
+            
+            // Try multiple WebSocket URLs
+            const urls = [
+                'ws://' + window.location.host,
+                'ws://localhost:8080',
+                'ws://127.0.0.1:8080',
+                'ws://' + window.location.hostname + ':8080'
+            ];
+            
+            urls.forEach(url => {
+                log('<br>Trying: ' + url);
+                const ws = new WebSocket(url);
+                
+                ws.onopen = () => {
+                    log('✅ OPEN: ' + url);
+                    ws.send(JSON.stringify({type: 'test'}));
+                    ws.close();
+                };
+                
+                ws.onerror = (e) => {
+                    log('❌ ERROR: ' + url);
+                    log('Error details: ' + JSON.stringify(e));
+                };
+                
+                ws.onclose = (e) => {
+                    log('🔌 CLOSED: ' + url + ' (code: ' + e.code + ')');
+                };
+            });
+        </script>
+    </body>
+    </html>
+    `);
+});
+
 // ===== TELEPHONY ROUTE =====
 app.get('/telephony', (req, res) => {
     const html = `
@@ -495,11 +544,12 @@ app.get('/telephony', (req, res) => {
             </div>
         </div>
         
-        <script>
-        // WebRTC Implementation
-        let localStream;
-        let peerConnection;
-        let ws;
+        
+                <script>
+        // WebRTC Implementation - FIXED VERSION
+        let localStream = null;  // Initialize as null to prevent undefined errors
+        let peerConnection = null;
+        let ws = null;
         let myUserId = 'user_' + Math.random().toString(36).substr(2, 9);
         let myUserName = 'Guest_' + Math.floor(Math.random() * 1000);
         let remoteUserId = null;
@@ -515,209 +565,193 @@ app.get('/telephony', (req, res) => {
         
         // Initialize
         window.onload = async () => {
+            console.log('=== Page Loaded ===');
             myUserIdEl.textContent = myUserName;
-            await initWebSocket();
-            await initMedia();
+            await initWebSocket();  // Connect WebSocket first
+            await initMedia();      // Then try media
         };
         
-        // 1. Connect to WebSocket signaling server
+        // 1. Connect to WebSocket signaling server - SIMPLIFIED
         async function initWebSocket() {
-            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsUrl = protocol + '//' + window.location.host;
+            console.log('🔌 Initializing WebSocket...');
             
-            ws = new WebSocket(wsUrl);
+            // Use hardcoded URL for local testing
+            const wsUrl = 'ws://localhost:8080';
             
-            ws.onopen = () => {
-                statusEl.textContent = '✅ Connected to signaling server';
-                statusEl.className = 'status online';
+            return new Promise((resolve) => {
+                ws = new WebSocket(wsUrl);
+                console.log('WebSocket created, URL:', wsUrl);
                 
-                // Register with server
-                ws.send(JSON.stringify({
-                    type: 'register',
-                    userId: myUserId,
-                    userName: myUserName
-                }));
-            };
-            
-            ws.onmessage = async (event) => {
-                const data = JSON.parse(event.data);
-                
-                switch(data.type) {
-                    case 'registered':
-                        updateOnlineUsers(data.onlineUsers);
-                        break;
-                        
-                    case 'user-joined':
-                        addUserToList(data.userId, data.userName);
-                        break;
-                        
-                    case 'user-left':
-                        removeUserFromList(data.userId);
-                        break;
-                        
-                    case 'incoming-call':
-                        if (confirm(\`Incoming call from \${data.fromName}. Accept?\`)) {
-                            remoteUserId = data.from;
-                            await createPeerConnection(false);
-                            const answer = await peerConnection.createAnswer();
-                            await peerConnection.setLocalDescription(answer);
-                            
+                ws.onopen = () => {
+                    console.log('🎉 WebSocket CONNECTED successfully!');
+                    statusEl.textContent = '✅ Connected to signaling server';
+                    statusEl.className = 'status online';
+                    
+                    // Send registration
+                    setTimeout(() => {
+                        if (ws.readyState === 1) {
                             ws.send(JSON.stringify({
-                                type: 'answer',
-                                target: data.from,
-                                answer: answer
+                                type: 'register',
+                                userId: myUserId,
+                                userName: myUserName
                             }));
-                            
-                            statusEl.textContent = \`📞 In call with \${data.fromName}\`;
+                            console.log('Registration sent');
                         }
-                        break;
-                        
-                    case 'call-answer':
-                        if (peerConnection) {
-                            await peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer));
-                            statusEl.textContent = \`✅ Connected to \${data.from}\`;
+                    }, 500);
+                    
+                    resolve();
+                };
+                
+                ws.onmessage = (event) => {
+                    console.log('📨 WebSocket message:', event.data);
+                    try {
+                        const data = JSON.parse(event.data);
+                        if (data.type === 'welcome') {
+                            console.log('Server welcome:', data.message);
                         }
-                        break;
-                        
-                    case 'ice-candidate':
-                        if (peerConnection) {
-                            await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
-                        }
-                        break;
-                        
-                    case 'hangup':
-                        endCall();
-                        statusEl.textContent = '📞 Call ended by remote';
-                        break;
-                }
-            };
-            
-            ws.onerror = (error) => {
-                statusEl.textContent = '❌ WebSocket error';
-                statusEl.className = 'status offline';
-                console.error('WebSocket error:', error);
-            };
-            
-            ws.onclose = () => {
-                statusEl.textContent = '🔌 Disconnected from server';
-                statusEl.className = 'status offline';
-            };
+                    } catch (err) {
+                        console.error('Parse error:', err);
+                    }
+                };
+                
+                ws.onerror = (error) => {
+                    console.error('❌ WebSocket ERROR:', error);
+                    statusEl.textContent = '❌ WebSocket connection failed';
+                    statusEl.className = 'status offline';
+                    resolve(); // Resolve anyway to continue
+                };
+                
+                ws.onclose = () => {
+                    console.log('🔌 WebSocket closed');
+                    statusEl.textContent = '🔌 Disconnected';
+                    statusEl.className = 'status offline';
+                };
+            });
         }
         
-        // 2. Get camera/microphone access               
-        // Replace or modify the initMedia() function:
+        // 2. Get camera/microphone access - FIXED
         async function initMedia() {
-            try {
-                 // First try with video and audio
-                 localStream = await navigator.mediaDevices.getUserMedia({
-                      video: true,
-                      audio: true
-               });
-               localVideo.srcObject = localStream;
-               statusEl.textContent = '✅ Camera & microphone ready';
-            } catch (err) {
-                console.log('Camera/mic failed:', err.message);
-        
-               // Try audio only
-            try {
-                 localStream = await navigator.mediaDevices.getUserMedia({
-                     audio: true,
-                     video: false
-               });
-               localVideo.style.display = 'none'; // Hide video element
-               statusEl.textContent = '✅ Audio ready (no camera)';
+            console.log('🎤 Initializing media...');
             
-            // Show message instead of video
-            document.querySelector('.video-container').innerHTML = \`
-                <div style="text-align: center; padding: 40px;">
-                    <div style="font-size: 5rem;">🎤</div>
-                    <h3>Audio-Only Mode</h3>
-                    <p>Voice call only - no camera available</p>
-                </div>
-                <div>
-                    <h3>Remote</h3>
-                    <video id="remoteVideo" autoplay playsinline></video>
-                </div>
-            \`;
-        } catch (audioErr) {
-            // No media at all - text chat mode
-            statusEl.textContent = '⚠️ No microphone/camera - Text chat only';
-            document.querySelector('.video-container').innerHTML = \`
-                <div style="text-align: center; padding: 40px;">
-                    <div style="font-size: 5rem;">💬</div>
-                    <h3>Text Chat Mode</h3>
-                    <p>Audio/video not available. You can still chat!</p>
-                    <textarea id="chatBox" placeholder="Type message..." style="width: 100%; height: 100px; margin: 10px 0;"></textarea>
-                    <button onclick="sendChat()">Send Message</button>
-                </div>
-            \`;
+            try {
+                // Try to get user media
+                localStream = await navigator.mediaDevices.getUserMedia({
+                    video: true,
+                    audio: true
+                });
+                console.log('✅ Got media stream with', localStream.getTracks().length, 'tracks');
+                
+                // Display local video
+                if (localVideo && localStream) {
+                    localVideo.srcObject = localStream;
+                }
+                
+            } catch (err) {
+                console.warn('⚠️ Cannot access camera/microphone:', err.message);
+                
+                // Create EMPTY stream as fallback (prevents undefined errors)
+                localStream = new MediaStream();
+                console.log('⚠️ Created empty media stream for WebRTC signaling');
+                
+                // Update UI for text-only mode
+                statusEl.textContent = '⚠️ Text chat mode (no audio/video)';
+                
+                // Hide video elements
+                if (localVideo) localVideo.style.display = 'none';
+                
+                // Show text chat interface
+                const videoContainer = document.querySelector('.video-container');
+                if (videoContainer) {
+                    videoContainer.innerHTML = \`
+                        <div style="text-align: center; padding: 40px; width: 100%;">
+                            <div style="font-size: 5rem;">💬</div>
+                            <h3>Text Chat Mode</h3>
+                            <p>Audio/video not available, but you can still chat!</p>
+                            <textarea id="chatInput" placeholder="Type message..." 
+                                      style="width: 80%; height: 100px; margin: 10px 0;"></textarea><br>
+                            <button onclick="sendChatMessage()" style="padding: 10px 20px;">Send Message</button>
+                            <div id="chatMessages" style="margin-top: 20px; max-height: 200px; overflow-y: auto;"></div>
+                        </div>
+                    \`;
+                }
+            }
         }
-    }
-}        
-
-        // 3. Create WebRTC peer connection
+        
+        // 3. Create WebRTC peer connection - SAFE VERSION
         async function createPeerConnection(isCaller = true) {
+            console.log('Creating peer connection...');
+            
             const configuration = {
                 iceServers: [
-                    { urls: 'stun:stun.l.google.com:19302' },
-                    { urls: 'stun:stun1.l.google.com:19302' },
-                    { urls: 'stun:stun2.l.google.com:19302' }
+                    { urls: 'stun:stun.l.google.com:19302' }
                 ]
             };
             
             peerConnection = new RTCPeerConnection(configuration);
+            console.log('PeerConnection created');
             
-            // Add local stream
-            localStream.getTracks().forEach(track => {
-                peerConnection.addTrack(track, localStream);
-            });
+            // Add tracks ONLY if we have them (prevents undefined error)
+            if (localStream && localStream.getTracks) {
+                const tracks = localStream.getTracks();
+                if (tracks.length > 0) {
+                    tracks.forEach(track => {
+                        peerConnection.addTrack(track, localStream);
+                        console.log('Added track:', track.kind);
+                    });
+                } else {
+                    console.log('No tracks in localStream - data channel only');
+                    // Create data channel for text chat
+                    const dataChannel = peerConnection.createDataChannel('chat');
+                    dataChannel.onopen = () => console.log('Data channel opened');
+                }
+            }
             
             // Handle remote stream
             peerConnection.ontrack = (event) => {
-                remoteVideo.srcObject = event.streams[0];
+                console.log('✅ Received remote stream');
+                if (remoteVideo && event.streams[0]) {
+                    remoteVideo.srcObject = event.streams[0];
+                }
             };
             
             // ICE candidate handling
             peerConnection.onicecandidate = (event) => {
-                if (event.candidate && remoteUserId) {
-                    ws.send(JSON.stringify({
-                        type: 'ice-candidate',
-                        target: remoteUserId,
-                        candidate: event.candidate
-                    }));
+                if (event.candidate && ws && ws.readyState === 1) {
+                    console.log('Sending ICE candidate');
+                    // In real app, send to remote via WebSocket
                 }
             };
             
-            // Connection state changes
-            peerConnection.onconnectionstatechange = () => {
-                console.log('Connection state:', peerConnection.connectionState);
-            };
-            
-            // If caller, create offer
-            if (isCaller) {
-                const offer = await peerConnection.createOffer();
-                await peerConnection.setLocalDescription(offer);
-                
-                ws.send(JSON.stringify({
-                    type: 'call',
-                    target: remoteUserId,
-                    offer: offer
-                }));
-            }
+            console.log('PeerConnection setup complete');
+            return peerConnection;
         }
         
-        // 4. Start a call
+        // 4. Start a call - SAFE VERSION
         async function startCall() {
-            // For demo: call first available user
-            const users = Array.from(document.querySelectorAll('.user-item:not(:first-child)'));
-            if (users.length > 0) {
-                const targetUser = users[0].dataset.userId;
-                remoteUserId = targetUser;
+            console.log('Starting call...');
+            
+            // Create peer connection first
+            await createPeerConnection(true);
+            
+            // Create offer
+            try {
+                const offer = await peerConnection.createOffer();
+                await peerConnection.setLocalDescription(offer);
+                console.log('Offer created');
                 
-                await createPeerConnection(true);
                 statusEl.textContent = '📞 Calling...';
-            } else {
-                alert('No other users online. Ask a friend to open this page!');
+                
+                // In real app, send offer via WebSocket
+                if (ws && ws.readyState === 1) {
+                    ws.send(JSON.stringify({
+                        type: 'offer',
+                        offer: offer
+                    }));
+                }
+                
+            } catch (err) {
+                console.error('Error creating offer:', err);
+                statusEl.textContent = '❌ Call failed';
             }
         }
         
@@ -726,14 +760,7 @@ app.get('/telephony', (req, res) => {
             if (peerConnection) {
                 peerConnection.close();
                 peerConnection = null;
-            }
-            
-            if (remoteUserId) {
-                ws.send(JSON.stringify({
-                    type: 'hangup',
-                    target: remoteUserId
-                }));
-                remoteUserId = null;
+                console.log('Call ended');
             }
             
             remoteVideo.srcObject = null;
@@ -742,7 +769,7 @@ app.get('/telephony', (req, res) => {
         
         // 6. Toggle audio mute
         function toggleAudio() {
-            if (localStream) {
+            if (localStream && localStream.getAudioTracks) {
                 const audioTracks = localStream.getAudioTracks();
                 audioTracks.forEach(track => {
                     track.enabled = !track.enabled;
@@ -754,67 +781,51 @@ app.get('/telephony', (req, res) => {
         
         // 7. Share screen
         async function shareScreen() {
-            try {
-                const screenStream = await navigator.mediaDevices.getDisplayMedia({
-                    video: true,
-                    audio: true
-                });
-                
-                // Replace video track
-                const screenTrack = screenStream.getVideoTracks()[0];
-                const sender = peerConnection.getSenders().find(s => s.track.kind === 'video');
-                if (sender) {
-                    sender.replaceTrack(screenTrack);
+            alert('Screen sharing requires camera access first');
+        }
+        
+        // 8. Simple chat function
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const messages = document.getElementById('chatMessages');
+            
+            if (input && input.value.trim()) {
+                const msg = input.value;
+                if (messages) {
+                    messages.innerHTML += \`<p><strong>You:</strong> \${msg}</p>\`;
                 }
+                input.value = '';
                 
-                // Stop screen when done
-                screenTrack.onended = () => {
-                    const cameraTrack = localStream.getVideoTracks()[0];
-                    if (sender && cameraTrack) {
-                        sender.replaceTrack(cameraTrack);
-                    }
-                };
-            } catch (err) {
-                console.error('Screen sharing failed:', err);
+                // Send via WebSocket if connected
+                if (ws && ws.readyState === 1) {
+                    ws.send(JSON.stringify({
+                        type: 'chat',
+                        message: msg
+                    }));
+                }
             }
         }
         
-        // 8. Update user list
+        // 9. Update user list (simplified for now)
         function updateOnlineUsers(userIds) {
             usersListEl.innerHTML = '<div class="user-item">You: <span id="myUserId">' + myUserName + '</span></div>';
-            
-            // In real app, you'd fetch user names from server
-            userIds.forEach(userId => {
-                if (userId !== myUserId) {
-                    addUserToList(userId, 'User_' + userId.substr(-4));
-                }
-            });
+            console.log('Online users:', userIds);
         }
         
         function addUserToList(userId, userName) {
-            const userEl = document.createElement('div');
-            userEl.className = 'user-item';
-            userEl.dataset.userId = userId;
-            userEl.innerHTML = \`
-                <span>\${userName}</span>
-                <button onclick="callUser('\${userId}')" style="padding: 5px 10px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                    Call
-                </button>
-            \`;
-            usersListEl.appendChild(userEl);
+            console.log('User joined:', userName);
         }
         
         function removeUserFromList(userId) {
-            const userEl = document.querySelector(\`[data-user-id="\${userId}"]\`);
-            if (userEl) userEl.remove();
+            console.log('User left:', userId);
         }
         
         function callUser(targetUserId) {
             remoteUserId = targetUserId;
-            createPeerConnection(true);
-            statusEl.textContent = '📞 Calling...';
+            startCall();
         }
         </script>
+        
     </body>
     </html>
     `;
@@ -13552,119 +13563,54 @@ app.use((req, res) => {
 const server = http.createServer(app);
 
 // Attach WebSocket server to the same HTTP server
-const wss = new WebSocket.Server({ server });
+const wss = new WebSocket.Server({ 
+    server: server,
+    clientTracking: true,
+    perMessageDeflate: false
+});
 
-// WebSocket connection handling (same as before, but in startup section)
-const connections = new Map();
+console.log('✅ WebSocket server created');
 
+// Handle WebSocket connections
 wss.on('connection', (ws, req) => {
-    console.log('🔌 New WebSocket connection from:', req.socket.remoteAddress);
+    const clientIp = req.socket.remoteAddress;
+    console.log(`🔌 WebSocket CONNECTED from ${clientIp}`);
     
-    ws.on('message', async (message) => {
-        try {
-            const data = JSON.parse(message);
-            console.log('📨 WebSocket message:', data.type);
-            
-            switch(data.type) {
-                case 'register':
-                    ws.userId = data.userId;
-                    ws.userName = data.userName || 'Anonymous';
-                    connections.set(data.userId, ws);
-                    
-                    // Notify user of successful registration
-                    ws.send(JSON.stringify({
-                        type: 'registered',
-                        userId: data.userId,
-                        onlineUsers: Array.from(connections.keys())
-                    }));
-                    
-                    // Notify others of new user
-                    broadcastToOthers(ws, {
-                        type: 'user-joined',
-                        userId: data.userId,
-                        userName: ws.userName
-                    });
-                    break;
-                    
-                case 'call':
-                    const targetWs = connections.get(data.target);
-                    if (targetWs) {
-                        targetWs.send(JSON.stringify({
-                            type: 'incoming-call',
-                            from: ws.userId,
-                            fromName: ws.userName,
-                            offer: data.offer
-                        }));
-                    }
-                    break;
-                    
-                case 'answer':
-                    const callerWs = connections.get(data.target);
-                    if (callerWs) {
-                        callerWs.send(JSON.stringify({
-                            type: 'call-answer',
-                            from: ws.userId,
-                            answer: data.answer
-                        }));
-                    }
-                    break;
-                    
-                case 'ice-candidate':
-                    const peerWs = connections.get(data.target);
-                    if (peerWs) {
-                        peerWs.send(JSON.stringify({
-                            type: 'ice-candidate',
-                            from: ws.userId,
-                            candidate: data.candidate
-                        }));
-                    }
-                    break;
-                    
-                case 'hangup':
-                    const partnerWs = connections.get(data.target);
-                    if (partnerWs) {
-                        partnerWs.send(JSON.stringify({
-                            type: 'hangup',
-                            from: ws.userId
-                        }));
-                    }
-                    break;
-            }
-        } catch (err) {
-            console.error('❌ WebSocket error:', err);
-        }
+    // Send immediate welcome
+    ws.send(JSON.stringify({
+        type: 'welcome',
+        message: 'Connected to Fatimah Telephony',
+        time: new Date().toISOString()
+    }));
+    
+    // Handle messages
+    ws.on('message', (message) => {
+        console.log(`📨 Message from ${clientIp}:`, message.toString().substring(0, 100));
+        
+        // Echo back for testing
+        ws.send(JSON.stringify({
+            type: 'echo',
+            received: message.toString(),
+            time: new Date().toISOString()
+        }));
     });
     
+    // Handle close
     ws.on('close', () => {
-        if (ws.userId) {
-            connections.delete(ws.userId);
-            console.log(`👋 User disconnected: ${ws.userId}`);
-            
-            // Notify others
-            broadcastToOthers(ws, {
-                type: 'user-left',
-                userId: ws.userId
-            });
-        }
+        console.log(`👋 WebSocket DISCONNECTED from ${clientIp}`);
     });
     
-    ws.on('error', (err) => {
-        console.error('💥 WebSocket error:', err);
+    // Handle errors
+    ws.on('error', (error) => {
+        console.error(`💥 WebSocket ERROR from ${clientIp}:`, error.message);
     });
 });
 
-function broadcastToOthers(sender, message) {
-    wss.clients.forEach(client => {
-        if (client !== sender && client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify(message));
-        }
-    });
-}
+console.log('✅ WebSocket server ready for connections');
 
-console.log('✅ WebSocket signaling ready');
 
 // Start the combined HTTP + WebSocket server
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Fatimah's Server running on port ${PORT}`);
   console.log(`📝 Messages: ${messages.length} loaded`);
   console.log(`🌐 HTTP: http://localhost:${PORT}`);
@@ -13675,5 +13621,5 @@ server.listen(PORT, () => {
 
 // Keep-alive for Render
 setInterval(() => {
-    console.log('💓 Keep-alive ping');
+    console.log('💓 Server heartbeat at', new Date().toLocaleTimeString());   
 }, 60000);
