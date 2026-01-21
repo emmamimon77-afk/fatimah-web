@@ -1,0 +1,15 @@
+./server.js-            // Try multiple WebSocket URLs
+./server.js-            const urls = [
+./server.js-                'ws://' + window.location.host,
+./server.js:                'ws://localhost:8080',
+./server.js-                'ws://127.0.0.1:8080',
+./server.js-                'ws://' + window.location.hostname + ':8080'
+./server.js-            ];
+--
+./server.js-            // Use the correct WebSocket URL
+./server.js-            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+./server.js-            const wsUrl = window.location.hostname === 'localhost' 
+./server.js:                ? 'ws://localhost:8080'  // Local development
+./server.js-                : protocol + '//' + window.location.host;  // Production
+./server.js-    
+./server.js-            console.log('WebSocket URL:', wsUrl);

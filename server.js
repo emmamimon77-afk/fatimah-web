@@ -294,6 +294,30 @@ app.get('/ws-debug', (req, res) => {
     `);
 });
 
+// ===== HTTP POLLING FALLBACK ROUTE =====
+// Add this RIGHT HERE, before telephony route
+app.get('/telephony-poll', (req, res) => {
+    const userId = req.query.userId;
+    
+    // Get online users from WebSocket connections
+    const onlineUsers = [];
+    
+    // Access the users Map from WebSocket server
+    if (typeof users !== 'undefined' && users instanceof Map) {
+        onlineUsers.push(...Array.from(users.keys()).filter(id => id !== userId));
+    }
+    
+    res.json({
+        type: 'poll-response',
+        userId: userId,
+        onlineUsers: onlineUsers,
+        userCount: onlineUsers.length,
+        timestamp: new Date().toISOString(),
+        serverTime: new Date().toLocaleTimeString()
+    });
+});
+
+
 // ===== TELEPHONY ROUTE =====
 app.get('/telephony', (req, res) => {
     const html = `
@@ -571,63 +595,115 @@ app.get('/telephony', (req, res) => {
             await initMedia();      // Then try media
         };
         
-        // 1. Connect to WebSocket signaling server - SIMPLIFIED
+        // 1. Connect to WebSocket signaling server - UPDATE
         async function initWebSocket() {
             console.log('🔌 Initializing WebSocket...');
             
-            // Use hardcoded URL for local testing
-            const wsUrl = 'ws://localhost:8080';
-            
+            // Use the correct WebSocket URL
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = window.location.hostname === 'localhost' 
+                ? 'ws://localhost:8080'  // Local development
+                : protocol + '//' + window.location.host;  // Production
+    
+            console.log('WebSocket URL:', wsUrl);
+    
             return new Promise((resolve) => {
                 ws = new WebSocket(wsUrl);
-                console.log('WebSocket created, URL:', wsUrl);
-                
+        
                 ws.onopen = () => {
                     console.log('🎉 WebSocket CONNECTED successfully!');
+                    console.log('WebSocket readyState:', ws.readyState);
+            
                     statusEl.textContent = '✅ Connected to signaling server';
                     statusEl.className = 'status online';
-                    
-                    // Send registration
+            
+                   // Register with server
                     setTimeout(() => {
                         if (ws.readyState === 1) {
-                            ws.send(JSON.stringify({
+                            const registerMsg = {
                                 type: 'register',
                                 userId: myUserId,
-                                userName: myUserName
-                            }));
-                            console.log('Registration sent');
+                                userName: myUserName,
+                                timestamp: new Date().toISOString()
+                           };
+                           console.log('Sending registration:', registerMsg);
+                           ws.send(JSON.stringify(registerMsg));
                         }
-                    }, 500);
-                    
+                    }, 1000);
+            
                     resolve();
-                };
+                 };
+        
+                 ws.onmessage = (event) => {
+                     console.log('📨 WebSocket message received:', event.data);
+                     try {
+                         const data = JSON.parse(event.data);
+                         console.log('Parsed message type:', data.type);
                 
-                ws.onmessage = (event) => {
-                    console.log('📨 WebSocket message:', event.data);
-                    try {
-                        const data = JSON.parse(event.data);
-                        if (data.type === 'welcome') {
-                            console.log('Server welcome:', data.message);
-                        }
-                    } catch (err) {
-                        console.error('Parse error:', err);
-                    }
-                };
+                         if (data.type === 'welcome') {
+                             console.log('Server says:', data.message);
+                         }
+                         else if (data.type === 'registered') {
+                             console.log('✅ Registration confirmed, online users:', data.onlineUsers);
+                             updateOnlineUsers(data.onlineUsers);
+                         }
+                         else if (data.type === 'user-joined') {
+                             console.log('👤 User joined:', data.userName);
+                             addUserToList(data.userId, data.userName);
+                         }
+                         else if (data.type === 'user-left') {
+                             console.log('👋 User left:', data.userId);
+                             removeUserFromList(data.userId);
+                         }
+                         else if (data.type === 'chat') {
+                             console.log('💬 Chat from:', data.fromName, ':', data.message);
+                             displayChatMessage(data.fromName, data.message);
+                         }
                 
-                ws.onerror = (error) => {
-                    console.error('❌ WebSocket ERROR:', error);
-                    statusEl.textContent = '❌ WebSocket connection failed';
-                    statusEl.className = 'status offline';
-                    resolve(); // Resolve anyway to continue
-                };
-                
-                ws.onclose = () => {
-                    console.log('🔌 WebSocket closed');
-                    statusEl.textContent = '🔌 Disconnected';
-                    statusEl.className = 'status offline';
-                };
-            });
+                     } catch (err) {
+                         console.error('Parse error:', err);
+                     }
+                 };
+        
+                 ws.onerror = (error) => {
+                     console.error('❌ WebSocket ERROR EVENT fired');
+                     console.error('Error type:', error.type);
+                     console.error('Error event:', error);
+            
+                     statusEl.textContent = '❌ WebSocket connection failed';
+                     statusEl.className = 'status offline';
+            
+                     // Try fallback: HTTP polling if WebSocket fails
+                     console.log('Trying HTTP polling fallback...');
+                     startPollingFallback();
+            
+                     resolve(); // Resolve anyway to continue
+                 };
+        
+                 ws.onclose = (event) => {
+                     console.log('🔌 WebSocket CLOSED:', event.code, event.reason);
+                     statusEl.textContent = '🔌 Disconnected from server';
+                     statusEl.className = 'status offline';
+                 };
+             });
+          }
+
+// HTTP polling fallback
+function startPollingFallback() {
+    console.log('Starting HTTP polling fallback...');
+    setInterval(async () => {
+        try {
+            const response = await fetch(\`/telephony-poll?userId=\${myUserId}\`);
+            const data = await response.json();
+            if (data.messages) {
+                // Process messages
+            }
+        } catch (err) {
+            console.log('Polling error:', err);
         }
+    }, 2000);
+}
+
         
         // 2. Get camera/microphone access - FIXED
         async function initMedia() {
@@ -13562,52 +13638,163 @@ app.use((req, res) => {
 // Create HTTP server from Express app
 const server = http.createServer(app);
 
-// Attach WebSocket server to the same HTTP server
+// WebSocket Server with better error handling
 const wss = new WebSocket.Server({ 
     server: server,
     clientTracking: true,
-    perMessageDeflate: false
+    perMessageDeflate: false,
+    verifyClient: (info, callback) => {
+        // Allow all connections for now
+        console.log("🔍 WebSocket connection attempt from:", info.origin || "unknown");
+        callback(true);
+    }
 });
+// GLOBAL users Map (accessible to both WebSocket and HTTP routes)
+global.users = new Map();  // Change this line - make it global
 
 console.log('✅ WebSocket server created');
 
-// Handle WebSocket connections
+// Store connected users
+const users = new Map(); // userId -> {ws, userName, ip}
+
+// WebSocket connection handler
 wss.on('connection', (ws, req) => {
     const clientIp = req.socket.remoteAddress;
-    console.log(`🔌 WebSocket CONNECTED from ${clientIp}`);
-    
-    // Send immediate welcome
-    ws.send(JSON.stringify({
-        type: 'welcome',
-        message: 'Connected to Fatimah Telephony',
-        time: new Date().toISOString()
-    }));
+    console.log(`🔌 WebSocket connection attempt from: ${clientIp}`);
+
+    // IMPORTANT: Wait for WebSocket to be fully open before sending
+    const sendWelcome = () => {
+        if (ws.readyState === 1) { // 1 = OPEN
+            try {
+                ws.send(JSON.stringify({
+                    type: 'welcome',
+                    message: 'Connected to Fatimah Telephony',
+                    serverTime: new Date().toISOString(),
+                    connectionId: Math.random().toString(36).substr(2, 9)
+                }));
+                console.log(`✅ Welcome sent to ${clientIp}`);
+            } catch (err) {
+                console.error('❌ Failed to send welcome:', err.message);
+            }
+        } else {
+            // Not ready yet, wait and retry
+            console.log(`⏳ WebSocket not ready (state: ${ws.readyState}), retrying...`);
+            setTimeout(sendWelcome, 100);
+        }
+    };
+
+    // Start the welcome sequence after a short delay
+    setTimeout(sendWelcome, 200);    
+
+    let userId = null;
+
     
     // Handle messages
     ws.on('message', (message) => {
-        console.log(`📨 Message from ${clientIp}:`, message.toString().substring(0, 100));
-        
-        // Echo back for testing
-        ws.send(JSON.stringify({
-            type: 'echo',
-            received: message.toString(),
-            time: new Date().toISOString()
-        }));
-    });
-    
-    // Handle close
-    ws.on('close', () => {
-        console.log(`👋 WebSocket DISCONNECTED from ${clientIp}`);
+        try {
+            const data = JSON.parse(message.toString());
+            console.log(`📨 Message from ${clientIp}:`, data.type);
+            
+            switch(data.type) {
+                case 'register':
+                    userId = data.userId;
+                    users.set(userId, {
+                        ws: ws,
+                        userName: data.userName || 'Anonymous',
+                        ip: clientIp,
+                        connectedAt: new Date()
+                    });
+                    
+                    console.log(`✅ User registered: ${userId} (${users.get(userId).userName})`);
+                    console.log(`   Total users online: ${users.size}`);
+                    
+                    // Send confirmation
+                    ws.send(JSON.stringify({
+                        type: 'registered',
+                        userId: userId,
+                        time: new Date().toISOString()
+                    }));
+                    break;
+                    
+                case 'ping':
+                    // Keep-alive response
+                    ws.send(JSON.stringify({
+                        type: 'pong',
+                        time: new Date().toISOString()
+                    }));
+                    break;
+                    
+                case 'chat':
+                    // Simple chat forwarding
+                    if (data.target) {
+                        const targetUser = users.get(data.target);
+                        if (targetUser && targetUser.ws.readyState === 1) {
+                            targetUser.ws.send(JSON.stringify({
+                                type: 'chat',
+                                from: userId,
+                                fromName: users.get(userId)?.userName || 'Unknown',
+                                message: data.message,
+                                time: new Date().toISOString()
+                            }));
+                        }
+                    }
+                    break;
+                    
+                default:
+                    console.log(`Unknown message type from ${userId || clientIp}:`, data.type);
+            }
+        } catch (err) {
+            console.error(`❌ Message parse error from ${clientIp}:`, err.message);
+        }
     });
     
     // Handle errors
     ws.on('error', (error) => {
-        console.error(`💥 WebSocket ERROR from ${clientIp}:`, error.message);
+        console.error(`💥 WebSocket error from ${userId || clientIp}:`, error.message);
     });
+    
+    // Handle close
+    ws.on('close', () => {
+        console.log(`👋 WebSocket closed for ${userId || clientIp}`);
+        if (userId) {
+            users.delete(userId);
+            
+            // Broadcast user left to others
+            broadcastToOthers(userId, {
+                type: 'user-left',
+                userId: userId,
+                time: new Date().toISOString()
+            });
+            
+            console.log(`   Remaining users: ${users.size}`);
+        }
+    });
+    
+    // Send periodic ping to keep connection alive
+    const pingInterval = setInterval(() => {
+        if (ws.readyState === 1) {
+            ws.send(JSON.stringify({ type: 'ping' }));
+        }
+    }, 30000);
+    
+    // Clear interval on close
+    ws.on('close', () => clearInterval(pingInterval));
 });
 
-console.log('✅ WebSocket server ready for connections');
+// Broadcast to all except sender
+function broadcastToOthers(excludeUserId, message) {
+    users.forEach((user, userId) => {
+        if (userId !== excludeUserId && user.ws.readyState === 1) {
+            try {
+                user.ws.send(JSON.stringify(message));
+            } catch (err) {
+                console.error(`Broadcast error to ${userId}:`, err.message);
+            }
+        }
+    });
+}
 
+console.log('✅ WebSocket signaling server ready');
 
 // Start the combined HTTP + WebSocket server
 server.listen(PORT, '0.0.0.0', () => {
@@ -13619,7 +13806,8 @@ server.listen(PORT, '0.0.0.0', () => {
   console.log(`   Render URL: https://fatimah-web.onrender.com`);
 });
 
+
 // Keep-alive for Render
 setInterval(() => {
-    console.log('💓 Server heartbeat at', new Date().toLocaleTimeString());   
+    console.log(`💓 Server heartbeat - ${users.size} users online`);
 }, 60000);
