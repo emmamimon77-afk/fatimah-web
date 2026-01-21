@@ -1,0 +1,32 @@
+886,895c
+        function updateOnlineUsers(userIds) {
+            usersListEl.innerHTML = '<div class="user-item">You: <span id="myUserId">' + myUserName + '</span></div>';
+            console.log('Online users:', userIds);
+            
+            if (userIds && Array.isArray(userIds)) {
+                userIds.forEach(userId => {
+                    addUserToList(userId, 'User_' + userId.substring(0, 6));
+                });
+            }
+        }
+        
+        function addUserToList(userId, userName) {
+            console.log('User joined:', userName);
+            const existingUser = document.getElementById('user-' + userId);
+            if (!existingUser && userId !== myUserId) {
+                const userDiv = document.createElement('div');
+                userDiv.id = 'user-' + userId;
+                userDiv.className = 'user-item';
+                userDiv.innerHTML = '<span class="user-name">' + userName + '</span><button onclick="callUser(\'' + userId + '\')" class="btn-call-small">📞 Call</button>';
+                usersListEl.appendChild(userDiv);
+            }
+        }
+        
+        function removeUserFromList(userId) {
+            console.log('User left:', userId);
+            const userElement = document.getElementById('user-' + userId);
+            if (userElement) {
+                userElement.remove();
+            }
+        }
+.

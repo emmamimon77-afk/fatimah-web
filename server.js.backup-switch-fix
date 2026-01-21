@@ -13737,25 +13737,17 @@ wss.on('connection', (ws, req) => {
                     }));
                     
                     // Broadcast user joined to others
+                    // Broadcast user joined to others
                     broadcastToOthers(userId, {
                         type: "user-joined",
                         userId: userId,
                         userName: users.get(userId)?.userName || "Anonymous",
                         time: new Date().toISOString()
                     });
-                    break;
-                case 'ping':
-                    // Keep-alive response
-                    ws.send(JSON.stringify({
-                        type: 'pong',
-                        time: new Date().toISOString()
-                    }));
-
                 case 'chat':
                     // Simple chat forwarding
                     if (data.target) {
                         const targetUser = users.get(data.target);
-                    break;
                         if (targetUser && targetUser.ws.readyState === 1) {
                             targetUser.ws.send(JSON.stringify({
                                 type: 'chat',
@@ -13777,12 +13769,12 @@ wss.on('connection', (ws, req) => {
     });
     
     // Handle errors
-    ws.on("error", (error) => {
+    ws.on('error', (error) => {
         console.error(`💥 WebSocket error from ${userId || clientIp}:`, error.message);
-    });
     
     // Handle close
-    ws.on("close", () => {
+    ws.on('close', () => {
+        console.log(`👋 WebSocket closed for ${userId || clientIp}`);
         if (userId) {
             users.delete(userId);
             

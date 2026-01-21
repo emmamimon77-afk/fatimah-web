@@ -886,32 +886,14 @@ function startPollingFallback() {
         function updateOnlineUsers(userIds) {
             usersListEl.innerHTML = '<div class="user-item">You: <span id="myUserId">' + myUserName + '</span></div>';
             console.log('Online users:', userIds);
-
-            if (userIds && Array.isArray(userIds)) {
-                userIds.forEach(userId => {
-                    addUserToList(userId, 'User_' + userId.substring(0, 6));
-                });
-            }
         }
         
         function addUserToList(userId, userName) {
             console.log('User joined:', userName);
-            const existingUser = document.getElementById('user-' + userId);
-            if (!existingUser && userId !== myUserId) {
-                const userDiv = document.createElement('div');
-                userDiv.id = 'user-' + userId;
-                userDiv.className = 'user-item';
-                userDiv.innerHTML = '<span class="user-name">' + userName + '</span><button onclick="callUser(\'' + userId + '\')" class="btn-call-small">📞 Call</button>';
-                usersListEl.appendChild(userDiv);
-            }
         }
         
         function removeUserFromList(userId) {
             console.log('User left:', userId);
-            const userElement = document.getElementById('user-' + userId);
-            if (userElement) {
-                userElement.remove();
-            }
         }
         
         function callUser(targetUserId) {
@@ -13727,35 +13709,26 @@ wss.on('connection', (ws, req) => {
                     console.log(`   Total users online: ${users.size}`);
                     
                     // Send confirmation
-                    console.log("📋 Registration: Sending response to", userId, "Online users:", Array.from(users.keys()).filter(id => id !== userId));
-                    // Send confirmation
                     ws.send(JSON.stringify({
                         type: "registered",
                         userId: userId,
                         serverTime: new Date().toISOString(),
                         onlineUsers: Array.from(users.keys()).filter(id => id !== userId)
                     }));
-                    
-                    // Broadcast user joined to others
-                    broadcastToOthers(userId, {
-                        type: "user-joined",
-                        userId: userId,
-                        userName: users.get(userId)?.userName || "Anonymous",
-                        time: new Date().toISOString()
-                    });
                     break;
+                    
                 case 'ping':
                     // Keep-alive response
                     ws.send(JSON.stringify({
                         type: 'pong',
                         time: new Date().toISOString()
                     }));
-
+                    break;
+                    
                 case 'chat':
                     // Simple chat forwarding
                     if (data.target) {
                         const targetUser = users.get(data.target);
-                    break;
                         if (targetUser && targetUser.ws.readyState === 1) {
                             targetUser.ws.send(JSON.stringify({
                                 type: 'chat',
@@ -13777,12 +13750,13 @@ wss.on('connection', (ws, req) => {
     });
     
     // Handle errors
-    ws.on("error", (error) => {
+    ws.on('error', (error) => {
         console.error(`💥 WebSocket error from ${userId || clientIp}:`, error.message);
     });
     
     // Handle close
-    ws.on("close", () => {
+    ws.on('close', () => {
+        console.log(`👋 WebSocket closed for ${userId || clientIp}`);
         if (userId) {
             users.delete(userId);
             
