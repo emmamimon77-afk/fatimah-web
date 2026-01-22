@@ -1421,8 +1421,8 @@ app.get('/education', (req, res) => {
           <div class="link-card">
             <h3>📚 Academic Resources</h3>
             <p><a href="https://archive.org" target="_blank">🏛️ Internet Archive</a> - Digital library</p>
-            <p><a href="https://librarygenesis.net/" target="_blank">📖 Library Genesis</a> - Academic books</p>
-            <p><a href="https://www.scihub.org/" target="_blank">🔬 Sci-Hub</a> - Scientific papers</p>
+            <p><a href="https://libgen.is" target="_blank">📖 Library Genesis</a> - Academic books</p>
+            <p><a href="https://sci-hub.se" target="_blank">🔬 Sci-Hub</a> - Scientific papers</p>
             <p><a href="https://z-lib.id" target="_blank">📕 Z-Library</a> - Book repository</p>
             <p><a href="https://www.unz.com" target="_blank">📖 Unz Review</a> - Alternative perspectives</p>
           </div>
@@ -1469,7 +1469,7 @@ app.get('/ai', (req, res) => {
           <div class="link-card">
             <h3>🧠 AI Chat & Assistants</h3>
             <p><a href="https://chat.deepseek.com" target="_blank">🔍 DeepSeek AI</a> - Open source assistant</p>
-            <p><a href="https://chat.qwen.ai/" target="_blank">🐬 Qwen AI</a> - Alibaba's AI models</p>
+            <p><a href="https://qwenlm.com" target="_blank">🐬 Qwen AI</a> - Alibaba's AI models</p>
             <p><a href="https://moonshot.cn" target="_blank">🚀 Moonshot AI</a> - Chinese AI platform</p>
             <p><a href="https://openai.com" target="_blank">⚡ OpenAI</a> - ChatGPT and APIs</p>
             <p><a href="https://claude.ai" target="_blank">🧠 Claude AI</a> - Anthropic's assistant</p>
@@ -1497,7 +1497,7 @@ app.get('/ai', (req, res) => {
             <h3>🎨 Creative AI Tools</h3>
             <p><a href="https://stability.ai" target="_blank">🎨 Stability AI</a> - Stable Diffusion</p>
             <p><a href="https://leonardo.ai" target="_blank">🖼️ Leonardo AI</a> - Image generation</p>
-            <p><a href="https://suno.com/home" target="_blank">🎵 Suno AI</a> - Music generation</p>
+            <p><a href="https://sunoaiapp.com" target="_blank">🎵 Suno AI</a> - Music generation</p>
             <p><a href="https://elevenlabs.io" target="_blank">🗣️ ElevenLabs</a> - Voice synthesis</p>
             <p><a href="https://runwayml.com" target="_blank">🎥 Runway ML</a> - Video AI tools</p>
           </div>
@@ -1933,8 +1933,7 @@ app.get('/religions/islam', (req, res) => {
         <div class="message-box">
           <h3>Step 1: Wudu (Ablution) - Ritual Purification</h3>
           <p><strong>Watch Official Tutorial:</strong></p>
-          <p>• <a href="https://www.mymasjid.ca/beginners-guide-learn-pray-salah/chapter-2/" target="_blank">How to make Wudo,Step by Step - Masjid Ar-Rahmah</a></p>
-          <p>• <a href="https://www.youtube.com/watch?v=P29LMOHhpjE" target="_blank">How to Perform Wudu step by step - Majed Mahmoud </a></p>
+          <p>• <a href="https://www.youtube.com/watch?v=exm58FdO-9Y" target="_blank">How to Perform Wudu (Islam Channel)</a></p>
           <p><strong>Steps:</strong></p>
           <p>1. Make intention (niyyah) for wudu</p>
           <p>2. Say "Bismillah" (In the name of Allah)</p>
@@ -1946,14 +1945,14 @@ app.get('/religions/islam', (req, res) => {
           <p>8. Wipe head with wet hands once</p>
           <p>9. Wipe inside and outside of ears once</p>
           <p>10. Wash right foot to ankle (3x), then left foot (3x)</p>
-          <p><strong>📚 Detailed Guide:</strong> <a href="https://islamqa.info/en/search?q=IslamQA+-+How+to+Perform+Wudu" target="_blank">IslamQA - How to Perform Wudu</a></p>
+          <p><strong>📚 Detailed Guide:</strong> <a href="https://islamqa.info/en/answers/65" target="_blank">IslamQA - How to Perform Wudu</a></p>
         </div>
         
         <div class="message-box">
           <h3>Step 2: Prayer (Salah) - Step by Step</h3>
           <p><strong>Watch Complete Prayer Tutorial:</strong></p>
           <p>• <a href="https://www.youtube.com/watch?v=W9kTd7q1zjE" target="_blank">How to Pray Salah (Step by Step)</a></p>
-          <p>• <a href="https://www.youtube.com/watch?v=YhgSe6DFK-0" target="_blank">How to Pray for Beginners</a></p>
+          <p>• <a href="https://www.youtube.com/watch?v=lvhhMGJShI8" target="_blank">How to Pray for Beginners</a></p>
           <p><strong>Prayer Structure (2 Rakats example):</strong></p>
           <p>1. <strong>Takbir:</strong> Stand facing Qibla (Mecca), raise hands, say "Allahu Akbar"</p>
           <p>2. <strong>Recitation:</strong> Recite Surah Al-Fatiha and another Surah</p>
@@ -1965,7 +1964,7 @@ app.get('/religions/islam', (req, res) => {
           <p>8. <strong>Repeat:</strong> Stand for 2nd Rakat, repeat steps 2-7</p>
           <p>9. <strong>Tashahhud:</strong> Sit, recite testimony of faith</p>
           <p>10. <strong>Tasleem:</strong> Turn head right then left, say "Assalamu alaikum wa rahmatullah"</p>
-          <p><strong>📚 Complete Guide:</strong> <a href="https://islamqa.info/en/search?q=IslamQA+-+How+to+Pray+Step+by+Step" target="_blank">IslamQA - How to Pray Step by Step</a></p>
+          <p><strong>📚 Complete Guide:</strong> <a href="https://islamqa.info/en/answers/115369" target="_blank">IslamQA - How to Pray Step by Step</a></p>
         </div>
         
         <h2>📚 Core Beliefs (Aqeedah)</h2>
@@ -2100,8 +2099,8 @@ app.get('/religions/christianity', (req, res) => {
           <p><em>"Our Father in heaven, hallowed be your name. Your kingdom come, your will be done, on earth as it is in heaven. Give us this day our daily bread, and forgive us our debts, as we also have forgiven our debtors. And lead us not into temptation, but deliver us from evil."</em></p>
           
           <p><strong>📚 Prayer Guides:</strong></p>
-          <p>• <a href="https://www.youtube.com/watch?v=kU7wtVgXsIs" target="_blank">5 points Jesus Taught in order to pray effectively-The model prayer explained</a></p>
-          <p>• <a href="https://www.youtube.com/watch?v=qNZrM_ye5yw" target="_blank">Jesus Reveals the correct way to talk to GOD - Wisdom of the Bible</a></p>
+          <p>• <a href="https://www.youtube.com/watch?v=v-rfVYG2zV0" target="_blank">How to Pray - Billy Graham</a></p>
+          <p>• <a href="https://www.youtube.com/watch?v=VNsW9_fqxh4" target="_blank">How to Pray for Beginners</a></p>
         </div>
         
         <div class="message-box">
@@ -2109,7 +2108,7 @@ app.get('/religions/christianity', (req, res) => {
           <p><strong>Sign of the Cross:</strong> Touch forehead, chest, left shoulder, right shoulder</p>
           <p><strong>Rosary:</strong> Meditative prayer using beads (Hail Mary, Our Father, Glory Be)</p>
           <p><strong>Mass:</strong> Eucharistic celebration (communion)</p>
-          <p>• <a href="https://www.youtube.com/watch?v=EHpLiUyZNH4" target="_blank">How to Pray the Rosary - A step-by-step beginner's guide to Catholic prayer</a></p>
+          <p>• <a href="https://www.youtube.com/watch?v=0ClAHsRX-1c" target="_blank">How to Pray the Rosary</a></p>
           <p>• <a href="https://www.usccb.org" target="_blank">USCCB.org</a> - Catholic resources</p>
         </div>
         
@@ -2293,8 +2292,8 @@ app.get('/religions/judaism', (req, res) => {
           <p><strong>Prayer Direction:</strong> Face Jerusalem (and the Temple Mount)</p>
           
           <p><strong>📚 How to Pray:</strong></p>
-          <p>• <a href="https://www.youtube.com/watch?v=XgFA5UonqyU" target="_blank">How to Pray in Judaism - Demonstration of Jewish prayer</a></p>
-          <p>• <a href="https://www.youtube.com/watch?v=mkPdFm-5zOI&list=PLywOnEvAasrsf9a9RswY8rrQfJBChbh8v" target="_blank">The ultimate guide - How to Put on Tefillin - Phylacteries</a></p>
+          <p>• <a href="https://www.youtube.com/watch?v=aJe_SyCLv6Q" target="_blank">How to Pray in Judaism</a></p>
+          <p>• <a href="https://www.youtube.com/watch?v=9HNer_FGEu8" target="_blank">How to Put on Tefillin</a></p>
           <p>• <a href="https://www.chabad.org/library/article_cdo/aid/682091/jewish/How-to-Pray.htm" target="_blank">Chabad - How to Pray</a></p>
         </div>
         
@@ -2559,9 +2558,9 @@ app.get('/religions/hinduism', (req, res) => {
           <p>6. <strong>Receive prasad:</strong> Consume blessed food</p>
           
           <p><strong>📚 How to Perform Puja:</strong></p>
-          <p>• <a href="https://www.youtube.com/watch?v=xrouIqkLPIY" target="_blank">How to Do Daily Puja at Home</a></p>
-          <p>• <a href="https://www.youtube.com/watch?v=4SxgIGD4Q6g" target="_blank">Aarti - How to do Arati at home</a></p>
-          <p>• <a href="https://www.rudraksha-ratna.com/articles/daily-puja-at-home" target="_blank">Daily Puja Mantra Japa at Home </a></p>
+          <p>• <a href="https://www.youtube.com/watch?v=pJDYH_YuTi4" target="_blank">How to Do Daily Puja at Home</a></p>
+          <p>• <a href="https://www.youtube.com/watch?v=XP0MhqN8uyY" target="_blank">Aarti - Complete Guide</a></p>
+          <p>• <a href="https://www.drikpanchang.com/puja/puja-vidhi.html" target="_blank">Puja Vidhi - Step by Step</a></p>
         </div>
         
         <div class="message-box">
@@ -2929,7 +2928,7 @@ app.get('/religions/sikhism', (req, res) => {
           <p>• <a href="https://www.srigranth.org" target="_blank">SriGranth.org</a> - Complete Guru Granth Sahib</p>
           <p>• <a href="https://www.searchgurbani.com" target="_blank">SearchGurbani.com</a> - Search and translations</p>
           <p>• <a href="https://www.sikhitothemax.org" target="_blank">SikhiToTheMax</a> - Gurbani with meanings</p>
-          <p>• <a href="https://www.radioindia.in/gurbani-kirtan" target="_blank">GurbaniFM</a> - Audio recitations</p>
+          <p>• <a href="https://www.gurbanifm.com" target="_blank">GurbaniFM</a> - Audio recitations</p>
         </div>
         
         <div class="message-box">
